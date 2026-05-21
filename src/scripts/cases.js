@@ -266,6 +266,14 @@ function buildCard(c) {
     role: 'region',
     'aria-label': `Expanded detail for ${c.name}`,
   }, [
+    // Top collapse handle — always visible at the top of the expanded area.
+    el('div', { class: 'expanded-top-bar' }, [
+      el('button', {
+        type: 'button',
+        class: 'collapse-handle js-collapse',
+        'aria-label': `Collapse ${c.name}`,
+      }, '↑ Collapse'),
+    ]),
     el('div', { class: 'expanded-section full' }, [
       el('h4', {}, 'Key holdings'),
       holdingsBlock(c.holdings_slug),
@@ -446,9 +454,12 @@ export async function initCases() {
         toggleCard(card);
       }
     });
-    card.querySelector('.js-collapse').addEventListener('click', () => {
-      toggleCard(card);
-      card.querySelector('.case-title button').focus();
+    card.querySelectorAll('.js-collapse').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleCard(card);
+        card.querySelector('.case-title button').focus();
+      });
     });
   }
   grid.dataset.ready = '1';
@@ -456,5 +467,28 @@ export async function initCases() {
   document.addEventListener('cases:open', (e) => {
     openById(e.detail.id);
   });
+
+  // Click anywhere OUTSIDE the expanded card collapses it.
+  // - Inside the expanded card itself: keep open.
+  // - On another card (collapsed): let the per-card handler swap the expansion.
+  // - Anywhere else (grid gap, intro block, header, page background): collapse.
+  document.addEventListener('click', (e) => {
+    const open = grid.querySelector('.catalytic-card.is-expanded');
+    if (!open) return;
+    if (open.contains(e.target)) return;
+    if (e.target.closest('.catalytic-card')) return;
+    toggleCard(open);
+  });
+
+  // Pressing Escape also collapses the open card.
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = grid.querySelector('.catalytic-card.is-expanded');
+    if (open) {
+      toggleCard(open);
+      open.querySelector('.case-title button').focus();
+    }
+  });
+
   document.dispatchEvent(new CustomEvent('cases:ready'));
 }
