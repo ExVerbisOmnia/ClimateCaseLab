@@ -35,6 +35,40 @@ h3 { font-size: var(--ts-h3); }
 
 p {
   margin: 0 0 var(--sp-4) 0;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+li { hyphens: auto; -webkit-hyphens: auto; }
+
+/* Justified text is wrong for short labels, badges, monospace metadata,
+   nav chips, and tabular cells — opt those back to left-aligned. */
+.landing-eyebrow,
+.tile-cta,
+.methodology-cta,
+.tag, .chip,
+.legend-row,
+.more-hint,
+.case-card-meta,
+.case-cited-list li,
+.citing-group li,
+.connected-list li,
+.timeline-legend span,
+.juris-table td,
+.juris-table th,
+.juris-bars .name,
+.juris-bars .count,
+.combobox-menu li,
+.cases-empty,
+.stats-grid dt,
+.stats-grid dd,
+.site-footer dt,
+.site-footer dd,
+.toast,
+.map-tooltip {
+  text-align: left;
+  hyphens: none;
 }
 
 a {

@@ -4,11 +4,11 @@
   padding-block: var(--sp-12) var(--sp-24);
   max-width: 1240px;
 }
+.cases-section-header { max-width: 48ch; }
 .cases-section-header h1 {
   font-size: 2.4rem;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  max-width: 18ch;
   margin-bottom: var(--sp-4);
 }
 .cases-intro { max-width: 64ch; margin: var(--sp-4) 0 var(--sp-8); }
@@ -16,18 +16,19 @@
 
 .catalytic-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));   /* minmax(0, 1fr) lets the column shrink — without it 1fr won't go below the content min-width and cards bleed past the container */
   gap: var(--sp-4);
   margin-top: var(--sp-8);
   align-items: start;
+  width: 100%;
+  max-width: 100%;
 }
-@media (max-width: 1240px) {
-  .catalytic-grid { grid-template-columns: repeat(3, 1fr); }
-  .catalytic-grid > .catalytic-card:nth-child(n+4) { grid-column: span 1; }
-  .catalytic-grid > .catalytic-card:nth-child(4) { grid-column: span 2; }
-  .catalytic-grid > .catalytic-card:nth-child(5) { grid-column: span 1; }
+/* 5 cards in a 3-column grid lay out as 3 + 2. When one card expands it
+   spans the full row at order: -1, leaving 4 collapsed cards below in 3+1. */
+@media (max-width: 880px) {
+  .catalytic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 1023px) {
+@media (max-width: 640px) {
   .catalytic-grid { grid-template-columns: 1fr; }
   .catalytic-grid > .catalytic-card { grid-column: 1 !important; }
 }
@@ -43,7 +44,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
-  transition: transform var(--dur) var(--ease),
+  min-width: 0;             /* let the grid track shrink the card to its 1fr share */
+  transition: transform var(--dur) var(--ease-out),
               border-color var(--dur-fast) var(--ease),
               box-shadow var(--dur-fast) var(--ease);
   /* used by FLIP reflow */
@@ -51,6 +53,7 @@
 }
 .catalytic-card.is-expanded {
   grid-column: 1 / -1;
+  order: -1;                       /* place the expanded card before all siblings */
   box-shadow: var(--el-2);
   border-color: var(--border-strong);
 }
@@ -145,18 +148,41 @@
   letter-spacing: 0.04em;
 }
 
-/* Expanded content (rendered inside the card; hidden when not expanded) */
+/* Expanded content — always rendered so we can animate height; revealed only
+   when the parent .catalytic-card has .is-expanded. */
 .card-expanded {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: var(--sp-6);
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0 solid var(--border-strong);
+  transition: max-height var(--dur) var(--ease-out),
+              margin-top var(--dur) var(--ease-out),
+              padding-top var(--dur) var(--ease-out),
+              border-top-width var(--dur) var(--ease-out);
+  /* nice scrollbar styling inside the expanded card */
+  scrollbar-width: thin;
+}
+.catalytic-card.is-expanded .card-expanded {
+  /* cap at 60vh — anything beyond scrolls inside the card */
+  max-height: 60vh;
+  overflow-y: auto;
   margin-top: var(--sp-6);
   padding-top: var(--sp-6);
   border-top: 1px dashed var(--border-strong);
 }
-.catalytic-card:not(.is-expanded) .card-expanded { display: none; }
 @media (max-width: 880px) {
   .card-expanded { grid-template-columns: 1fr; gap: var(--sp-4); }
+}
+
+.expanded-top-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  margin: calc(-1 * var(--sp-2)) 0 calc(-1 * var(--sp-2));
 }
 
 .expanded-section { grid-column: span 6; }

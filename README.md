@@ -5,6 +5,7 @@ of transnational citation patterns in climate litigation.
 
 Three top-level sections: a **Landing** narrative, an **Interactive Map**
 of citation flows, and a **Catalytic Cases** dashboard. Vanilla HTML/CSS/JS
+
 + D3.js. No bundler. Deploys to GitHub Pages at `climatecaselab.org`.
 
 ## Quickstart

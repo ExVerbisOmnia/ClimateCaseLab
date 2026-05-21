@@ -1,0 +1,37 @@
+# --- Python virtualenv + bytecode ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# --- OS / editor junk ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Retired build artifact (we publish from docs/ now) ---
+dist/
+
+# --- Heavy doc/reference artifacts (not needed to render the site) ---
+build/screenshots/
+
+# --- Raw research data (per CLAUDE.md: don't ship the XLSX) ---
+refs/data/*.xlsx
+
+# --- Claude tooling local state ---
+.claude/sip-state/
+.claude/superpowers/
+
+# --- Node (in case Lucas adds tooling later) ---
+node_modules/
+.next/
+.cache/

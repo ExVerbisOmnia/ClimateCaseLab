@@ -16,18 +16,19 @@
 
 .catalytic-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));   /* minmax(0, 1fr) lets the column shrink — without it 1fr won't go below the content min-width and cards bleed past the container */
   gap: var(--sp-4);
   margin-top: var(--sp-8);
   align-items: start;
+  width: 100%;
+  max-width: 100%;
 }
-@media (max-width: 1240px) {
-  .catalytic-grid { grid-template-columns: repeat(3, 1fr); }
-  .catalytic-grid > .catalytic-card:nth-child(n+4) { grid-column: span 1; }
-  .catalytic-grid > .catalytic-card:nth-child(4) { grid-column: span 2; }
-  .catalytic-grid > .catalytic-card:nth-child(5) { grid-column: span 1; }
+/* 5 cards in a 3-column grid lay out as 3 + 2. When one card expands it
+   spans the full row at order: -1, leaving 4 collapsed cards below in 3+1. */
+@media (max-width: 880px) {
+  .catalytic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 1023px) {
+@media (max-width: 640px) {
   .catalytic-grid { grid-template-columns: 1fr; }
   .catalytic-grid > .catalytic-card { grid-column: 1 !important; }
 }
@@ -43,7 +44,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
-  transition: transform var(--dur) var(--ease),
+  min-width: 0;             /* let the grid track shrink the card to its 1fr share */
+  transition: transform var(--dur) var(--ease-out),
               border-color var(--dur-fast) var(--ease),
               box-shadow var(--dur-fast) var(--ease);
   /* used by FLIP reflow */
@@ -157,10 +159,10 @@
   margin-top: 0;
   padding-top: 0;
   border-top: 0 solid var(--border-strong);
-  transition: max-height var(--dur) var(--ease),
-              margin-top var(--dur) var(--ease),
-              padding-top var(--dur) var(--ease),
-              border-top-width var(--dur) var(--ease);
+  transition: max-height var(--dur) var(--ease-out),
+              margin-top var(--dur) var(--ease-out),
+              padding-top var(--dur) var(--ease-out),
+              border-top-width var(--dur) var(--ease-out);
   /* nice scrollbar styling inside the expanded card */
   scrollbar-width: thin;
 }
