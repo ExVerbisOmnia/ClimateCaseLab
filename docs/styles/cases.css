@@ -163,8 +163,25 @@
               margin-top var(--dur) var(--ease-out),
               padding-top var(--dur) var(--ease-out),
               border-top-width var(--dur) var(--ease-out);
-  /* nice scrollbar styling inside the expanded card */
+  /* themed scrollbar — Firefox API */
   scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+/* themed scrollbar — WebKit (Chrome/Safari) */
+.card-expanded::-webkit-scrollbar {
+  width: 10px;
+}
+.card-expanded::-webkit-scrollbar-track {
+  background: transparent;
+}
+.card-expanded::-webkit-scrollbar-thumb {
+  background-color: var(--border-strong);
+  border-radius: var(--r-full);
+  border: 2px solid var(--surface-1);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.card-expanded::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
 }
 .catalytic-card.is-expanded .card-expanded {
   /* cap at 60vh — anything beyond scrolls inside the card */
