@@ -34,7 +34,7 @@ climatecaselab/
 │   └── data/                   ← compiled JSON consumed by the front-end
 ├── build/
 │   └── xlsx_to_json.py         ← XLSX → JSON pipeline
-└── dist/                       ← deploy artifact (GitHub Pages target)
+└── docs/                       ← published by GitHub Pages (built from src/ via `make publish`)
 ```
 
 **No framework yet.** The seed and mockups suggest vanilla HTML/CSS/JS + D3.js is enough. If Lucas wants Vite/React/Astro, that's a design call to log in the spec — don't introduce a bundler unilaterally.
@@ -43,14 +43,14 @@ climatecaselab/
 
 ## Stack & dependencies
 
-| Layer        | Choice                                                                         |
-| ------------ | ------------------------------------------------------------------------------ |
-| HTML/CSS/JS  | Vanilla, ES modules. No framework unless the spec is amended.                  |
-| Visuals      | **D3.js v7** + **TopoJSON v3** for the citation map (same as mockup).          |
-| Build        | Python script (`build/xlsx_to_json.py`) converts the XLSX to multiple JSON files committed to `src/data/`. |
-| Hosting      | GitHub Pages, static (`dist/` or `/docs` folder, TBD).                         |
-| Fonts        | Google Fonts — see spec for the families (serif for titles, geometric for body).|
-| Theming      | CSS custom properties on `:root` and `[data-theme="dark"]`.                    |
+| Layer       | Choice                                                                                                     |
+| ----------- | ---------------------------------------------------------------------------------------------------------- |
+| HTML/CSS/JS | Vanilla, ES modules. No framework unless the spec is amended.                                              |
+| Visuals     | **D3.js v7** + **TopoJSON v3** for the citation map (same as mockup).                                      |
+| Build       | Python script (`build/xlsx_to_json.py`) converts the XLSX to multiple JSON files committed to `src/data/`. |
+| Hosting      | GitHub Pages, static, served from `/docs` on `main` (custom domain `climatecaselab.org`).                 |
+| Fonts       | Google Fonts — see spec for the families (serif for titles, geometric for body).                           |
+| Theming     | CSS custom properties on `:root` and `[data-theme="dark"]`.                                                |
 
 ---
 
@@ -67,14 +67,44 @@ climatecaselab/
 
 ## How to think about edits
 
-| If you are…                                              | Then…                                                                                                |
-| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Editing the spec                                         | Update `specs/specs.md` only. Cross-reference seed sections by `§` so reviewers can map back.        |
-| Adding new mockups                                       | Drop them in `refs/mockups/` and link from the spec. Never inline mockup HTML into `src/`.            |
-| Writing landing copy                                     | Edit `refs/specs/landing-content.md`. The spec defers all body copy of the Landing uppertab there.    |
-| Implementing a feature                                   | The spec is the contract; the seed is the origin story. If they disagree, the spec wins, but log it. |
-| Touching the data                                        | Edit `build/xlsx_to_json.py` (when it exists). Regenerate `src/data/*.json`. Commit both.            |
-| Adding a dependency                                      | First-paint impact matters more than DX — the site must load fast on a slow connection. Justify it.   |
+| If you are…            | Then…                                                                                                |
+| ---------------------- | ---------------------------------------------------------------------------------------------------- |
+| Editing the spec       | Update `specs/specs.md` only. Cross-reference seed sections by `§` so reviewers can map back.        |
+| Adding new mockups     | Drop them in `refs/mockups/` and link from the spec. Never inline mockup HTML into `src/`.           |
+| Writing landing copy   | Edit `refs/specs/landing-content.md`. The spec defers all body copy of the Landing uppertab there.   |
+| Implementing a feature | The spec is the contract; the seed is the origin story. If they disagree, the spec wins, but log it. |
+| Touching the data      | Edit `build/xlsx_to_json.py` (when it exists). Regenerate `src/data/*.json`. Commit both.            |
+| Adding a dependency    | First-paint impact matters more than DX — the site must load fast on a slow connection. Justify it.  |
+
+---
+
+## Deploy routine (GitHub Pages)
+
+The site is served from `docs/` on the `main` branch — Pages source is set to `main` → `/docs` in the repo Settings. `docs/CNAME` carries `climatecaselab.org`. **Never hand-edit files in `docs/`** — it's a build output. Edit `src/` and re-run `make publish`.
+
+**Edit → preview → ship loop:**
+
+```bash
+# 1. edit src/...                       ← human edits live here
+# 2. (if you touched the XLSX or build/*.json) regenerate data:
+make build         # writes src/data/*.json from refs/data/*.xlsx
+# 3. preview locally before staging:
+make serve         # http://127.0.0.1:8080 over src/
+# 4. stage the published bytes:
+make publish       # wipes docs/, copies src/. into docs/, writes docs/CNAME
+# 5. commit both source and rendered output, then push:
+git add src/ docs/ && git commit -m "..." && git push origin main
+```
+
+GitHub Pages auto-deploys within ~1 min of the push.
+
+**Why `src/` AND `docs/` are both committed:** `src/` is the editable source of truth (Lucas works here); `docs/` is the byte-for-byte published output (what `climatecaselab.org` serves). Committing both makes the diff between source and rendered output reviewable in PRs.
+
+**Gotchas:**
+
+- If `docs/CNAME` is missing after a build, the custom domain breaks. `make publish` re-writes it every time — trust the Makefile.
+- `dist/` no longer exists. The old `make dist` target was renamed to `make publish` (and now targets `docs/` instead of `dist/`).
+- `refs/data/*.xlsx` is gitignored per [What NOT to do](#what-not-to-do). If a teammate needs the raw spreadsheet, hand it off out-of-band — never commit it.
 
 ---
 
