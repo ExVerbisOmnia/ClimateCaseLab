@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>
+  html,body{margin:0;padding:0;background:#ffffff;}
+  #map{width:100vw;height:100vh;}
+  .land{fill:#ECECEC;stroke:#DADADA;stroke-width:.5px;}
+  .flow{fill:none;stroke-linecap:round;}
+  .flowlabel{font-family:Georgia,'Times New Roman',serif;font-weight:700;fill:#333;font-size:13px;}
+  .destlabel{fill:#555;font-size:12.5px;font-family:Georgia,serif;}
+  .lead{stroke:#9a9a9a;stroke-width:.9px;fill:none;}
+  .legend text{fill:#444;font-size:12.5px;font-family:Georgia,serif;}
+  #err{position:absolute;top:14px;left:14px;color:#B23A2E;
+       font-family:Georgia,serif;font-size:13px;display:none;}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="err">Could not load the world basemap (needs an internet connection). Reconnect and reload.</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const DATA = {"nodes": [{"id": "New Zealand", "role": "citing", "total": 33, "lonlat": [174, -41], "cited_total": 2}, {"id": "Brazil", "role": "citing", "total": 30, "lonlat": [-51, -12]}, {"id": "Australia", "role": "citing", "total": 17, "lonlat": [134, -25], "cited_total": 9}, {"id": "United Kingdom", "role": "citing", "total": 17, "lonlat": [-2, 54]}, {"id": "Czechia", "role": "citing", "total": 16, "lonlat": [15, 50]}, {"id": "Europe", "role": "cited", "total": 62, "lonlat": [10, 49]}, {"id": "United States", "role": "cited", "total": 24, "lonlat": [-98, 39]}, {"id": "Pakistan", "role": "cited", "total": 3, "lonlat": [69, 30]}, {"id": "Colombia", "role": "cited", "total": 3, "lonlat": [-74, 4]}, {"id": "Canada", "role": "cited", "total": 3, "lonlat": [-106, 56]}, {"id": "Chile", "role": "cited", "total": 1, "lonlat": [-71, -35]}, {"id": "South Africa", "role": "cited", "total": 1, "lonlat": [24, -29]}, {"id": "Nepal", "role": "cited", "total": 1, "lonlat": [84, 28]}], "edges": [{"source": "New Zealand", "target": "Europe", "value": 16}, {"source": "Brazil", "target": "Europe", "value": 15}, {"source": "United Kingdom", "target": "Europe", "value": 11}, {"source": "Australia", "target": "Europe", "value": 10}, {"source": "Brazil", "target": "United States", "value": 10}, {"source": "Czechia", "target": "Europe", "value": 10}, {"source": "New Zealand", "target": "Australia", "value": 7}, {"source": "New Zealand", "target": "United States", "value": 7}, {"source": "Australia", "target": "United States", "value": 3}, {"source": "Brazil", "target": "Pakistan", "value": 3}, {"source": "Australia", "target": "New Zealand", "value": 2}, {"source": "Czechia", "target": "Colombia", "value": 2}, {"source": "Czechia", "target": "United States", "value": 2}, {"source": "New Zealand", "target": "Canada", "value": 2}, {"source": "United Kingdom", "target": "Australia", "value": 2}, {"source": "United Kingdom", "target": "United States", "value": 2}, {"source": "Australia", "target": "Canada", "value": 1}, {"source": "Australia", "target": "Colombia", "value": 1}, {"source": "Brazil", "target": "Chile", "value": 1}, {"source": "Brazil", "target": "South Africa", "value": 1}, {"source": "Czechia", "target": "Nepal", "value": 1}]};
+const COLOR={"New Zealand":"#2E78C8","Brazil":"#1F9E5A","Australia":"#E8862E",
+ "United Kingdom":"#8E5BC8","Czechia":"#C0392B"};
+const W=1280,H=680;
+const svg=d3.select("#map").append("svg")
+  .attr("viewBox","0 0 "+W+" "+H)
+  .attr("preserveAspectRatio","xMidYMid meet")
+  .attr("width","100%").attr("height","100%");
+const projection=d3.geoNaturalEarth1().scale(245).translate([W/2-6,H/2+14]);
+const path=d3.geoPath(projection);
+const P=ll=>projection(ll);
+function arc(a,b,bend){
+  const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[0]-a[0],dy=b[1]-a[1];
+  const cx=mx-dy*bend,cy=my+dx*bend;
+  return {d:"M"+a[0]+","+a[1]+" Q"+cx+","+cy+" "+b[0]+","+b[1],c:[cx,cy]};}
+
+/* halo-text helper: white outline under text so labels stay readable
+   over land and never look truncated/clipped */
+function label(sel,x,y,txt,opts){
+  opts=opts||{};
+  const g=sel.append("g");
+  const t1=g.append("text").attr("x",x).attr("y",y)
+    .attr("text-anchor",opts.anchor||"middle")
+    .style("font-family","Georgia,serif")
+    .style("font-size",(opts.size||13)+"px")
+    .style("font-weight",opts.bold?"700":"400")
+    .style("fill","#fff").style("stroke","#fff")
+    .style("stroke-width","3.4px").style("stroke-linejoin","round")
+    .text(txt);
+  const t2=g.append("text").attr("x",x).attr("y",y)
+    .attr("text-anchor",opts.anchor||"middle")
+    .style("font-family","Georgia,serif")
+    .style("font-size",(opts.size||13)+"px")
+    .style("font-weight",opts.bold?"700":"400")
+    .style("fill",opts.color||"#555").text(txt);
+  return g;
+}
+
+const WORLD="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+d3.json(WORLD).then(function(world){
+  const land=topojson.feature(world,world.objects.countries);
+  svg.append("g").selectAll("path").data(land.features).enter()
+     .append("path").attr("class","land").attr("d",path);
+
+  const maxV=d3.max(DATA.edges,d=>d.value);
+  const wScale=d3.scaleSqrt().domain([1,maxV]).range([1.1,5.4]);
+  const BEND={"New Zealand":0.14,"Brazil":0.19,"Australia":0.23,
+              "United Kingdom":-0.15,"Czechia":-0.22};
+  const byId={};DATA.nodes.forEach(n=>byId[n.id]=n);
+
+  const defs=svg.append("defs");
+  Object.entries(COLOR).forEach(([k,c],i)=>{
+    defs.append("marker").attr("id","ah"+i).attr("viewBox","0 0 10 10")
+      .attr("refX",8).attr("refY",5).attr("markerWidth",5.4)
+      .attr("markerHeight",5.4).attr("orient","auto-start-reverse")
+      .append("path").attr("d","M0,0 L10,5 L0,10 z").attr("fill",c).attr("opacity",.82);});
+  const mIdx=Object.fromEntries(Object.keys(COLOR).map((k,i)=>[k,i]));
+
+  DATA.edges.sort((a,b)=>a.value-b.value).forEach(e=>{
+    const s=byId[e.source],t=byId[e.target];if(!s||!t)return;
+    const A=P(s.lonlat),B=P(t.lonlat),col=COLOR[e.source];
+    const g=arc(A,B,BEND[e.source]||0.17);
+    svg.append("path").attr("class","flow").attr("d",g.d)
+       .attr("stroke",col).attr("stroke-width",wScale(e.value))
+       .attr("opacity",.66).attr("marker-end","url(#ah"+mIdx[e.source]+")");
+    if(e.value>=2){
+      const tt=e.value>=5?0.46:0.40;
+      let lx=(1-tt)*(1-tt)*A[0]+2*(1-tt)*tt*g.c[0]+tt*tt*B[0];
+      let ly=(1-tt)*(1-tt)*A[1]+2*(1-tt)*tt*g.c[1]+tt*tt*B[1];
+      /* if the label falls under the Europe or Czechia red nodes,
+         lift it slightly upward so the number stays visible */
+      const eN=byId["Europe"], cN=byId["Czechia"];
+      [eN,cN].forEach(nn=>{ if(!nn) return;
+        const np=P(nn.lonlat);
+        if(Math.hypot(lx-np[0],ly-np[1])<20){ ly-=24; }
+      });
+      const lg2=svg.append("g");
+      lg2.append("circle").attr("cx",lx).attr("cy",ly).attr("r",10.5)
+         .attr("fill","#fff").attr("opacity",.9)
+         .attr("stroke",col).attr("stroke-width",1);
+      lg2.append("text").attr("class","flowlabel").attr("x",lx).attr("y",ly)
+         .attr("text-anchor","middle").attr("dominant-baseline","central")
+         .text(e.value);}
+  });
+
+  /* Non-crowded cited nodes: direct halo labels */
+  const CROWDED=new Set(["Europe","United Kingdom","Czechia"]);
+  DATA.nodes.filter(n=>n.role==="cited"&&!CROWDED.has(n.id)).forEach(n=>{
+    const p=P(n.lonlat);
+    svg.append("circle").attr("cx",p[0]).attr("cy",p[1]).attr("r",5)
+       .attr("fill","#fff").attr("stroke","#777").attr("stroke-width",1.3);
+    label(svg,p[0],p[1]-9,n.id,{size:12.5,color:"#555"});
+  });
+
+  /* Non-crowded citing nodes: direct halo labels */
+  DATA.nodes.filter(n=>n.role==="citing"&&!CROWDED.has(n.id)).forEach(n=>{
+    const p=P(n.lonlat),c=COLOR[n.id];
+    svg.append("circle").attr("cx",p[0]).attr("cy",p[1]).attr("r",7)
+       .attr("fill",c).attr("stroke","#fff").attr("stroke-width",1.5);
+    label(svg,p[0],p[1]+19,n.id,{size:14.5,color:c,bold:true});
+    label(svg,p[0],p[1]+32,n.total+" cit.",{size:11.5,color:c});
+  });
+
+  /* Crowded European cluster: callout labels with leader lines so the
+     names are never truncated/overlapping. Offsets tuned to open areas. */
+  function callout(n,dx,dy,color,bold,sub,r,fill){
+    const p=P(n.lonlat);
+    const lx=p[0]+dx, ly=p[1]+dy;
+    svg.append("path").attr("class","lead")
+       .attr("d","M"+p[0]+","+p[1]+" L"+lx+","+ly);
+    svg.append("circle").attr("cx",p[0]).attr("cy",p[1]).attr("r",r)
+       .attr("fill",fill).attr("stroke","#fff").attr("stroke-width",1.5);
+    const anchor = dx<0 ? "end" : (dx>0 ? "start" : "middle");
+    label(svg,lx,ly,n.id,{size:14.5,color:color,bold:bold,anchor:anchor});
+    if(sub) label(svg,lx,ly+13,sub,{size:11.5,color:color,anchor:anchor});
+  }
+  const EU=byId["Europe"], UK=byId["United Kingdom"], CZ=byId["Czechia"];
+  if(EU){ const ep=P(EU.lonlat);
+    svg.append("circle").attr("cx",ep[0]).attr("cy",ep[1]).attr("r",7.5)
+       .attr("fill","#C0392B").attr("stroke","#fff").attr("stroke-width",1.5); }
+  if(UK) callout(UK,-78,-46,COLOR["United Kingdom"],true,
+                 UK.total+" cit.",7,COLOR["United Kingdom"]);
+  if(CZ) callout(CZ, 62, 40,COLOR["Czechia"],true,
+                 CZ.total+" cit.",7,COLOR["Czechia"]);
+
+}).catch(function(e){
+  document.getElementById("err").style.display="block";console.error(e);});
+</script>
+</body>
+</html>

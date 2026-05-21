@@ -1,0 +1,74 @@
+{
+  "sip_version": "1.0",
+  "feature_id": "climatecaselab-v1",
+  "feature_name": "climatecaselab static webapp v1",
+  "mode": "specified",
+  "started_at": "2026-05-21T10:40:00Z",
+  "updated_at": "2026-05-21T11:09:00Z",
+  "status": "completed",
+  "phase": {
+    "current": "verification",
+    "completed": ["context_load", "codebase_assessment", "planning", "implementation"],
+    "remaining": ["integration"]
+  },
+  "context": {
+    "spec_files": ["specs/specs-v1.md", "refs/specs/landing-content.md"],
+    "project": "climatecaselab",
+    "branch": "feature/phase-dq",
+    "gates_suppressed_per_user_request": true
+  },
+  "gates": {
+    "initial_confirmation": { "passed": true, "at": "2026-05-21T10:40:00Z", "note": "user requested fully autonomous execution; no gates" },
+    "design_review": { "skipped": true },
+    "plan_approval": { "skipped": true },
+    "final_review": { "deferred_to": "dev server launch + user review" }
+  },
+  "tasks": [
+    { "id": "t-001", "subject": "M0 — Build pipeline (xlsx_to_json.py)", "status": "completed" },
+    { "id": "t-002", "subject": "M1 — Skeleton: HTML shell, tokens, fonts, theme toggle, uppertab routing", "status": "completed" },
+    { "id": "t-003", "subject": "M2 — Landing uppertab: About + Methodology + Collaboration", "status": "completed" },
+    { "id": "t-004", "subject": "M3 — Catalytic Cases dashboard", "status": "completed" },
+    { "id": "t-005", "subject": "M4 — Interactive Map base", "status": "completed" },
+    { "id": "t-006", "subject": "M5 — Map enhancements: multi-select union, counter-scaled zoom, N/S explainer", "status": "completed" },
+    { "id": "t-007", "subject": "M6 — Polish, footer, accessibility, dev server launch", "status": "completed" }
+  ],
+  "decisions": [
+    { "id": "d-001", "decision": "use uv-managed local .venv for the Python build script", "confidence": "high", "reversible": true },
+    { "id": "d-002", "decision": "vendor D3 v7 + TopoJSON v3 locally under src/scripts/lib/", "confidence": "high", "reversible": true },
+    { "id": "d-003", "decision": "top-5 catalytic cases = data-driven from total citation count, filtered by catalytic_exclusions.json (EU procedural cases excluded). Resulting top-5: Urgenda, Shell v NL, Mass v EPA, Neubauer, KlimaSeniorinnen.", "confidence": "medium", "reversible": true },
+    { "id": "d-004", "decision": "vendor world-atlas@2/countries-110m.json locally", "confidence": "high", "reversible": true },
+    { "id": "d-005", "decision": "no bundler / no minifier for v1", "confidence": "high", "reversible": true },
+    { "id": "d-006", "decision": "use `inert` (not `hidden`) on non-active uppertab panels so the horizontal flex track keeps its 300vw layout while the translate-X actually slides into view. Fixed a layout collapse bug where applying hidden to siblings shrunk the track and pushed the active panel off-screen.", "confidence": "high", "reversible": true },
+    { "id": "d-007", "decision": "headless-Chrome smoke tests via DOM dump + screenshot used as the primary verification harness during implementation (no separate test framework)", "confidence": "high", "reversible": true }
+  ],
+  "verification": {
+    "tests_passed": true,
+    "lint_passed": null,
+    "security_check_passed": null,
+    "performance_budget_check": {
+      "main_css_gz": "10 KB (target 40 KB)",
+      "landing_js_gz": "10 KB (target 25 KB)",
+      "map_js_with_d3_gz": "103 KB (target 60 + 90 = 150 KB)",
+      "topojson_gz": "39 KB (target 95 KB raw)",
+      "data_json_gz_combined": "31 KB (target 250 KB)"
+    },
+    "headless_smoke_results": {
+      "landing_render": "OK",
+      "cases_5_cards_render": "OK",
+      "map_multi_select_brazil_argentina_outgoing": "47 citations / 11 countries / 24 arcs — matches expected union semantics",
+      "map_multi_select_usa_nl_de_incoming": "172 citations / 21 countries / 94 N + 54 S",
+      "no_js_errors": true,
+      "all_data_files_200": true
+    }
+  },
+  "findings": {
+    "spec_gaps": [
+      "spec lists 5 named catalytic cases (Urgenda, Neubauer, Mass v EPA, Leghari, Notre Affaire) but also requires data-driven top-5; the raw data ranks differently, so the build script applies a small exclusion list for EU procedural cases. See decisions d-003.",
+      "spec doesn't define a stable centroid table for jurisdictions; we ship build/country_centroids.json as a small hand-curated table."
+    ],
+    "bugs_discovered_and_fixed": [
+      "navigation: onNavigate listener was registered AFTER initNav's initial emit — fixed by reordering bootstrap.",
+      "layout: hidden attribute on non-active uppertab panels collapsed the flex track and slid the active panel off-screen — fixed by switching to inert + aria-hidden."
+    ]
+  }
+}

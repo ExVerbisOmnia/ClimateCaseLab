@@ -1,0 +1,842 @@
+[
+  {
+    "id": "case_urgenda",
+    "rank": 1,
+    "name": "Urgenda Foundation v. State of the Netherlands",
+    "origin_country": "Netherlands",
+    "origin_region": "Global North",
+    "year": 2015,
+    "sabin_url": "https://climatecasechart.com/case/urgenda-foundation-v-state-of-the-netherlands_3297/",
+    "color_token": "--case-1",
+    "total_citing_decisions": 33,
+    "total_jurisdictions": 14,
+    "jurisdictions": [
+      {
+        "name": "Belgium",
+        "count": 6,
+        "region": "Global North"
+      },
+      {
+        "name": "Brazil",
+        "count": 5,
+        "region": "Global South"
+      },
+      {
+        "name": "Czechia",
+        "count": 4,
+        "region": "Global South"
+      },
+      {
+        "name": "South Korea",
+        "count": 4,
+        "region": "Global North"
+      },
+      {
+        "name": "International",
+        "count": 3,
+        "region": "International"
+      },
+      {
+        "name": "Canada",
+        "count": 2,
+        "region": "Global North"
+      },
+      {
+        "name": "Norway",
+        "count": 2,
+        "region": "Global North"
+      },
+      {
+        "name": "Argentina",
+        "count": 1,
+        "region": "Global South"
+      },
+      {
+        "name": "Australia",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Austria",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Germany",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Ireland",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Italy",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Papua New Guinea",
+        "count": 1,
+        "region": "Global South"
+      }
+    ],
+    "citing_cases": [
+      {
+        "name": "Greenpeace Argentina et. al., v. Argentina et. al.",
+        "country": "Argentina",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0",
+        "region": "Global South"
+      },
+      {
+        "name": "Complaint over Ampol’s carbon-neutral fuel claims",
+        "country": "Australia",
+        "year": 2015,
+        "url": "https://www.climatecasechart.com/document/complaint-over-ampols-carbon-neutral-fuel-claims_9862",
+        "region": "Global North"
+      },
+      {
+        "name": "Fliegenschnee et al. v. Federal Ministry for Digitalisation and Business Location (Austria)",
+        "country": "Austria",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/fliegenschnee-et-al-v-federal-ministry-for-digitalisation-and-business-location-austria-decision_93c5",
+        "region": "Global North"
+      },
+      {
+        "name": "VZW Klimaatzaak v. Kingdom of Belgium & Others",
+        "country": "Belgium",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42",
+        "region": "Global North"
+      },
+      {
+        "name": "Institute of Amazonian Studies v. Brazil",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/institute-of-amazonian-studies-v-brazil_4826",
+        "region": "Global South"
+      },
+      {
+        "name": "Instituto Preservar et. al. v. Copelmi Mineração Ltda. and IBAMA",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/instituto-preservar-et-al-v-copelmi-mineracao-ltda-and-ibama_99f9",
+        "region": "Global South"
+      },
+      {
+        "name": "Mathur, et al. v. His Majesty the King in Right of Ontario",
+        "country": "Canada",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/mathur-et-al-v-his-majesty-the-king-in-right-of-ontario_edc5",
+        "region": "Global North"
+      },
+      {
+        "name": "Trans Mountain Pipeline ULC v. Mivasair",
+        "country": "Canada",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/trans-mountain-pipeline-ulc-v-mivasair_647d",
+        "region": "Global North"
+      },
+      {
+        "name": "Klimatická žaloba ČR v. Czech Republic",
+        "country": "Czechia",
+        "year": 2019,
+        "url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0",
+        "region": "Global South"
+      },
+      {
+        "name": "Deutsche Umwelthilfe (DUH) v. Mercedes-Benz AG",
+        "country": "Germany",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/deutsche-umwelthilfe-duh-v-mercedes-benz-ag-judgment_d148",
+        "region": "Global North"
+      },
+      {
+        "name": "BankTrack, et al. vs. ING Bank",
+        "country": "International",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/banktrack-et-al-vs-ing-bank_f9bc",
+        "region": "International"
+      },
+      {
+        "name": "Friends of the Irish Environment v. Ireland ([2019] IEHC 747)",
+        "country": "Ireland",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-ireland-judgment_7533",
+        "region": "Global North"
+      },
+      {
+        "name": "Greenpeace Italy et al. v. ENI S.p.A., the Italian Ministry of Economy and Finance, and Cassa Depositi e Prestiti S.p.A.",
+        "country": "Italy",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/greenpeace-italy-et-al-v-eni-s-p-a-the-italian-ministry-of-economy-and-finance-and-cassa-depositi-e-prestiti-s-p-a-decision_c7d3",
+        "region": "Global North"
+      },
+      {
+        "name": "Greenpeace Nordic Ass’n v. Ministry of Petroleum and Energy (People v Arctic Oil)",
+        "country": "Norway",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/greenpeace-nordic-assn-v-ministry-of-petroleum-and-energy-people-v-arctic-oil_508f",
+        "region": "Global North"
+      },
+      {
+        "name": "Buni Morua v. China Harbour Engineering Company (PNG) Limited & Ors",
+        "country": "Papua New Guinea",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/buni-morua-v-china-harbour-engineering-company-png-limited-ors_1902",
+        "region": "Global South"
+      },
+      {
+        "name": "Do-Hyun Kim et al. v. South Korea",
+        "country": "South Korea",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/do-hyun-kim-et-al-v-south-korea_2dd5",
+        "region": "Global North"
+      },
+      {
+        "name": "Opinion of the National Human Rights Commission on the Constitutional Complaints on Constitutionality of Carbon Neutrality Act",
+        "country": "South Korea",
+        "year": 2015,
+        "url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-constitutional-complaints-on-constitutionality-of-carbon-neutrality-act_1cdf",
+        "region": "Global North"
+      },
+      {
+        "name": "Opinion of the National Human Rights Commission on the climate crisis and human rights",
+        "country": "South Korea",
+        "year": 2015,
+        "url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-climate-crisis-and-human-rights_77ae",
+        "region": "Global North"
+      }
+    ],
+    "holdings_slug": "case_urgenda",
+    "yearly_citations": [
+      {
+        "year": 2015,
+        "north": 8,
+        "south": 2,
+        "international": 1
+      },
+      {
+        "year": 2019,
+        "north": 0,
+        "south": 2,
+        "international": 0
+      }
+    ]
+  },
+  {
+    "id": "case_shell",
+    "rank": 2,
+    "name": "Shell PLC v. Kingdom of the Netherlands",
+    "origin_country": "Netherlands",
+    "origin_region": "Global North",
+    "year": 2021,
+    "sabin_url": "https://climatecasechart.com/case/shell-plc-v-kingdom-of-the-netherlands_e81b/",
+    "color_token": "--case-2",
+    "total_citing_decisions": 19,
+    "total_jurisdictions": 13,
+    "jurisdictions": [
+      {
+        "name": "Belgium",
+        "count": 4,
+        "region": "Global North"
+      },
+      {
+        "name": "Germany",
+        "count": 3,
+        "region": "Global North"
+      },
+      {
+        "name": "Ireland",
+        "count": 2,
+        "region": "Global North"
+      },
+      {
+        "name": "Australia",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Brazil",
+        "count": 1,
+        "region": "Global South"
+      },
+      {
+        "name": "Canada",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Czechia",
+        "count": 1,
+        "region": "Global South"
+      },
+      {
+        "name": "France",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "International",
+        "count": 1,
+        "region": "International"
+      },
+      {
+        "name": "Italy",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "New Zealand",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "United Kingdom",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "United States",
+        "count": 1,
+        "region": "Global North"
+      }
+    ],
+    "citing_cases": [
+      {
+        "name": "Youth Verdict v. Waratah Coal",
+        "country": "Australia",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679",
+        "region": "Global North"
+      },
+      {
+        "name": "VZW Klimaatzaak v. Kingdom of Belgium & Others",
+        "country": "Belgium",
+        "year": 2026,
+        "url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42",
+        "region": "Global North"
+      },
+      {
+        "name": "PSB et al. v. Brazil (on Amazon Fund)",
+        "country": "Brazil",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-amazon-fund_f10a",
+        "region": "Global South"
+      },
+      {
+        "name": "Mathur, et al. v. His Majesty the King in Right of Ontario",
+        "country": "Canada",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/mathur-et-al-v-his-majesty-the-king-in-right-of-ontario_edc5",
+        "region": "Global North"
+      },
+      {
+        "name": "Klimatická žaloba ČR v. Czech Republic",
+        "country": "Czechia",
+        "year": 2026,
+        "url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0",
+        "region": "Global South"
+      },
+      {
+        "name": "Municipality of Grande-Synthe v. France",
+        "country": "France",
+        "year": 2026,
+        "url": "https://www.climatecasechart.com/document/municipality-of-grande-synthe-v-france_0472",
+        "region": "Global North"
+      },
+      {
+        "name": "Family Farmers and Greenpeace Germany v. Germany",
+        "country": "Germany",
+        "year": 2026,
+        "url": "https://www.climatecasechart.com/document/family-farmers-and-greenpeace-germany-v-germany_6d4d",
+        "region": "Global North"
+      },
+      {
+        "name": "Kaiser, et al. v. Volkswagen AG",
+        "country": "Germany",
+        "year": 2026,
+        "url": "https://www.climatecasechart.com/document/kaiser-et-al-v-volkswagen-ag_aa30",
+        "region": "Global North"
+      },
+      {
+        "name": "Neubauer, et al. v. Germany",
+        "country": "Germany",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/neubauer-et-al-v-germany_0a3e",
+        "region": "Global North"
+      },
+      {
+        "name": "Carême v. France",
+        "country": "International",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/careme-v-france_0b01",
+        "region": "International"
+      },
+      {
+        "name": "Friends of the Irish Environment v. Ireland",
+        "country": "Ireland",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-ireland_c37f",
+        "region": "Global North"
+      },
+      {
+        "name": "A Sud et al. v. Italy",
+        "country": "Italy",
+        "year": 2026,
+        "url": "https://www.climatecasechart.com/document/a-sud-et-al-v-italy_004c",
+        "region": "Global North"
+      },
+      {
+        "name": "Smith v. Attorney-General",
+        "country": "New Zealand",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/smith-v-attorney-general_82a8",
+        "region": "Global North"
+      },
+      {
+        "name": "R (oao Friends of the Earth) v. Secretary of State for Business Energy and Industrial Strategy",
+        "country": "United Kingdom",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/r-oao-friends-of-the-earth-v-secretary-of-state-for-business-energy-and-industrial-strategy_0458",
+        "region": "Global North"
+      },
+      {
+        "name": "In re Hawai‘i Electric Light Co.",
+        "country": "United States",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/in-re-hawaii-electric-light-co_ec95",
+        "region": "Global North"
+      }
+    ],
+    "holdings_slug": "case_shell",
+    "yearly_citations": [
+      {
+        "year": 2021,
+        "north": 9,
+        "south": 1,
+        "international": 1
+      },
+      {
+        "year": 2026,
+        "north": 6,
+        "south": 1,
+        "international": 0
+      }
+    ]
+  },
+  {
+    "id": "case_mass_v_epa",
+    "rank": 3,
+    "name": "Massachusetts v. EPA",
+    "origin_country": "United States",
+    "origin_region": "Global North",
+    "year": 2007,
+    "sabin_url": "https://climatecasechart.com/case/massachusetts-v-epa_f586/",
+    "color_token": "--case-3",
+    "total_citing_decisions": 18,
+    "total_jurisdictions": 8,
+    "jurisdictions": [
+      {
+        "name": "Brazil",
+        "count": 9,
+        "region": "Global South"
+      },
+      {
+        "name": "Czechia",
+        "count": 2,
+        "region": "Global South"
+      },
+      {
+        "name": "Netherlands",
+        "count": 2,
+        "region": "Global North"
+      },
+      {
+        "name": "Australia",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Belgium",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Canada",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "New Zealand",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Philippines",
+        "count": 1,
+        "region": "Global South"
+      }
+    ],
+    "citing_cases": [
+      {
+        "name": "Gloucester Resources Limited v. Minister for Planning",
+        "country": "Australia",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning-decision_800b",
+        "region": "Global North"
+      },
+      {
+        "name": "VZW Klimaatzaak v. Kingdom of Belgium & Others",
+        "country": "Belgium",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42",
+        "region": "Global North"
+      },
+      {
+        "name": "Federal Public Prosecutor’s Office v. Ana Paula Moura de Souza (Deforestation and climate damage in the PAE Antimary)",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-ana-paula-moura-de-souza-deforestation-and-climate-damage-in-the-pae-antimary_2c16",
+        "region": "Global South"
+      },
+      {
+        "name": "Federal Public Prosecutor’s Office v. Joel de Souza (Deforestation and climate damage in the PAE Antimary)",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-joel-de-souza-deforestation-and-climate-damage-in-the-pae-antimary_ea8b",
+        "region": "Global South"
+      },
+      {
+        "name": "Federal Public Prosecutor’s Office v. Jorginei Anjos Batista (Deforestation and climate damage in the Antimary PAE)",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-jorginei-anjos-batista-deforestation-and-climate-damage-in-the-antimary-pae_e6c8",
+        "region": "Global South"
+      },
+      {
+        "name": "Federal Public Prosecutor’s Office v. José Silva (Deforestation and climate damage in the Antimary PAE)",
+        "country": "Brazil",
+        "year": 2007,
+        "url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-jose-silva-deforestation-and-climate-damage-in-the-antimary-pae_caa5",
+        "region": "Global South"
+      },
+      {
+        "name": "Federal Public Prosecutor’s Office v. Loacir Maria da Conceição (Deforestation and climate damage in the Antimary PAE)",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-loacir-maria-da-conceicao-deforestation-and-climate-damage-in-the-antimary-pae_ef9c",
+        "region": "Global South"
+      },
+      {
+        "name": "IBAMA v. Dirceu Kruger (Illegal deforestation in the Amazon and climate damage)",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/ibama-v-dirceu-kruger-illegal-deforestation-in-the-amazon-and-climate-damage_f629",
+        "region": "Global South"
+      },
+      {
+        "name": "Institute of Amazonian Studies v. Brazil",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/institute-of-amazonian-studies-v-brazil_4826",
+        "region": "Global South"
+      },
+      {
+        "name": "Trans Mountain Pipeline ULC v. Mivasair",
+        "country": "Canada",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/trans-mountain-pipeline-ulc-v-mivasair_647d",
+        "region": "Global North"
+      },
+      {
+        "name": "Klimatická žaloba ČR v. Czech Republic",
+        "country": "Czechia",
+        "year": 2007,
+        "url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0",
+        "region": "Global South"
+      },
+      {
+        "name": "Urgenda Foundation v. State of the Netherlands",
+        "country": "Netherlands",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/urgenda-foundation-v-state-of-the-netherlands_3297",
+        "region": "Global North"
+      },
+      {
+        "name": "Thomson v. Minister for Climate Change Issues",
+        "country": "New Zealand",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/thomson-v-minister-for-climate-change-issues_35b8",
+        "region": "Global North"
+      },
+      {
+        "name": "In re Greenpeace Southeast Asia and Others",
+        "country": "Philippines",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others-judgment_8289",
+        "region": "Global South"
+      }
+    ],
+    "holdings_slug": "case_mass_v_epa",
+    "yearly_citations": [
+      {
+        "year": 2007,
+        "north": 0,
+        "south": 3,
+        "international": 0
+      }
+    ]
+  },
+  {
+    "id": "case_neubauer",
+    "rank": 4,
+    "name": "Neubauer, et al. v. Germany",
+    "origin_country": "Germany",
+    "origin_region": "Global North",
+    "year": 2021,
+    "sabin_url": "https://climatecasechart.com/case/neubauer-et-al-v-germany_0a3e/",
+    "color_token": "--case-4",
+    "total_citing_decisions": 16,
+    "total_jurisdictions": 9,
+    "jurisdictions": [
+      {
+        "name": "Brazil",
+        "count": 5,
+        "region": "Global South"
+      },
+      {
+        "name": "Belgium",
+        "count": 2,
+        "region": "Global North"
+      },
+      {
+        "name": "Czechia",
+        "count": 2,
+        "region": "Global South"
+      },
+      {
+        "name": "South Korea",
+        "count": 2,
+        "region": "Global North"
+      },
+      {
+        "name": "Argentina",
+        "count": 1,
+        "region": "Global South"
+      },
+      {
+        "name": "Australia",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "Austria",
+        "count": 1,
+        "region": "Global North"
+      },
+      {
+        "name": "International",
+        "count": 1,
+        "region": "International"
+      },
+      {
+        "name": "Italy",
+        "count": 1,
+        "region": "Global North"
+      }
+    ],
+    "citing_cases": [
+      {
+        "name": "Greenpeace Argentina et. al., v. Argentina et. al.",
+        "country": "Argentina",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0",
+        "region": "Global South"
+      },
+      {
+        "name": "Youth Verdict v. Waratah Coal",
+        "country": "Australia",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679",
+        "region": "Global North"
+      },
+      {
+        "name": "Children of Austria v. Austria",
+        "country": "Austria",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/children-of-austria-v-austria_5b44",
+        "region": "Global North"
+      },
+      {
+        "name": "VZW Klimaatzaak v. Kingdom of Belgium & Others",
+        "country": "Belgium",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42",
+        "region": "Global North"
+      },
+      {
+        "name": "ADO 54 (Amazon Deforestation)",
+        "country": "Brazil",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/ado-54-amazon-deforestation_bec3",
+        "region": "Global South"
+      },
+      {
+        "name": "ADPF 746 (Fires in the Pantanal and the Amazon Forest)",
+        "country": "Brazil",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/adpf-746-fires-in-the-pantanal-and-the-amazon-forest_5747",
+        "region": "Global South"
+      },
+      {
+        "name": "Instituto Preservar et. al. v. Copelmi Mineração Ltda. and IBAMA",
+        "country": "Brazil",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/instituto-preservar-et-al-v-copelmi-mineracao-ltda-and-ibama_99f9",
+        "region": "Global South"
+      },
+      {
+        "name": "PSB et al. v. Brazil (on Amazon Fund)",
+        "country": "Brazil",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-amazon-fund_f10a",
+        "region": "Global South"
+      },
+      {
+        "name": "PSB et al. v. Brazil (on deforestation and human rights)",
+        "country": "Brazil",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-deforestation-and-human-rights_d678",
+        "region": "Global South"
+      },
+      {
+        "name": "Klimatická žaloba ČR v. Czech Republic",
+        "country": "Czechia",
+        "year": 2020,
+        "url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0",
+        "region": "Global South"
+      },
+      {
+        "name": "Request for an advisory opinion on the scope of the state obligations for responding to the climate emergency",
+        "country": "International",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/request-for-an-advisory-opinion-on-the-scope-of-the-state-obligations-for-responding-to-the-climate-emergency_fbcd",
+        "region": "International"
+      },
+      {
+        "name": "Greenpeace Italy et al. v. ENI S.p.A., the Italian Ministry of Economy and Finance, and Cassa Depositi e Prestiti S.p.A.",
+        "country": "Italy",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/greenpeace-italy-et-al-v-eni-s-p-a-the-italian-ministry-of-economy-and-finance-and-cassa-depositi-e-prestiti-s-p-a-decision_c7d3",
+        "region": "Global North"
+      },
+      {
+        "name": "Do-Hyun Kim et al. v. South Korea",
+        "country": "South Korea",
+        "year": 2021,
+        "url": "https://www.climatecasechart.com/document/do-hyun-kim-et-al-v-south-korea_2dd5",
+        "region": "Global North"
+      },
+      {
+        "name": "Opinion of the National Human Rights Commission on the Constitutional Complaints on Constitutionality of Carbon Neutrality Act",
+        "country": "South Korea",
+        "year": 2020,
+        "url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-constitutional-complaints-on-constitutionality-of-carbon-neutrality-act_1cdf",
+        "region": "Global North"
+      }
+    ],
+    "holdings_slug": "case_neubauer",
+    "yearly_citations": [
+      {
+        "year": 2020,
+        "north": 1,
+        "south": 2,
+        "international": 0
+      },
+      {
+        "year": 2021,
+        "north": 5,
+        "south": 5,
+        "international": 1
+      }
+    ]
+  },
+  {
+    "id": "case_klimaseniorinnen",
+    "rank": 5,
+    "name": "Verein KlimaSeniorinnen Schweiz and Others v. Switzerland",
+    "origin_country": "International",
+    "origin_region": "International",
+    "year": 2024,
+    "sabin_url": "https://climatecasechart.com/case/verein-klimaseniorinnen-schweiz-and-others-v-switzerland_6852/",
+    "color_token": "--case-5",
+    "total_citing_decisions": 14,
+    "total_jurisdictions": 3,
+    "jurisdictions": [
+      {
+        "name": "Finland",
+        "count": 11,
+        "region": "Global North"
+      },
+      {
+        "name": "Netherlands",
+        "count": 2,
+        "region": "Global North"
+      },
+      {
+        "name": "Norway",
+        "count": 1,
+        "region": "Global North"
+      }
+    ],
+    "citing_cases": [
+      {
+        "name": "Finnish Association for Nature Conservation and Greenpeace v. Finland",
+        "country": "Finland",
+        "year": 2024,
+        "url": "https://www.climatecasechart.com/document/finnish-association-for-nature-conservation-and-greenpeace-v-finland_a20e",
+        "region": "Global North"
+      },
+      {
+        "name": "Finnish Association for Nature Conservation and others v Finland",
+        "country": "Finland",
+        "year": 2024,
+        "url": "https://www.climatecasechart.com/document/finnish-association-for-nature-conservation-and-others-v-finland_8508",
+        "region": "Global North"
+      },
+      {
+        "name": "Greenpeace Netherlands and 8 citizens of Bonaire v. The Netherlands",
+        "country": "Netherlands",
+        "year": 2024,
+        "url": "https://www.climatecasechart.com/document/greenpeace-netherlands-and-8-citizens-of-bonaire-v-the-netherlands_8731",
+        "region": "Global North"
+      },
+      {
+        "name": "Milieudefensie et al. v. Royal Dutch Shell plc.",
+        "country": "Netherlands",
+        "year": null,
+        "url": "https://www.climatecasechart.com/document/milieudefensie-et-al-v-royal-dutch-shell-plc_c3e4",
+        "region": "Global North"
+      },
+      {
+        "name": "Greenpeace Nordic and Nature & Youth v. Energy Ministry (The North Sea Fields Case)",
+        "country": "Norway",
+        "year": 2024,
+        "url": "https://www.climatecasechart.com/document/greenpeace-nordic-and-nature-youth-v-energy-ministry-the-north-sea-fields-case_52a4",
+        "region": "Global North"
+      }
+    ],
+    "holdings_slug": "case_klimaseniorinnen",
+    "yearly_citations": [
+      {
+        "year": 2024,
+        "north": 13,
+        "south": 0,
+        "international": 0
+      }
+    ]
+  }
+]

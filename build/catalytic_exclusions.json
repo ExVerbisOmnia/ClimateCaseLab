@@ -1,0 +1,9 @@
+{
+  "_comment": "Normalized cited-case names to exclude from the top-5 catalytic ranking. These are EU institutional / procedural cases that dominate the raw row counts but are not 'climate-jurisprudence catalytic' cases in the spec's sense. The build script does a case-insensitive substring match against the normalized cited-case name.",
+  "exclude_substrings": [
+    "commission v",
+    "parliament v",
+    "iberdrola and others",
+    "council v"
+  ]
+}

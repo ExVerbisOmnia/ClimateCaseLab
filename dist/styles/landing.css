@@ -1,0 +1,177 @@
+/* landing.css — Landing uppertab sections. */
+
+.landing-body { padding-top: var(--sp-12); padding-bottom: 0; }
+
+.landing-section {
+  scroll-margin-top: calc(var(--header-height) + var(--subtab-height) + var(--sp-4));
+  padding: var(--sp-12) 0 var(--sp-24);
+}
+
+.landing-eyebrow {
+  color: var(--text-muted);
+  margin-bottom: var(--sp-4);
+}
+.landing-eyebrow .mono {
+  font-size: var(--ts-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: inline-block;
+  position: relative;
+  padding-left: var(--sp-4);
+}
+.landing-eyebrow .mono::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  width: 12px; height: 1px;
+  background: var(--border-strong);
+}
+
+.landing-hero {
+  font-size: var(--ts-display);
+  margin: 0 0 var(--sp-6) 0;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.landing-lede {
+  font-size: 1.15rem;
+  color: var(--text);
+  max-width: 56ch;
+  margin-bottom: var(--sp-12);
+}
+
+.landing-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-16);
+}
+@media (max-width: 880px) {
+  .landing-tiles { grid-template-columns: 1fr; }
+}
+
+.landing-pullquote {
+  margin: var(--sp-16) 0 0;
+  padding: var(--sp-8) 0 var(--sp-8) var(--sp-6);
+  border-left: 2px solid var(--accent-warm);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: var(--text-strong);
+}
+.landing-pullquote p { margin: 0 0 var(--sp-4) 0; }
+.landing-pullquote cite {
+  display: block;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: var(--ts-small);
+  color: var(--text-muted);
+}
+
+/* Methodology --------------------------------------------------- */
+.methodology-prose p {
+  font-size: 1.05rem;
+  max-width: 64ch;
+  margin-bottom: var(--sp-6);
+}
+.methodology-prose p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.2em;
+  float: left;
+  line-height: 0.9;
+  margin-right: 8px;
+  margin-top: 4px;
+  color: var(--accent-cool);
+}
+
+.methodology-diagram {
+  margin: var(--sp-12) 0 var(--sp-6);
+  color: var(--text-muted);
+}
+.methodology-diagram svg { width: 100%; height: auto; }
+.methodology-caption {
+  font-size: var(--ts-small);
+  color: var(--text-muted);
+  margin-top: var(--sp-3);
+  max-width: 64ch;
+}
+.methodology-cta {
+  font-family: var(--font-mono);
+  font-size: var(--ts-small);
+  color: var(--text-muted);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+  border: 1px dashed var(--border-strong);
+  display: inline-block;
+}
+
+/* Collaboration ------------------------------------------------- */
+.collab-heading {
+  font-size: 1.85rem;
+}
+.collab-body, .collab-instructions {
+  max-width: 64ch;
+}
+
+.collab-mailto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-6);
+  background: var(--accent-cool);
+  color: var(--surface);
+  border-radius: var(--r-full);
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  box-shadow: var(--el-1);
+  transition: transform var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease);
+}
+[data-theme="dark"] .collab-mailto { color: var(--surface); }
+.collab-mailto:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--el-2);
+  background: color-mix(in srgb, var(--accent-cool) 88%, var(--text-strong));
+}
+.collab-mailto:focus-visible { outline-offset: 4px; }
+.collab-mailto .mailto-address {
+  font-size: var(--ts-small);
+  opacity: 0.85;
+  border-left: 1px solid color-mix(in srgb, var(--surface) 30%, transparent);
+  padding-left: var(--sp-3);
+}
+
+.cited-literature {
+  margin-top: var(--sp-12);
+  border-top: 1px solid var(--border);
+  padding-top: var(--sp-6);
+}
+.cited-literature h2 {
+  font-size: var(--ts-h2);
+  margin-bottom: var(--sp-6);
+}
+.cited-literature h3 {
+  font-family: var(--font-mono);
+  font-size: var(--ts-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-3);
+}
+.cited-literature ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cited-literature li {
+  font-size: var(--ts-small);
+  color: var(--text);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px dashed var(--border);
+}
+.cited-literature li:last-child { border-bottom: 0; }

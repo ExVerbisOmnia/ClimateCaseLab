@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Litigation Citation Map</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0f14;
+            --bg-secondary: #111820;
+            --bg-panel: #1a222d;
+            --text-primary: #e8edf3;
+            --text-secondary: #8b9aad;
+            --text-muted: #5a6978;
+            --north-primary: #d4a657;
+            --north-glow: rgba(212, 166, 87, 0.4);
+            --south-primary: #2dd4bf;
+            --south-glow: rgba(45, 212, 191, 0.4);
+            --accent-orange: #f97316;
+            --accent-purple: #8b5cf6;
+            --border-color: #2a3544;
+            --border-hover: #3d4f66;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            padding: 20px 32px;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, transparent 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .title-block h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .title-block .subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .legend-dot.north {
+            background: var(--north-primary);
+            box-shadow: 0 0 10px var(--north-glow);
+        }
+        
+        .legend-dot.south {
+            background: var(--south-primary);
+            box-shadow: 0 0 10px var(--south-glow);
+        }
+        
+        /* Main layout - three columns */
+        .main-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 380px;
+            height: calc(100vh - 80px);
+            padding: 0 24px 24px;
+            gap: 20px;
+        }
+        
+        /* Control Panel (left) */
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+        }
+        
+        .panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        
+        .panel-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 12px;
+        }
+        
+        /* Select dropdown */
+        .select-wrapper { position: relative; }
+        
+        .country-select {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.2s ease;
+        }
+        
+        .country-select:hover { border-color: var(--border-hover); }
+        
+        .country-select:focus {
+            outline: none;
+            border-color: var(--north-primary);
+            box-shadow: 0 0 0 3px var(--north-glow);
+        }
+        
+        .select-arrow {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+        
+        /* Direction toggle */
+        .direction-toggle {
+            display: flex;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            padding: 3px;
+            gap: 3px;
+        }
+        
+        .direction-btn {
+            flex: 1;
+            padding: 8px 10px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .direction-btn:hover { color: var(--text-primary); }
+        
+        .direction-btn.active {
+            background: #8b5cf6;
+            color: white;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+        }
+        
+        .direction-btn.active.outgoing {
+            background: #f97316;
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.4);
+        }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .stat-value.north { color: var(--north-primary); }
+        .stat-value.south { color: var(--south-primary); }
+        .stat-value.total { color: var(--accent-orange); }
+        
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+        
+        /* Citation list (countries) */
+        .citation-list {
+            max-height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .citation-list::-webkit-scrollbar { width: 5px; }
+        .citation-list::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 3px; }
+        .citation-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+        
+        .citation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            background: var(--bg-secondary);
+            border-radius: 5px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .citation-item:hover { background: rgba(212, 166, 87, 0.1); }
+        .citation-item.north { border-left-color: var(--north-primary); }
+        .citation-item.south { border-left-color: var(--south-primary); }
+        
+        .citation-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 30px 16px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        .empty-state svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+        
+        /* Map container (center) */
+        .map-container {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #map { width: 100%; height: 100%; }
+        
+        .country {
+            fill: var(--bg-secondary);
+            stroke: var(--border-color);
+            stroke-width: 0.5;
+            transition: fill 0.3s ease;
+        }
+        
+        .country:hover { fill: #2a3544; }
+        .country.highlighted { stroke: var(--text-primary); stroke-width: 1.5; }
+        .country.selected { fill: var(--accent-orange); stroke: var(--accent-orange); stroke-width: 2; }
+        .country.citing { fill: rgba(139, 92, 246, 0.6); }
+        .country.cited { fill: rgba(249, 115, 22, 0.6); }
+        
+        .flow-arc {
+            fill: none;
+            stroke-linecap: round;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .flow-arc:hover { opacity: 1; }
+        .flow-arc.incoming { stroke: #8b5cf6; }
+        .flow-arc.outgoing { stroke: #f97316; }
+        
+        .tooltip {
+            position: absolute;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 0.8rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+            max-width: 250px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .tooltip.visible { opacity: 1; }
+        .tooltip-title { font-weight: 600; margin-bottom: 3px; }
+        .tooltip-region { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px; }
+        .tooltip-stat { font-family: 'Space Mono', monospace; }
+        
+        .zoom-controls {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            z-index: 100;
+        }
+        
+        .zoom-btn {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .zoom-btn:hover { background: var(--bg-secondary); border-color: var(--border-hover); }
+        
+        /* Cases Panel (right) */
+        .cases-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow: hidden;
+        }
+        
+        .cases-header {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        
+        .cases-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .cases-header .case-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* Search/Filter */
+        .case-search {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        
+        .case-search::placeholder { color: var(--text-muted); }
+        .case-search:focus { outline: none; border-color: var(--north-primary); }
+        
+        /* Cases list */
+        .cases-list-container {
+            flex: 1;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cases-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .cases-list::-webkit-scrollbar { width: 6px; }
+        .cases-list::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 3px; }
+        .cases-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+        
+        .case-card {
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            padding: 12px;
+            border-left: 3px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        
+        .case-card:hover {
+            border-left-color: var(--accent-orange);
+            background: rgba(249, 115, 22, 0.05);
+        }
+        
+        .case-card.north { border-left-color: var(--north-primary); }
+        .case-card.south { border-left-color: var(--south-primary); }
+        
+        .case-source {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+        
+        .case-source a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .case-source a:hover { color: var(--accent-orange); }
+        
+        .case-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        
+        .case-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+        
+        .case-tag.country { background: rgba(212, 166, 87, 0.2); color: var(--north-primary); }
+        .case-tag.country.south { background: rgba(45, 212, 191, 0.2); color: var(--south-primary); }
+        .case-tag.year { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
+        
+        .case-citation {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding-left: 10px;
+            border-left: 2px solid var(--border-color);
+            margin-top: 6px;
+        }
+        
+        .case-citation-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+        
+        .cases-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: var(--text-muted);
+            padding: 40px 20px;
+        }
+        
+        .cases-empty svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            opacity: 0.4;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .main-container {
+                grid-template-columns: 250px 1fr 320px;
+            }
+        }
+        
+        @media (max-width: 1100px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 400px auto;
+            }
+            
+            .control-panel {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .control-panel .panel {
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            .cases-list-container {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="title-block">
+            <h1>Climate Litigation Citation Map</h1>
+            <p class="subtitle">Transnational Citation Flows in Climate Case Law</p>
+        </div>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-dot north"></span>
+                <span>Global North</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot south"></span>
+                <span>Global South</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="main-container">
+        <!-- Left: Controls -->
+        <aside class="control-panel">
+            <div class="panel">
+                <h2 class="panel-title">Select Country</h2>
+                <div class="select-wrapper">
+                    <select id="country-select" class="country-select">
+                        <option value="">— Select a country —</option>
+                    </select>
+                    <span class="select-arrow">▼</span>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2 class="panel-title">Citation Direction</h2>
+                <div class="direction-toggle">
+                    <button class="direction-btn active" data-direction="incoming">
+                        ← Cited by
+                    </button>
+                    <button class="direction-btn outgoing" data-direction="outgoing">
+                        Cites →
+                    </button>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2 class="panel-title">Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value total" id="stat-total">0</div>
+                        <div class="stat-label">Citations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-countries">0</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value north" id="stat-north">0</div>
+                        <div class="stat-label">North</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value south" id="stat-south">0</div>
+                        <div class="stat-label">South</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel" style="flex: 1;">
+                <h2 class="panel-title" id="list-title">Connected Countries</h2>
+                <div class="citation-list" id="citation-list">
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                        </svg>
+                        <p>Select a country</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Center: Map -->
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="tooltip" id="tooltip"></div>
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoom-in">+</button>
+                <button class="zoom-btn" id="zoom-out">−</button>
+                <button class="zoom-btn" id="zoom-reset">⟲</button>
+            </div>
+        </div>
+        
+        <!-- Right: Cases -->
+        <aside class="cases-panel">
+            <div class="cases-header">
+                <h2 id="cases-title">Cases</h2>
+                <div class="case-count" id="cases-count">Select a country to view cases</div>
+                <input type="text" class="case-search" id="case-search" placeholder="Filter cases..." disabled>
+            </div>
+            
+            <div class="cases-list-container">
+                <div class="cases-list" id="cases-list">
+                    <div class="cases-empty">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <p>Select a country to view<br>detailed case information</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+    
+    <script>
+        // Citation data with case details
+        const citationData = {"flows": [{"source": "Argentina", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "count": 2}, {"source": "Argentina", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "count": 1}, {"source": "Argentina", "source_region": "Global South", "target": "Norway", "target_region": "Global North", "count": 1}, {"source": "Argentina", "source_region": "Global South", "target": "South Africa", "target_region": "Global South", "count": 1}, {"source": "Argentina", "source_region": "Global South", "target": "United Kingdom", "target_region": "Global North", "count": 1}, {"source": "Argentina", "source_region": "Global South", "target": "United States", "target_region": "Global North", "count": 1}, {"source": "Australia", "source_region": "Global North", "target": "Belgium", "target_region": "Global North", "count": 3}, {"source": "Australia", "source_region": "Global North", "target": "Canada", "target_region": "Global North", "count": 1}, {"source": "Australia", "source_region": "Global North", "target": "Colombia", "target_region": "Global South", "count": 1}, {"source": "Australia", "source_region": "Global North", "target": "France", "target_region": "Global North", "count": 2}, {"source": "Australia", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "count": 1}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 10}, {"source": "Australia", "source_region": "Global North", "target": "New Zealand", "target_region": "Global North", "count": 2}, {"source": "Australia", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "count": 2}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 7}, {"source": "Austria", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "count": 1}, {"source": "Austria", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 1}, {"source": "Belgium", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "count": 1}, {"source": "Belgium", "source_region": "Global North", "target": "France", "target_region": "Global North", "count": 1}, {"source": "Belgium", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "count": 4}, {"source": "Belgium", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 2}, {"source": "Belgium", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "count": 2}, {"source": "Belgium", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 4}, {"source": "Brazil", "source_region": "Global South", "target": "Chile", "target_region": "Global South", "count": 1}, {"source": "Brazil", "source_region": "Global South", "target": "France", "target_region": "Global North", "count": 3}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "count": 8}, {"source": "Brazil", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "count": 3}, {"source": "Brazil", "source_region": "Global South", "target": "Pakistan", "target_region": "Global South", "count": 2}, {"source": "Brazil", "source_region": "Global South", "target": "South Africa", "target_region": "Global South", "count": 1}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "count": 9}, {"source": "Canada", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "count": 2}, {"source": "Canada", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "count": 1}, {"source": "Canada", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 4}, {"source": "Canada", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "count": 1}, {"source": "Canada", "source_region": "Global North", "target": "South Africa", "target_region": "Global South", "count": 1}, {"source": "Canada", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "count": 1}, {"source": "Canada", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 4}, {"source": "Czechia", "source_region": "Global North", "target": "Colombia", "target_region": "Global South", "count": 2}, {"source": "Czechia", "source_region": "Global North", "target": "France", "target_region": "Global North", "count": 1}, {"source": "Czechia", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "count": 3}, {"source": "Czechia", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "count": 2}, {"source": "Czechia", "source_region": "Global North", "target": "Nepal", "target_region": "Global South", "count": 1}, {"source": "Czechia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 2}, {"source": "Czechia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 1}, {"source": "France", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "count": 1}, {"source": "France", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 1}, {"source": "France", "source_region": "Global North", "target": "Norway", "target_region": "Global North", "count": 1}, {"source": "France", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "count": 1}, {"source": "Germany", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "count": 1}, {"source": "Germany", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 3}, {"source": "India", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "count": 1}, {"source": "Ireland", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 2}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "count": 12}, {"source": "Italy", "source_region": "Global North", "target": "France", "target_region": "Global North", "count": 1}, {"source": "Italy", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "count": 1}, {"source": "Italy", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 2}, {"source": "Kenya", "source_region": "Global South", "target": "South Africa", "target_region": "Global South", "count": 2}, {"source": "Kenya", "source_region": "Global South", "target": "United States", "target_region": "Global North", "count": 1}, {"source": "Luxembourg", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 1}, {"source": "Netherlands", "source_region": "Global North", "target": "Brazil", "target_region": "Global South", "count": 1}, {"source": "Netherlands", "source_region": "Global North", "target": "Colombia", "target_region": "Global South", "count": 1}, {"source": "Netherlands", "source_region": "Global North", "target": "India", "target_region": "Global South", "count": 1}, {"source": "Netherlands", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "count": 3}, {"source": "Netherlands", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 2}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "count": 10}, {"source": "New Zealand", "source_region": "Global North", "target": "Canada", "target_region": "Global North", "count": 2}, {"source": "New Zealand", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "count": 2}, {"source": "New Zealand", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "count": 1}, {"source": "New Zealand", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 4}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "count": 13}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 7}, {"source": "Norway", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 1}, {"source": "Norway", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "count": 1}, {"source": "Panama", "source_region": "Global South", "target": "Colombia", "target_region": "Global South", "count": 1}, {"source": "Papua New Guinea", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "count": 1}, {"source": "Papua New Guinea", "source_region": "Global South", "target": "Pakistan", "target_region": "Global South", "count": 1}, {"source": "Philippines", "source_region": "Global South", "target": "Australia", "target_region": "Global North", "count": 1}, {"source": "Philippines", "source_region": "Global South", "target": "Colombia", "target_region": "Global South", "count": 1}, {"source": "Philippines", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "count": 1}, {"source": "Philippines", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "count": 2}, {"source": "Philippines", "source_region": "Global South", "target": "Pakistan", "target_region": "Global South", "count": 1}, {"source": "Philippines", "source_region": "Global South", "target": "United States", "target_region": "Global North", "count": 4}, {"source": "Romania", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "count": 1}, {"source": "South Africa", "source_region": "Global South", "target": "Namibia", "target_region": "Global South", "count": 1}, {"source": "South Africa", "source_region": "Global South", "target": "United States", "target_region": "Global North", "count": 1}, {"source": "South Korea", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "count": 1}, {"source": "South Korea", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "count": 6}, {"source": "South Korea", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 3}, {"source": "United Kingdom", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "count": 3}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "count": 7}, {"source": "United Kingdom", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 2}, {"source": "United Kingdom", "source_region": "Global North", "target": "Norway", "target_region": "Global North", "count": 1}, {"source": "United Kingdom", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 2}, {"source": "United States", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "count": 1}, {"source": "United States", "source_region": "Global North", "target": "Canada", "target_region": "Global North", "count": 1}, {"source": "United States", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "count": 2}, {"source": "United States", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "count": 1}, {"source": "United States", "source_region": "Global North", "target": "United States", "target_region": "Global North", "count": 1}], "countries": [{"country": "Argentina", "region": "Global South", "lon": -64, "lat": -34}, {"country": "Australia", "region": "Global North", "lon": 133, "lat": -25}, {"country": "Austria", "region": "Global North", "lon": 14, "lat": 47.5}, {"country": "Belgium", "region": "Global North", "lon": 4.5, "lat": 50.5}, {"country": "Brazil", "region": "Global South", "lon": -52, "lat": -14}, {"country": "Canada", "region": "Global North", "lon": -106, "lat": 56}, {"country": "Chile", "region": "Global South", "lon": -71, "lat": -33}, {"country": "Colombia", "region": "Global South", "lon": -72, "lat": 4}, {"country": "Czechia", "region": "Global North", "lon": 15, "lat": 49.8}, {"country": "France", "region": "Global North", "lon": 2.2, "lat": 46.2}, {"country": "Germany", "region": "Global North", "lon": 10, "lat": 51}, {"country": "India", "region": "Global South", "lon": 78, "lat": 21}, {"country": "Ireland", "region": "Global North", "lon": -8, "lat": 53.5}, {"country": "Italy", "region": "Global North", "lon": 12.5, "lat": 42.5}, {"country": "Kenya", "region": "Global South", "lon": 38, "lat": 1}, {"country": "Luxembourg", "region": "Global North", "lon": 6.1, "lat": 49.8}, {"country": "Namibia", "region": "Global South", "lon": 18.5, "lat": -22}, {"country": "Nepal", "region": "Global South", "lon": 84, "lat": 28}, {"country": "Netherlands", "region": "Global North", "lon": 5.3, "lat": 52.1}, {"country": "New Zealand", "region": "Global North", "lon": 174, "lat": -41}, {"country": "Norway", "region": "Global North", "lon": 9, "lat": 61}, {"country": "Pakistan", "region": "Global South", "lon": 69, "lat": 30}, {"country": "Panama", "region": "Global South", "lon": -80, "lat": 9}, {"country": "Papua New Guinea", "region": "Global South", "lon": 145, "lat": -6}, {"country": "Philippines", "region": "Global South", "lon": 122, "lat": 12}, {"country": "Romania", "region": "Global North", "lon": 25, "lat": 46}, {"country": "South Africa", "region": "Global South", "lon": 24, "lat": -29}, {"country": "South Korea", "region": "Global North", "lon": 128, "lat": 36}, {"country": "United Kingdom", "region": "Global North", "lon": -2, "lat": 54}, {"country": "United States", "region": "Global North", "lon": -98, "lat": 38}], "case_details": [{"source": "Argentina", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "Greenpeace Argentina et. al., v. Argentina et. al.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0", "source_case_year": null, "cited_case_name": "Greenpeace e.V. and Germanwatch e.V. v. Germany (Challenge on amended Federal Climate Protection Act) (2024)", "cited_year": 2024}, {"source": "Argentina", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "Greenpeace Argentina et. al., v. Argentina et. al.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Argentina", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Greenpeace Argentina et. al., v. Argentina et. al.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Argentina", "source_region": "Global South", "target": "Norway", "target_region": "Global North", "source_case_name": "Greenpeace Argentina et. al., v. Argentina et. al.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0", "source_case_year": null, "cited_case_name": "Greenpeace Nordic and Nature & Youth v. Energy Ministry (The North Sea Fields Case)", "cited_year": 2020}, {"source": "Argentina", "source_region": "Global South", "target": "South Africa", "target_region": "Global South", "source_case_name": "Greenpeace Argentina et. al., v. Argentina et. al.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0", "source_case_year": null, "cited_case_name": "Earthlife Africa and groundWork v. The Department of Forestry, Fisheries and the Environment of the Republic of South Africa", "cited_year": null}, {"source": "Argentina", "source_region": "Global South", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Greenpeace Argentina et. al., v. Argentina et. al.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0", "source_case_year": null, "cited_case_name": "Friends of the Earth and Others v. the United Kingdom (2025)", "cited_year": 2008}, {"source": "Argentina", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Greenpeace Argentina et. al., v. Argentina et. al.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-argentina-et-al-v-argentina-et-al_31a0", "source_case_year": null, "cited_case_name": "Juliana Youth v. United States of America (Jóvenes ex Juliana v. Estados Unidos de América)", "cited_year": 2015}, {"source": "Australia", "source_region": "Global North", "target": "Belgium", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "VZW Klimaatzaak v Kingdom of Belgium & Others", "cited_year": 2021}, {"source": "Australia", "source_region": "Global North", "target": "Belgium", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "VZW Klimaatzaak v Kingdom of Belgium & Others [2021] 2015/4585/A", "cited_year": 2021}, {"source": "Australia", "source_region": "Global North", "target": "Belgium", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "VZW Klimaatzaak v Kingdom of Belgium & Others [2023] 2021/AR/15gs 2022/AR/737 2022/AR/891", "cited_year": 2023}, {"source": "Australia", "source_region": "Global North", "target": "Canada", "target_region": "Global North", "source_case_name": "Mullaley Gas and Pipeline Accord Inc v Santos NSW (Eastern) Pty Ltd", "source_case_url": "https://www.climatecasechart.com/document/mullaley-gas-and-pipeline-accord-inc-v-santos-nsw-eastern-pty-ltd_f029", "source_case_year": null, "cited_case_name": "Reference re Greenhouse Gas Pollution Pricing Act", "cited_year": null}, {"source": "Australia", "source_region": "Global North", "target": "Colombia", "target_region": "Global South", "source_case_name": "Youth Verdict v. Waratah Coal", "source_case_url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679", "source_case_year": null, "cited_case_name": "Future Generations v Ministry of the Environment", "cited_year": null}, {"source": "Australia", "source_region": "Global North", "target": "France", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "Notre Affaire à Tous v France", "cited_year": 2021}, {"source": "Australia", "source_region": "Global North", "target": "France", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "Notre Affaire à Tous v France [2021] No 1904967, 1904968, 1904972, 1904976/4-1", "cited_year": 2021}, {"source": "Australia", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Youth Verdict v. Waratah Coal", "source_case_url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Complaint over Shell’s net zero by 2050 claims", "source_case_url": "https://www.climatecasechart.com/document/complaint-over-shells-net-zero-by-2050-claims_1e80", "source_case_year": null, "cited_case_name": "Milieudefensie et al. v. Royal Dutch Shell plc.", "cited_year": 2021}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "Milieudefensie v Royal Dutch Shell", "cited_year": null}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Youth Verdict v. Waratah Coal", "source_case_url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": 2021}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Youth Verdict v. Waratah Coal", "source_case_url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679", "source_case_year": null, "cited_case_name": "State of the Netherlands (Ministry of Economic Affairs and Climate Policy) v Urgenda Foundation", "cited_year": 2019}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Youth Verdict v. Waratah Coal", "source_case_url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679", "source_case_year": null, "cited_case_name": "State of the Netherlands (Ministry of Infrastructure and the Environment) v Urgenda Foundation", "cited_year": null}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning_745d", "source_case_year": null, "cited_case_name": "The State of the Netherlands v Urgenda Foundation", "cited_year": 2018}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning_745d", "source_case_year": null, "cited_case_name": "Urgenda Foundation v The State of the Netherlands", "cited_year": 2015}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "Urgenda Foundation v the State of the Netherlands", "cited_year": 2015}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Pabai Pabai and Guy Paul Kabai v. Commonwealth of Australia", "source_case_url": "https://www.climatecasechart.com/document/pabai-pabai-and-guy-paul-kabai-v-commonwealth-of-australia_2b10", "source_case_year": null, "cited_case_name": "Urgenda Foundation v the State of the Netherlands (2015) ECLI:NL:RBDHA:20155555:7196", "cited_year": 2015}, {"source": "Australia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Complaint over Ampol’s carbon-neutral fuel claims", "source_case_url": "https://www.climatecasechart.com/document/complaint-over-ampols-carbon-neutral-fuel-claims_9862", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands (2015)", "cited_year": 2015}, {"source": "Australia", "source_region": "Global North", "target": "New Zealand", "target_region": "Global North", "source_case_name": "Taralga Landscape Guardians Inc. v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/taralga-landscape-guardians-inc-v-minister-for-planning_9109", "source_case_year": null, "cited_case_name": "Genesis Power Ltd v Franklin District Council", "cited_year": 2005}, {"source": "Australia", "source_region": "Global North", "target": "New Zealand", "target_region": "Global North", "source_case_name": "Sharma and others v. Minister for the Environment", "source_case_url": "https://www.climatecasechart.com/document/sharma-and-others-v-minister-for-the-environment_a41d", "source_case_year": null, "cited_case_name": "Smith v Fonterra Co-operative Group Limited [2021] NZCA 552", "cited_year": null}, {"source": "Australia", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Complaint over Ampol’s carbon-neutral fuel claims", "source_case_url": "https://www.climatecasechart.com/document/complaint-over-ampols-carbon-neutral-fuel-claims_9862", "source_case_year": null, "cited_case_name": "ASA Ruling on Shell UK Ltd (following a complaint by Adfree Cities) (2023)", "cited_year": 2023}, {"source": "Australia", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "EH v Queensland Police Service; GS v Queensland Police Service", "source_case_url": "https://www.climatecasechart.com/document/eh-v-queensland-police-service-gs-v-queensland-police-service_8909", "source_case_year": null, "cited_case_name": "R v Roberts", "cited_year": 2018}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning_745d", "source_case_year": null, "cited_case_name": "Border Power Plant Working Group v Department of Energy", "cited_year": 2003}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning_745d", "source_case_year": null, "cited_case_name": "Mid States Coalition for Progress v Surface Transportation Board", "cited_year": 2003}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning_745d", "source_case_year": null, "cited_case_name": "San Juan Citizens Alliance v United States Bureau of Land Management", "cited_year": 2018}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning_745d", "source_case_year": null, "cited_case_name": "Sierra Club v Federal Energy Regulatory Commission", "cited_year": 2017}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning_745d", "source_case_year": null, "cited_case_name": "WildEarth Guardians v US Bureau of Land Management", "cited_year": 2017}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Youth Verdict v. Waratah Coal", "source_case_url": "https://www.climatecasechart.com/document/youth-verdict-v-waratah-coal_7679", "source_case_year": null, "cited_case_name": "WildEarth Guardians v. U.S. Bureau of Land Management", "cited_year": 2020}, {"source": "Austria", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Children of Austria v. Austria", "source_case_url": "https://www.climatecasechart.com/document/children-of-austria-v-austria_5b44", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Belgium", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Gloucester Resources Limited v. Minister for Planning", "cited_year": null}, {"source": "Belgium", "source_region": "Global North", "target": "France", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "The Case of the Century 2025: Greenpeace France, Notre affaire à tous et Oxfam vs France (2025)", "cited_year": 2021}, {"source": "Belgium", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Greenpeace e.V. and Germanwatch e.V. v. Germany (Challenge on amended Federal Climate Protection Act)", "cited_year": 2024}, {"source": "Belgium", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Neubauer", "cited_year": 2021}, {"source": "Belgium", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Neubauer v. Germany", "cited_year": null}, {"source": "Belgium", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Belgium", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands (2026)", "cited_year": 2026}, {"source": "Belgium", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Belgium", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Ashgar Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Belgium", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Belgium", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "In re Juliana", "cited_year": 2015}, {"source": "Belgium", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Juliana Youth v. United States of America", "cited_year": 2015}, {"source": "Belgium", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Juliana v. United States", "cited_year": 2015}, {"source": "Belgium", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "VZW Klimaatzaak v. Kingdom of Belgium & Others", "source_case_url": "https://www.climatecasechart.com/document/vzw-klimaatzaak-v-kingdom-of-belgium-others_da42", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "Chile", "target_region": "Global South", "source_case_name": "ADO 54 (Amazon Deforestation)", "source_case_url": "https://www.climatecasechart.com/document/ado-54-amazon-deforestation_bec3", "source_case_year": null, "cited_case_name": "Climate Justice Case (2025)", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "ADO 54 (Amazon Deforestation)", "source_case_url": "https://www.climatecasechart.com/document/ado-54-amazon-deforestation_bec3", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany (2020)", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "France", "target_region": "Global North", "source_case_name": "PSB et al. v. Brazil (on deforestation and human rights)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-deforestation-and-human-rights_d678", "source_case_year": null, "cited_case_name": "Notre Affaire à Tous et autres v. France", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "France", "target_region": "Global North", "source_case_name": "ADO 54 (Amazon Deforestation)", "source_case_url": "https://www.climatecasechart.com/document/ado-54-amazon-deforestation_bec3", "source_case_year": null, "cited_case_name": "The Case of the Century 2025: Greenpeace France, Notre affaire à tous et Oxfam vs France", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "France", "target_region": "Global North", "source_case_name": "PSB et al. v. Brazil (on deforestation and human rights)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-deforestation-and-human-rights_d678", "source_case_year": null, "cited_case_name": "The Case of the Century 2025: Greenpeace France, Notre affaire à tous et Oxfam vs France", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "PSB et al. v. Brazil (on Climate Fund)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-climate-fund_890b", "source_case_year": null, "cited_case_name": "Neubauer and Others v. Germany", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "PSB et al. v. Brazil (on Climate Fund)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-climate-fund_890b", "source_case_year": null, "cited_case_name": "Neubauer et al. v. Germany", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "ADO 54 (Amazon Deforestation)", "source_case_url": "https://www.climatecasechart.com/document/ado-54-amazon-deforestation_bec3", "source_case_year": null, "cited_case_name": "Neubauer et al. v. Germany", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "PSB et al. v. Brazil (on Amazon Fund)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-amazon-fund_f10a", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "Instituto Preservar et. al. v. Copelmi Mineração Ltda. and IBAMA", "source_case_url": "https://www.climatecasechart.com/document/instituto-preservar-et-al-v-copelmi-mineracao-ltda-and-ibama_99f9", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "ADPF 746 (Fires in the Pantanal and the Amazon Forest)", "source_case_url": "https://www.climatecasechart.com/document/adpf-746-fires-in-the-pantanal-and-the-amazon-forest_5747", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "PSB et al. v. Brazil (on deforestation and human rights)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-deforestation-and-human-rights_d678", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "PSB et al. v. Brazil (on Amazon Fund)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-amazon-fund_f10a", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": 2021}, {"source": "Brazil", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Institute of Amazonian Studies v. Brazil", "source_case_url": "https://www.climatecasechart.com/document/institute-of-amazonian-studies-v-brazil_4826", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Instituto Preservar et. al. v. Copelmi Mineração Ltda. and IBAMA", "source_case_url": "https://www.climatecasechart.com/document/instituto-preservar-et-al-v-copelmi-mineracao-ltda-and-ibama_99f9", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "Pakistan", "target_region": "Global South", "source_case_name": "PSB et al. v. Brazil (on Amazon Fund)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-amazon-fund_f10a", "source_case_year": null, "cited_case_name": "Ashgar Leghari v. Federation Of Pakistan", "cited_year": 2015}, {"source": "Brazil", "source_region": "Global South", "target": "Pakistan", "target_region": "Global South", "source_case_name": "Institute of Amazonian Studies v. Brazil", "source_case_url": "https://www.climatecasechart.com/document/institute-of-amazonian-studies-v-brazil_4826", "source_case_year": null, "cited_case_name": "Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Brazil", "source_region": "Global South", "target": "South Africa", "target_region": "Global South", "source_case_name": "PSB et al. v. Brazil (on Amazon Fund)", "source_case_url": "https://www.climatecasechart.com/document/psb-et-al-v-brazil-on-amazon-fund_f10a", "source_case_year": null, "cited_case_name": "Earthlife Africa and groundWork v. The Department of Forestry, Fisheries and the Environment of the Republic of South Africa", "cited_year": 2024}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Instituto Preservar et. al. v. Copelmi Mineração Ltda. and IBAMA", "source_case_url": "https://www.climatecasechart.com/document/instituto-preservar-et-al-v-copelmi-mineracao-ltda-and-ibama_99f9", "source_case_year": null, "cited_case_name": "Juliana Youth v. United States of America", "cited_year": 2015}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Instituto Preservar et. al. v. Copelmi Mineração Ltda. and IBAMA", "source_case_url": "https://www.climatecasechart.com/document/instituto-preservar-et-al-v-copelmi-mineracao-ltda-and-ibama_99f9", "source_case_year": null, "cited_case_name": "Juliana v. United States", "cited_year": 2015}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Federal Public Prosecutor’s Office v. Ana Paula Moura de Souza (Deforestation and climate damage in the PAE Antimary)", "source_case_url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-ana-paula-moura-de-souza-deforestation-and-climate-damage-in-the-pae-antimary_2c16", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Federal Public Prosecutor’s Office v. Joel de Souza (Deforestation and climate damage in the PAE Antimary)", "source_case_url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-joel-de-souza-deforestation-and-climate-damage-in-the-pae-antimary_ea8b", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Federal Public Prosecutor’s Office v. Jorginei Anjos Batista (Deforestation and climate damage in the Antimary PAE)", "source_case_url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-jorginei-anjos-batista-deforestation-and-climate-damage-in-the-antimary-pae_e6c8", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Federal Public Prosecutor’s Office v. José Silva (Deforestation and climate damage in the Antimary PAE)", "source_case_url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-jose-silva-deforestation-and-climate-damage-in-the-antimary-pae_caa5", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": 2007}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Federal Public Prosecutor’s Office v. Loacir Maria da Conceição (Deforestation and climate damage in the Antimary PAE)", "source_case_url": "https://www.climatecasechart.com/document/federal-public-prosecutors-office-v-loacir-maria-da-conceicao-deforestation-and-climate-damage-in-the-antimary-pae_ef9c", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "IBAMA v. Dirceu Kruger (Illegal deforestation in the Amazon and climate damage)", "source_case_url": "https://www.climatecasechart.com/document/ibama-v-dirceu-kruger-illegal-deforestation-in-the-amazon-and-climate-damage_f629", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Brazil", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Institute of Amazonian Studies v. Brazil", "source_case_url": "https://www.climatecasechart.com/document/institute-of-amazonian-studies-v-brazil_4826", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Canada", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Mathur, et al. v. His Majesty the King in Right of Ontario", "source_case_url": "https://www.climatecasechart.com/document/mathur-et-al-v-his-majesty-the-king-in-right-of-ontario_edc5", "source_case_year": null, "cited_case_name": "Bowen Basin Coal Pty Ltd v Environmental Advocacy in Central Queensland Inc & Anor", "cited_year": 2025}, {"source": "Canada", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Saskatchewan et al. v. Canada re Greenhouse Gas Pollution Pricing Act", "source_case_url": "https://www.climatecasechart.com/document/saskatchewan-et-al-v-canada-re-greenhouse-gas-pollution-pricing-act_511c", "source_case_year": null, "cited_case_name": "Gloucester Resources Limited v. Minister for Planning", "cited_year": null}, {"source": "Canada", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Sierra Club of British Columbia Foundation v. Minister of Environment and Climate Change Strategy", "source_case_url": "https://www.climatecasechart.com/document/sierra-club-of-british-columbia-foundation-v-minister-of-environment-and-climate-change-strategy_7709", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. The Government of Ireland & Ors", "cited_year": 2020}, {"source": "Canada", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Mathur, et al. v. His Majesty the King in Right of Ontario", "source_case_url": "https://www.climatecasechart.com/document/mathur-et-al-v-his-majesty-the-king-in-right-of-ontario_edc5", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": 2021}, {"source": "Canada", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Mathur, et al. v. His Majesty the King in Right of Ontario", "source_case_url": "https://www.climatecasechart.com/document/mathur-et-al-v-his-majesty-the-king-in-right-of-ontario_edc5", "source_case_year": null, "cited_case_name": "Stichting Urgenda v. The State of the Netherlands", "cited_year": 2015}, {"source": "Canada", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Trans Mountain Pipeline ULC v. Mivasair", "source_case_url": "https://www.climatecasechart.com/document/trans-mountain-pipeline-ulc-v-mivasair_647d", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Canada", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Mathur, et al. v. His Majesty the King in Right of Ontario", "source_case_url": "https://www.climatecasechart.com/document/mathur-et-al-v-his-majesty-the-king-in-right-of-ontario_edc5", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Canada", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "source_case_name": "Trans Mountain Pipeline ULC v. Mivasair", "source_case_url": "https://www.climatecasechart.com/document/trans-mountain-pipeline-ulc-v-mivasair_647d", "source_case_year": null, "cited_case_name": "Ashgar Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Canada", "source_region": "Global North", "target": "South Africa", "target_region": "Global South", "source_case_name": "Highlands District Community Association v. British Columbia (Attorney General)", "source_case_url": "https://www.climatecasechart.com/document/highlands-district-community-association-v-british-columbia-attorney-general_d10a", "source_case_year": null, "cited_case_name": "Earthlife Africa Johannesburg v. Minister of Environmental Affairs", "cited_year": 2017}, {"source": "Canada", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Sierra Club of British Columbia Foundation v. Minister of Environment and Climate Change Strategy", "source_case_url": "https://www.climatecasechart.com/document/sierra-club-of-british-columbia-foundation-v-minister-of-environment-and-climate-change-strategy_7709", "source_case_year": null, "cited_case_name": "Friends of the Earth Ltd & Ors, R (On the Application Of) v. Secretary of State for Business, Energy and Industrial Strategy", "cited_year": 2022}, {"source": "Canada", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Trans Mountain Pipeline ULC v. Mivasair", "source_case_url": "https://www.climatecasechart.com/document/trans-mountain-pipeline-ulc-v-mivasair_647d", "source_case_year": null, "cited_case_name": "Juliana v. United States", "cited_year": 2015}, {"source": "Canada", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Trans Mountain Pipeline ULC v. Mivasair", "source_case_url": "https://www.climatecasechart.com/document/trans-mountain-pipeline-ulc-v-mivasair_647d", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Canada", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Sierra Club Canada Foundation et al. v. Minister of Environment and Climate Change Canada et al.", "source_case_url": "https://www.climatecasechart.com/document/sierra-club-canada-foundation-et-al-v-minister-of-environment-and-climate-change-canada-et-al_a90a", "source_case_year": null, "cited_case_name": "Sierra Club v. Federal Energy Regulatory Commission", "cited_year": null}, {"source": "Canada", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Trans Mountain Pipeline ULC v. Mivasair", "source_case_url": "https://www.climatecasechart.com/document/trans-mountain-pipeline-ulc-v-mivasair_647d", "source_case_year": null, "cited_case_name": "Washington v. Brockway", "cited_year": 2018}, {"source": "Czechia", "source_region": "Global North", "target": "Colombia", "target_region": "Global South", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. Government of Ireland (2025)", "cited_year": null}, {"source": "Czechia", "source_region": "Global North", "target": "Colombia", "target_region": "Global South", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Future Generations v. Ministry of the Environment and Others (2018)", "cited_year": null}, {"source": "Czechia", "source_region": "Global North", "target": "France", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "The Case of the Century 2025: Greenpeace France, Notre affaire à tous et Oxfam vs France (2025)", "cited_year": 2021}, {"source": "Czechia", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "DUH v. Baden Wuerttemberg (2025)", "cited_year": 2025}, {"source": "Czechia", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Neubauer et al.", "cited_year": 2021}, {"source": "Czechia", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany (2020)", "cited_year": 2020}, {"source": "Czechia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands (2026)", "cited_year": 2026}, {"source": "Czechia", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment Company Limited by Guarantee v Commissioner for Environmental Information (2025)", "cited_year": null}, {"source": "Czechia", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. The Government of Ireland & Ors (2020)", "cited_year": 2020}, {"source": "Czechia", "source_region": "Global North", "target": "Nepal", "target_region": "Global South", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Shrestha v. Office of the Prime Minister et al. (2019)", "cited_year": 2018}, {"source": "Czechia", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": 2019}, {"source": "Czechia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Klimatická žaloba ČR v. Czech Republic", "source_case_url": "https://www.climatecasechart.com/document/klimaticka-zaloba-cr-v-czech-republic_d4c0", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA (2007)", "cited_year": 2007}, {"source": "France", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Municipality of Grande-Synthe v. France", "source_case_url": "https://www.climatecasechart.com/document/municipality-of-grande-synthe-v-france_0472", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands (2026)", "cited_year": 2026}, {"source": "France", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Municipality of Grande-Synthe v. France", "source_case_url": "https://www.climatecasechart.com/document/municipality-of-grande-synthe-v-france_0472", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment", "cited_year": null}, {"source": "France", "source_region": "Global North", "target": "Norway", "target_region": "Global North", "source_case_name": "Municipality of Grande-Synthe v. France", "source_case_url": "https://www.climatecasechart.com/document/municipality-of-grande-synthe-v-france_0472", "source_case_year": null, "cited_case_name": "Greenpeace Nordic Association and Nature and Youth v. Ministry of Petroleum and Energy", "cited_year": 2020}, {"source": "France", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Municipality of Grande-Synthe v. France", "source_case_url": "https://www.climatecasechart.com/document/municipality-of-grande-synthe-v-france_0472", "source_case_year": null, "cited_case_name": "R (on the application of Plan B Earth) and Secretary of State for Transport", "cited_year": 2020}, {"source": "Germany", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Family Farmers and Greenpeace Germany v. Germany", "source_case_url": "https://www.climatecasechart.com/document/family-farmers-and-greenpeace-germany-v-germany_6d4d", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands (2026)", "cited_year": 2026}, {"source": "Germany", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Family Farmers and Greenpeace Germany v. Germany", "source_case_url": "https://www.climatecasechart.com/document/family-farmers-and-greenpeace-germany-v-germany_6d4d", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. Ireland (2017)", "cited_year": 2017}, {"source": "Germany", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Neubauer, et al. v. Germany", "source_case_url": "https://www.climatecasechart.com/document/neubauer-et-al-v-germany_0a3e", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": 2021}, {"source": "India", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "MK Ranjitsinh et al. v. Union of India et al.", "source_case_url": "https://www.climatecasechart.com/document/mk-ranjitsinh-et-al-v-union-of-india-et-al_91a4", "source_case_year": null, "cited_case_name": "State of the Netherlands v. Urgenda Foundation", "cited_year": 2019}, {"source": "Ireland", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Friends of the Irish Environment v. Ireland", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-ireland_c37f", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": 2021}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "An Taisce v. Irish Planning Board", "source_case_url": "https://www.climatecasechart.com/document/an-taisce-v-irish-planning-board_1a26", "source_case_year": null, "cited_case_name": "Bolton Metropolitan Borough Council v. Secretary of State for the Environment", "cited_year": 1990}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Alternative A5 Alliance v Northern Ireland Department for Infrastructure", "source_case_url": "https://www.climatecasechart.com/document/alternative-a5-alliance-v-northern-ireland-department-for-infrastructure_632a", "source_case_year": null, "cited_case_name": "CG Fry & Son Ltd v Secretary of State for Levelling up, Housing and Communities", "cited_year": 2024}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Colin Doyle et al. v. An Bord Pleanála", "source_case_url": "https://www.climatecasechart.com/document/colin-doyle-et-al-v-an-bord-pleanala_4518", "source_case_year": null, "cited_case_name": "Canterbury City Council v. Secretary of State for Housing Communities and Local Government", "cited_year": 2019}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Alternative A5 Alliance v Northern Ireland Department for Infrastructure", "source_case_url": "https://www.climatecasechart.com/document/alternative-a5-alliance-v-northern-ireland-department-for-infrastructure_632a", "source_case_year": null, "cited_case_name": "No Gas Caverns Ltd & Anor, Application for Judicial Review (Rev1) [2023] NIKB 84 (2023)", "cited_year": 2023}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Alternative A5 Alliance v Northern Ireland Department for Infrastructure", "source_case_url": "https://www.climatecasechart.com/document/alternative-a5-alliance-v-northern-ireland-department-for-infrastructure_632a", "source_case_year": null, "cited_case_name": "R (Fighting Dirty Ltd) v (1) The Environment Agency and (2) The Secretary of State for Environment Food and Rural Affairs (2024)", "cited_year": 2024}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Friends of the Irish Environment v. Government of Ireland", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-government-of-ireland_ade0", "source_case_year": null, "cited_case_name": "R (Friends of the Earth Ltd and others) v. Secretary of State for Energy Security and Net Zero", "cited_year": 2024}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Alternative A5 Alliance v Northern Ireland Department for Infrastructure", "source_case_url": "https://www.climatecasechart.com/document/alternative-a5-alliance-v-northern-ireland-department-for-infrastructure_632a", "source_case_year": null, "cited_case_name": "R (Friends of the Earth) v Secretary of State for Business, Energy and Industrial Strategy", "cited_year": 2022}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Friends of the Irish Environment v. Government of Ireland", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-government-of-ireland_ade0", "source_case_year": null, "cited_case_name": "R (on the application of Friends of the Earth Ltd) v. Secretary of State for Business, Energy and Industrial Strategy", "cited_year": 2022}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Friends of the Irish Environment v. The Government of Ireland, et al.", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-the-government-of-ireland-et-al_c212", "source_case_year": null, "cited_case_name": "R (on the application of HS2 Action Alliance Limited) v. Secretary of State for Transport", "cited_year": null}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Colin Doyle et al. v. An Bord Pleanála", "source_case_url": "https://www.climatecasechart.com/document/colin-doyle-et-al-v-an-bord-pleanala_4518", "source_case_year": null, "cited_case_name": "R Mynydd Y Gwynt Ltd v The Secretary of State for Business, Energy and Industrial Strategy", "cited_year": 2016}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Friends of the Irish Environment v. The Government of Ireland, et al.", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-the-government-of-ireland-et-al_c212", "source_case_year": null, "cited_case_name": "R. (Richard Spurrier) v. The Secretary of State for Transport & Ors.", "cited_year": 2019}, {"source": "Ireland", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Alternative A5 Alliance v Northern Ireland Department for Infrastructure", "source_case_url": "https://www.climatecasechart.com/document/alternative-a5-alliance-v-northern-ireland-department-for-infrastructure_632a", "source_case_year": null, "cited_case_name": "Secretary of State for Communities and Local Government v Allen", "cited_year": 2016}, {"source": "Italy", "source_region": "Global North", "target": "France", "target_region": "Global North", "source_case_name": "Greenpeace Italy et. Al. v. ENI S.p.A., the Italian Ministry of Economy and Finance and Cassa Depositi e Prestiti S.p.A.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-italy-et-al-v-eni-s-p-a-the-italian-ministry-of-economy-and-finance-and-cassa-depositi-e-prestiti-s-p-a_d341", "source_case_year": null, "cited_case_name": "Notre Affaire à Tous et al. c. France", "cited_year": null}, {"source": "Italy", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "A Sud et al. v. Italy", "source_case_url": "https://www.climatecasechart.com/document/a-sud-et-al-v-italy_004c", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands (2026)", "cited_year": 2026}, {"source": "Kenya", "source_region": "Global South", "target": "South Africa", "target_region": "Global South", "source_case_name": "Menengai West Stakeholders Forum, and Solomon Manyarkir and 1 Other v National Environment Management Authority and Sosian Energy Ltd", "source_case_url": "https://www.climatecasechart.com/document/menengai-west-stakeholders-forum-and-solomon-manyarkir-and-1-other-v-national-environment-management-authority-and-sosian-energy-ltd_43ec", "source_case_year": null, "cited_case_name": "Earthlife Africa Johannesburg vs Minister of Environmental Affairs and Others", "cited_year": 2017}, {"source": "Kenya", "source_region": "Global South", "target": "South Africa", "target_region": "Global South", "source_case_name": "Amu Power Company Limited v Save Lamu & 6 others (Environment and Land Appeal 6 of 2019)", "source_case_url": "https://www.climatecasechart.com/document/amu-power-company-limited-v-save-lamu-6-others-environment-and-land-appeal-6-of-2019_2bae", "source_case_year": null, "cited_case_name": "Sustaining the Wild Coast NPC and Others Versus Minister of Mineral Resources and Energy and Others", "cited_year": 2021}, {"source": "Kenya", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "Menengai West Stakeholders Forum, and Solomon Manyarkir and 1 Other v National Environment Management Authority and Sosian Energy Ltd", "source_case_url": "https://www.climatecasechart.com/document/menengai-west-stakeholders-forum-and-solomon-manyarkir-and-1-other-v-national-environment-management-authority-and-sosian-energy-ltd_43ec", "source_case_year": null, "cited_case_name": "Communities for a Better Environment vs City of Richmond", "cited_year": 2010}, {"source": "Luxembourg", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Greenpeace Luxembourg v. Schneider", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-luxembourg-v-schneider_fb6f", "source_case_year": null, "cited_case_name": "Urgenda Foundation v The State of the Netherlands", "cited_year": 2015}, {"source": "Netherlands", "source_region": "Global North", "target": "Brazil", "target_region": "Global South", "source_case_name": "Milieudefensie et al. v. Royal Dutch Shell plc.", "source_case_url": "https://www.climatecasechart.com/document/milieudefensie-et-al-v-royal-dutch-shell-plc_c3e4", "source_case_year": null, "cited_case_name": "PSB et al. v. Brazil (on Climate Fund)", "cited_year": 2020}, {"source": "Netherlands", "source_region": "Global North", "target": "Colombia", "target_region": "Global South", "source_case_name": "Milieudefensie et al. v. Royal Dutch Shell plc.", "source_case_url": "https://www.climatecasechart.com/document/milieudefensie-et-al-v-royal-dutch-shell-plc_c3e4", "source_case_year": null, "cited_case_name": "Future Generations v. Ministry of the Environment and Others", "cited_year": 2018}, {"source": "Netherlands", "source_region": "Global North", "target": "India", "target_region": "Global South", "source_case_name": "Milieudefensie et al. v. Royal Dutch Shell plc.", "source_case_url": "https://www.climatecasechart.com/document/milieudefensie-et-al-v-royal-dutch-shell-plc_c3e4", "source_case_year": null, "cited_case_name": "MK Ranjitsinh et al. v. Union of India et al. (2022)", "cited_year": 2024}, {"source": "Netherlands", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "source_case_name": "Urgenda Foundation v. State of the Netherlands", "source_case_url": "https://www.climatecasechart.com/document/urgenda-foundation-v-state-of-the-netherlands_3297", "source_case_year": null, "cited_case_name": "Asghar Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Netherlands", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "source_case_name": "Milieudefensie et al. v. Royal Dutch Shell plc.", "source_case_url": "https://www.climatecasechart.com/document/milieudefensie-et-al-v-royal-dutch-shell-plc_c3e4", "source_case_year": null, "cited_case_name": "Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Netherlands", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "source_case_name": "Urgenda Foundation v. State of the Netherlands", "source_case_url": "https://www.climatecasechart.com/document/urgenda-foundation-v-state-of-the-netherlands_3297", "source_case_year": null, "cited_case_name": "Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Netherlands", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Milieudefensie et al. v. Royal Dutch Shell plc.", "source_case_url": "https://www.climatecasechart.com/document/milieudefensie-et-al-v-royal-dutch-shell-plc_c3e4", "source_case_year": null, "cited_case_name": "Held v. State (2024)", "cited_year": 2024}, {"source": "Netherlands", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Urgenda Foundation v. State of the Netherlands", "source_case_url": "https://www.climatecasechart.com/document/urgenda-foundation-v-state-of-the-netherlands_3297", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "AF (Kiribati) | Teitiota v The Chief Executive of Ministry of Business, Innovation and Employment", "source_case_url": "https://www.climatecasechart.com/document/af-kiribati-teitiota-v-the-chief-executive-of-ministry-of-business-innovation-and-employment_78a8", "source_case_year": null, "cited_case_name": "0907346 [2009] RRTA 1168", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "Do-Hyun Kim et al. v. South Korea", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "West Coast ENT Inc. v. Buller Coal Ltd.", "source_case_url": "https://www.climatecasechart.com/document/west-coast-ent-inc-v-buller-coal-ltd_52e5", "source_case_year": null, "cited_case_name": "Gray v The Minister of Planning [2006] NSWLEC 720", "cited_year": 2006}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "Minister for Environment v Sharma", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "Munkara v Santos NA Barossa Pty Ltd (No 4)", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "Munkara v Santos NA Barossa Pty Ltd (No 5)", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Smith v. Attorney-General", "source_case_url": "https://www.climatecasechart.com/document/smith-v-attorney-general_82a8", "source_case_year": null, "cited_case_name": "Sharma v Minister for the Environment", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Climate Clinic Aotearoa v Minister of Energy", "source_case_url": "https://www.climatecasechart.com/document/climate-clinic-aotearoa-v-minister-of-energy_322a", "source_case_year": null, "cited_case_name": "Waratah Coal Pty Ltd v Youth Verdict Ltd (No 6)", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "West Coast ENT Inc. v. Buller Coal Ltd.", "source_case_url": "https://www.climatecasechart.com/document/west-coast-ent-inc-v-buller-coal-ltd_52e5", "source_case_year": null, "cited_case_name": "Wildlife Preservation Society of Queensland Proserpine/Whitsunday Branch Inc v Minister for the Environment and Heritage [2006] FCA 736, (2006) 232 ALR 510", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "West Coast ENT Inc. v. Buller Coal Ltd.", "source_case_url": "https://www.climatecasechart.com/document/west-coast-ent-inc-v-buller-coal-ltd_52e5", "source_case_year": null, "cited_case_name": "Xstrata Coal Queensland Pty Ltd v Friends of the Earth [2012] QLC 013", "cited_year": 2012}, {"source": "New Zealand", "source_region": "Global North", "target": "Canada", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "La Rose v. His Majesty the King", "cited_year": 2020}, {"source": "New Zealand", "source_region": "Global North", "target": "Canada", "target_region": "Global North", "source_case_name": "Police v Brorens", "source_case_url": "https://www.climatecasechart.com/document/police-v-brorens_ce70", "source_case_year": null, "cited_case_name": "Trans Mountain Pipeline ULC v Mivasair", "cited_year": 2020}, {"source": "New Zealand", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "Neubauer et al v Germany", "cited_year": 2021}, {"source": "New Zealand", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "Neubauer v Germany", "cited_year": 2021}, {"source": "New Zealand", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Smith v. Attorney-General", "source_case_url": "https://www.climatecasechart.com/document/smith-v-attorney-general_82a8", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. Shannon LNG", "cited_year": 2020}, {"source": "New Zealand", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Smith v. Attorney-General", "source_case_url": "https://www.climatecasechart.com/document/smith-v-attorney-general_82a8", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "State of the Netherlands v Urgenda Foundation", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Thomson v. Minister for Climate Change Issues", "source_case_url": "https://www.climatecasechart.com/document/thomson-v-minister-for-climate-change-issues_35b8", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. The Netherlands", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "Vereniging Milieudefensie v Royal Dutch Shell plc", "cited_year": 2021}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Thomson v. Minister for Climate Change Issues", "source_case_url": "https://www.climatecasechart.com/document/thomson-v-minister-for-climate-change-issues_35b8", "source_case_year": null, "cited_case_name": "ClientEarth v. Secretary of State", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Climate Clinic Aotearoa v Minister of Energy", "source_case_url": "https://www.climatecasechart.com/document/climate-clinic-aotearoa-v-minister-of-energy_322a", "source_case_year": null, "cited_case_name": "Friends of the Earth Ltd and others v Secretary of State for Business, Energy and Industrial Strategy", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Smith v. Attorney-General", "source_case_url": "https://www.climatecasechart.com/document/smith-v-attorney-general_82a8", "source_case_year": null, "cited_case_name": "Plan B Earth v Prime Minister", "cited_year": 2021}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Movement v. Waka Kotahi", "source_case_url": "https://www.climatecasechart.com/document/movement-v-waka-kotahi_584a", "source_case_year": null, "cited_case_name": "R (ClientEarth) v Secretary of State for Business, Energy and Industrial Strategy", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Thomson v. Minister for Climate Change Issues", "source_case_url": "https://www.climatecasechart.com/document/thomson-v-minister-for-climate-change-issues_35b8", "source_case_year": null, "cited_case_name": "R (ClientEarth) v. Secretary of State for the Environment, Food and Rural Affairs", "cited_year": 2010}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Greenpeace Aotearoa Inc v Hiringa Energy Limited and Ballance Agri-Nutrients Limited", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-aotearoa-inc-v-hiringa-energy-limited-and-ballance-agri-nutrients-limited_ba8a", "source_case_year": null, "cited_case_name": "R (Finch) v Surrey County Council", "cited_year": 2022}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Movement v. Waka Kotahi", "source_case_url": "https://www.climatecasechart.com/document/movement-v-waka-kotahi_584a", "source_case_year": null, "cited_case_name": "R (Friends of the Earth Ltd) v Secretary of State for Business, Energy and Industrial Strategy", "cited_year": 2022}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "R (Friends of the Earth) v Secretary of State of Energy and Climate Change", "cited_year": 2009}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Movement v. Waka Kotahi", "source_case_url": "https://www.climatecasechart.com/document/movement-v-waka-kotahi_584a", "source_case_year": null, "cited_case_name": "R (Rights: Community: Action) v Secretary of State for Housing, Communities and Local Government", "cited_year": 2021}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Smith v. Attorney-General", "source_case_url": "https://www.climatecasechart.com/document/smith-v-attorney-general_82a8", "source_case_year": null, "cited_case_name": "R (on the application of Plan B Earth and others) v. The Prime Minister", "cited_year": 2021}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "Regina (Friends of the Earth Ltd) v Secretary of State for Business, Energy and Industrial Strategy [2022] EWHC 1841 (Admin)", "cited_year": 2022}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "Regina (Rights: Community: Action) v Secretary of State for Housing, Communities and Local Government [2020] EWHC 3073 (Admin)", "cited_year": 2020}, {"source": "New Zealand", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "Spencer", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "American Electric Power Co Inc v Connecticut", "cited_year": 2011}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Smith v. Fonterra Co-Operative Group Limited", "source_case_url": "https://www.climatecasechart.com/document/smith-v-fonterra-co-operative-group-limited_33b2", "source_case_year": null, "cited_case_name": "City of New York v Chevron Corp", "cited_year": 2021}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Lawyers for Climate Action NZ Incorporated v. The Climate Change Commission", "source_case_url": "https://www.climatecasechart.com/document/lawyers-for-climate-action-nz-incorporated-v-the-climate-change-commission_0940", "source_case_year": null, "cited_case_name": "Juliana Youth v. United States of America", "cited_year": 2015}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Smith v. Attorney-General", "source_case_url": "https://www.climatecasechart.com/document/smith-v-attorney-general_82a8", "source_case_year": null, "cited_case_name": "Juliana v United States of America", "cited_year": 2020}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Thomson v. Minister for Climate Change Issues", "source_case_url": "https://www.climatecasechart.com/document/thomson-v-minister-for-climate-change-issues_35b8", "source_case_year": null, "cited_case_name": "Juliana v. United States", "cited_year": 2015}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Thomson v. Minister for Climate Change Issues", "source_case_url": "https://www.climatecasechart.com/document/thomson-v-minister-for-climate-change-issues_35b8", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "New Zealand", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Police v Brorens", "source_case_url": "https://www.climatecasechart.com/document/police-v-brorens_ce70", "source_case_year": null, "cited_case_name": "State v Ward", "cited_year": 2019}, {"source": "Norway", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Greenpeace Nordic Ass’n v. Ministry of Petroleum and Energy (People v Arctic Oil)", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-nordic-assn-v-ministry-of-petroleum-and-energy-people-v-arctic-oil_508f", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Norway", "source_region": "Global North", "target": "United Kingdom", "target_region": "Global North", "source_case_name": "Greenpeace Nordic and Nature & Youth v. Energy Ministry (The North Sea Fields Case)", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-nordic-and-nature-youth-v-energy-ministry-the-north-sea-fields-case_52a4", "source_case_year": null, "cited_case_name": "R (Finch) v. Surrey County Council et al.", "cited_year": 2022}, {"source": "Panama", "source_region": "Global South", "target": "Colombia", "target_region": "Global South", "source_case_name": "Callejas v. Law No 406 (unconstitutionality of mining concession)", "source_case_url": "https://www.climatecasechart.com/document/callejas-v-law-no-406-unconstitutionality-of-mining-concession_08a8", "source_case_year": null, "cited_case_name": "Callejas v. Law No 406 (unconstitutionality of mining concession)", "cited_year": null}, {"source": "Philippines", "source_region": "Global South", "target": "Australia", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Abrahams v. Commonwealth Bank of Australia", "cited_year": 2016}, {"source": "Philippines", "source_region": "Global South", "target": "Germany", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Lliuya v. RWE", "cited_year": 2015}, {"source": "Philippines", "source_region": "Global South", "target": "Colombia", "target_region": "Global South", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Future Generations v. Colombia Ministry of Environment", "cited_year": null}, {"source": "Philippines", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. The Netherlands", "cited_year": null}, {"source": "Philippines", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Urgenda v. Netherlands", "cited_year": 2015}, {"source": "Philippines", "source_region": "Global South", "target": "Pakistan", "target_region": "Global South", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Leghari v. Federation of Pakistan", "cited_year": 2015}, {"source": "Philippines", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "City of Oakland v. BP P.L.C.", "cited_year": 2018}, {"source": "Philippines", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Juliana v. United States", "cited_year": 2015}, {"source": "Philippines", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others_a98d", "source_case_year": null, "cited_case_name": "Native Village of Kivalina v. ExxonMobil Corp.", "cited_year": null}, {"source": "Romania", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Mihaileni Dam Project", "source_case_url": "https://www.climatecasechart.com/document/mihaileni-dam-project_ce7b", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. An Coimisiún Pleanála (Galway Ring Road Planning Decision) (2025)", "cited_year": 2025}, {"source": "South Africa", "source_region": "Global South", "target": "Namibia", "target_region": "Global South", "source_case_name": "Sustaining the Wild Coast NPC and Others  v. Minister of Mineral Resources and Energy and Others", "source_case_url": "https://www.climatecasechart.com/document/sustaining-the-wild-coast-npc-and-others-v-minister-of-mineral-resources-and-energy-and-others_9a3c", "source_case_year": null, "cited_case_name": "Ncumcara Community Forest Management Association v The Environmental Commissioner", "cited_year": 2022}, {"source": "South Africa", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "EarthLife Africa Johannesburg v. Minister of Environmental Affairs and Others", "source_case_url": "https://www.climatecasechart.com/document/earthlife-africa-johannesburg-v-minister-of-environmental-affairs-and-others_e8e9", "source_case_year": null, "cited_case_name": "Communities for a Better Environment v City of Richmond", "cited_year": null}, {"source": "South Korea", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Do-Hyun Kim et al. v. South Korea", "source_case_url": "https://www.climatecasechart.com/document/do-hyun-kim-et-al-v-south-korea_2dd5", "source_case_year": null, "cited_case_name": "Do-Hyun Kim et al. v. South Korea", "cited_year": null}, {"source": "South Korea", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Opinion of the National Human Rights Commission on the Constitutional Complaints on Constitutionality of Carbon Neutrality Act", "source_case_url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-constitutional-complaints-on-constitutionality-of-carbon-neutrality-act_1cdf", "source_case_year": null, "cited_case_name": "Greenpeace e.V. and Germanwatch e.V. v. Germany (Challenge on amended Federal Climate Protection Act) (2024)", "cited_year": 2021}, {"source": "South Korea", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Opinion of the National Human Rights Commission on the climate crisis and human rights", "source_case_url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-climate-crisis-and-human-rights_77ae", "source_case_year": null, "cited_case_name": "Greenpeace e.V. and Germanwatch e.V. v. Germany (Challenge on amended Federal Climate Protection Act) (2024)", "cited_year": 2021}, {"source": "South Korea", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Opinion of the National Human Rights Commission on the Constitutional Complaints on Constitutionality of Carbon Neutrality Act", "source_case_url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-constitutional-complaints-on-constitutionality-of-carbon-neutrality-act_1cdf", "source_case_year": null, "cited_case_name": "Greenpeace e.V. and Germanwatch e.V. v. Germany (Failure to adopt effective climate measures in transport sector) (2024)", "cited_year": 2024}, {"source": "South Korea", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Opinion of the National Human Rights Commission on the Constitutional Complaints on Constitutionality of Carbon Neutrality Act", "source_case_url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-constitutional-complaints-on-constitutionality-of-carbon-neutrality-act_1cdf", "source_case_year": null, "cited_case_name": "Luca Salis, et al. v. State of Sachsen-Anhalt (2021)", "cited_year": 2021}, {"source": "South Korea", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Do-Hyun Kim et al. v. South Korea", "source_case_url": "https://www.climatecasechart.com/document/do-hyun-kim-et-al-v-south-korea_2dd5", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": 2021}, {"source": "South Korea", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Opinion of the National Human Rights Commission on the Constitutional Complaints on Constitutionality of Carbon Neutrality Act", "source_case_url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-constitutional-complaints-on-constitutionality-of-carbon-neutrality-act_1cdf", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany (2020)", "cited_year": 2020}, {"source": "South Korea", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Do-Hyun Kim et al. v. South Korea", "source_case_url": "https://www.climatecasechart.com/document/do-hyun-kim-et-al-v-south-korea_2dd5", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "South Korea", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Opinion of the National Human Rights Commission on the Constitutional Complaints on Constitutionality of Carbon Neutrality Act", "source_case_url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-constitutional-complaints-on-constitutionality-of-carbon-neutrality-act_1cdf", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands (2015)", "cited_year": 2015}, {"source": "South Korea", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Opinion of the National Human Rights Commission on the climate crisis and human rights", "source_case_url": "https://www.climatecasechart.com/document/opinion-of-the-national-human-rights-commission-on-the-climate-crisis-and-human-rights_77ae", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands (2015)", "cited_year": 2015}, {"source": "United Kingdom", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "Friends of the Earth v. UK Export Finance", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-earth-v-uk-export-finance_6030", "source_case_year": null, "cited_case_name": "Gloucester Resources Limited v Minister of Planning", "cited_year": 2019}, {"source": "United Kingdom", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "R (Finch on behalf of the Weald Action Group & Others) v. Surrey County Council (& Others)", "source_case_url": "https://www.climatecasechart.com/document/r-finch-on-behalf-of-the-weald-action-group-others-v-surrey-county-council-others_e6d3", "source_case_year": null, "cited_case_name": "Gray v. Minister for Planning", "cited_year": null}, {"source": "United Kingdom", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "R (Finch on behalf of the Weald Action Group & Others) v. Surrey County Council (& Others)", "source_case_url": "https://www.climatecasechart.com/document/r-finch-on-behalf-of-the-weald-action-group-others-v-surrey-county-council-others_e6d3", "source_case_year": null, "cited_case_name": "Whitehaven Coal Pty Ltd v Australian Conservation Foundation & Ors", "cited_year": 2024}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "Friends of the Earth v. Secretary of State for Levelling Up, Housing and Communities; and South Lakeland Action on Climate Change v. SSLUHC (Whitehaven coalmine)", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-earth-v-secretary-of-state-for-levelling-up-housing-and-communities-and-south-lakeland-action-on-climate-change-v-ssluhc-whitehaven-coalmine_ec59", "source_case_year": null, "cited_case_name": "An Taisce – the National Trust for Ireland v An Bord Pleanala", "cited_year": 2022}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "R (oao Friends of the Earth) v. Secretary of State for Business Energy and Industrial Strategy", "source_case_url": "https://www.climatecasechart.com/document/r-oao-friends-of-the-earth-v-secretary-of-state-for-business-energy-and-industrial-strategy_0458", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment", "cited_year": null}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "R (Finch on behalf of the Weald Action Group & Others) v. Surrey County Council (& Others)", "source_case_url": "https://www.climatecasechart.com/document/r-finch-on-behalf-of-the-weald-action-group-others-v-surrey-county-council-others_e6d3", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment CLG v An Bord Pleanala Ireland Attorney General Minister for Housing Local Government and Heritage (2025)", "cited_year": 2025}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "R (oao Friends of the Earth) v. Secretary of State for Business Energy and Industrial Strategy", "source_case_url": "https://www.climatecasechart.com/document/r-oao-friends-of-the-earth-v-secretary-of-state-for-business-energy-and-industrial-strategy_0458", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment CLG v The Government of Ireland", "cited_year": 2020}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "R(Friends of the Earth Ltd) v Secretary of State for Energy Security and Net Zero; ClientEarth v SSESNZ; Good Law Project v SSESNZ (challenges to the Carbon Budget Delivery Plan)", "source_case_url": "https://www.climatecasechart.com/document/r-friends-of-the-earth-ltd-v-secretary-of-state-for-energy-security-and-net-zero-clientearth-v-ssesnz-good-law-project-v-ssesnz-challenges-to-the-carbon-budget-delivery-plan_7cd5", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v Government of Ireland", "cited_year": 2020}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "R (Finch on behalf of the Weald Action Group & Others) v. Surrey County Council (& Others)", "source_case_url": "https://www.climatecasechart.com/document/r-finch-on-behalf-of-the-weald-action-group-others-v-surrey-county-council-others_e6d3", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. An Coimisiún Pleanála (Galway Ring Road Planning Decision) (2025)", "cited_year": 2025}, {"source": "United Kingdom", "source_region": "Global North", "target": "Ireland", "target_region": "Global North", "source_case_name": "R (Finch on behalf of the Weald Action Group & Others) v. Surrey County Council (& Others)", "source_case_url": "https://www.climatecasechart.com/document/r-finch-on-behalf-of-the-weald-action-group-others-v-surrey-county-council-others_e6d3", "source_case_year": null, "cited_case_name": "Friends of the Irish Environment v. Government of Ireland", "cited_year": 2018}, {"source": "United Kingdom", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "ClientEarth v. Shell’s Board of Directors", "source_case_url": "https://www.climatecasechart.com/document/clientearth-v-shells-board-of-directors_9377", "source_case_year": null, "cited_case_name": "Milieudefensie v Royal Dutch Shell plc", "cited_year": 2021}, {"source": "United Kingdom", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "R (oao Friends of the Earth) v. Secretary of State for Business Energy and Industrial Strategy", "source_case_url": "https://www.climatecasechart.com/document/r-oao-friends-of-the-earth-v-secretary-of-state-for-business-energy-and-industrial-strategy_0458", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": 2021}, {"source": "United Kingdom", "source_region": "Global North", "target": "Norway", "target_region": "Global North", "source_case_name": "R (Finch on behalf of the Weald Action Group & Others) v. Surrey County Council (& Others)", "source_case_url": "https://www.climatecasechart.com/document/r-finch-on-behalf-of-the-weald-action-group-others-v-surrey-county-council-others_e6d3", "source_case_year": null, "cited_case_name": "Greenpeace Nordic and Nature & Youth v. Energy Ministry (The North Sea Fields Case)", "cited_year": null}, {"source": "United Kingdom", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Transport Action Network v. Secretary of State for Transport and Highway England Company (on Roads Investment Strategy)", "source_case_url": "https://www.climatecasechart.com/document/transport-action-network-v-secretary-of-state-for-transport-and-highway-england-company-on-roads-investment-strategy_fdc7", "source_case_year": null, "cited_case_name": "Friends of the Earth and Others v. the United Kingdom", "cited_year": null}, {"source": "United Kingdom", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "R (Finch on behalf of the Weald Action Group & Others) v. Surrey County Council (& Others)", "source_case_url": "https://www.climatecasechart.com/document/r-finch-on-behalf-of-the-weald-action-group-others-v-surrey-county-council-others_e6d3", "source_case_year": null, "cited_case_name": "WildEarth Guardians v. Nesvik", "cited_year": 2025}, {"source": "United States", "source_region": "Global North", "target": "Australia", "target_region": "Global North", "source_case_name": "In re Hawai‘i Electric Light Co.", "source_case_url": "https://www.climatecasechart.com/document/in-re-hawaii-electric-light-co_ec95", "source_case_year": null, "cited_case_name": "Whitehaven Coal Pty Ltd v Australian Conservation Foundation & Ors", "cited_year": 2024}, {"source": "United States", "source_region": "Global North", "target": "Canada", "target_region": "Global North", "source_case_name": "In re Hawai‘i Electric Light Co.", "source_case_url": "https://www.climatecasechart.com/document/in-re-hawaii-electric-light-co_ec95", "source_case_year": null, "cited_case_name": "A. Gingras v. Proctor & Gamble Inc. (2025)", "cited_year": 2025}, {"source": "United States", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "In re Hawai‘i Electric Light Co.", "source_case_url": "https://www.climatecasechart.com/document/in-re-hawaii-electric-light-co_ec95", "source_case_year": null, "cited_case_name": "Shell PLC v. Kingdom of the Netherlands", "cited_year": 2021}, {"source": "United States", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Juliana v. United States", "source_case_url": "https://www.climatecasechart.com/document/juliana-v-united-states_522f", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. Kingdom of the Netherlands", "cited_year": 2015}, {"source": "United States", "source_region": "Global North", "target": "Pakistan", "target_region": "Global South", "source_case_name": "In re Hawai‘i Electric Light Co.", "source_case_url": "https://www.climatecasechart.com/document/in-re-hawaii-electric-light-co_ec95", "source_case_year": null, "cited_case_name": "Milas and Yatağan Olive Producers v. Ministry of Energy and Natural Resources (Council of State challenge to Provisional Article 45 of the Mining Law)", "cited_year": 2015}, {"source": "United States", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Municipality of San Juan v. Exxon Mobil Corp.", "source_case_url": "https://www.climatecasechart.com/document/municipality-of-san-juan-v-exxon-mobil-corp_d4d0", "source_case_year": null, "cited_case_name": "Municipality of Bayamón, et al. v. Exxon Mobil, et al.", "cited_year": 2022}, {"source": "Papua New Guinea", "source_region": "Global South", "target": "Pakistan", "target_region": "Global South", "source_case_name": "Buni Morua v. China Harbour Engineering Company (PNG) Limited & Ors", "source_case_url": "https://www.climatecasechart.com/document/buni-morua-v-china-harbour-engineering-company-png-limited-ors_1902", "source_case_year": null, "cited_case_name": "Asghar Leghari v. Federation of Pakistan", "cited_year": null}, {"source": "Papua New Guinea", "source_region": "Global South", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Buni Morua v. China Harbour Engineering Company (PNG) Limited & Ors", "source_case_url": "https://www.climatecasechart.com/document/buni-morua-v-china-harbour-engineering-company-png-limited-ors_1902", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Italy", "source_region": "Global North", "target": "Germany", "target_region": "Global North", "source_case_name": "Greenpeace Italy et al. v. ENI S.p.A., the Italian Ministry of Economy and Finance, and Cassa Depositi e Prestiti S.p.A.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-italy-et-al-v-eni-s-p-a-the-italian-ministry-of-economy-and-finance-and-cassa-depositi-e-prestiti-s-p-a-decision_c7d3", "source_case_year": null, "cited_case_name": "Neubauer, et al. v. Germany", "cited_year": null}, {"source": "Italy", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Greenpeace Italy et al. v. ENI S.p.A., the Italian Ministry of Economy and Finance, and Cassa Depositi e Prestiti S.p.A.", "source_case_url": "https://www.climatecasechart.com/document/greenpeace-italy-et-al-v-eni-s-p-a-the-italian-ministry-of-economy-and-finance-and-cassa-depositi-e-prestiti-s-p-a-decision_c7d3", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Philippines", "source_region": "Global South", "target": "United States", "target_region": "Global North", "source_case_name": "In re Greenpeace Southeast Asia and Others", "source_case_url": "https://www.climatecasechart.com/document/in-re-greenpeace-southeast-asia-and-others-judgment_8289", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Australia", "source_region": "Global North", "target": "United States", "target_region": "Global North", "source_case_name": "Gloucester Resources Limited v. Minister for Planning", "source_case_url": "https://www.climatecasechart.com/document/gloucester-resources-limited-v-minister-for-planning-decision_800b", "source_case_year": null, "cited_case_name": "Massachusetts v. EPA", "cited_year": null}, {"source": "Ireland", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Friends of the Irish Environment v. Ireland ([2019] IEHC 747)", "source_case_url": "https://www.climatecasechart.com/document/friends-of-the-irish-environment-v-ireland-judgment_7533", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Austria", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Fliegenschnee et al. v. Federal Ministry for Digitalisation and Business Location (Austria)", "source_case_url": "https://www.climatecasechart.com/document/fliegenschnee-et-al-v-federal-ministry-for-digitalisation-and-business-location-austria-decision_93c5", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}, {"source": "Germany", "source_region": "Global North", "target": "Netherlands", "target_region": "Global North", "source_case_name": "Deutsche Umwelthilfe (DUH) v. Mercedes-Benz AG", "source_case_url": "https://www.climatecasechart.com/document/deutsche-umwelthilfe-duh-v-mercedes-benz-ag-judgment_d148", "source_case_year": null, "cited_case_name": "Urgenda Foundation v. State of the Netherlands", "cited_year": null}]};
+        
+        // ISO mappings
+        const isoToNumeric = {
+            'ARG': '032', 'AUS': '036', 'AUT': '040', 'BGD': '050', 'BEL': '056',
+            'BLZ': '084', 'BEN': '204', 'BRA': '076', 'CMR': '120', 'CAN': '124',
+            'CHL': '152', 'CHN': '156', 'COL': '170', 'CZE': '203', 'ECU': '218',
+            'EST': '233', 'FIN': '246', 'FRA': '250', 'DEU': '276', 'GHA': '288',
+            'GRC': '300', 'GRD': '308', 'HUN': '348', 'IND': '356', 'IDN': '360',
+            'IRL': '372', 'ITA': '380', 'JAM': '388', 'JPN': '392', 'KEN': '404',
+            'LUX': '442', 'MEX': '484', 'NAM': '516', 'NPL': '524', 'NLD': '528',
+            'NZL': '554', 'NGA': '566', 'NOR': '578', 'PAK': '586', 'PAN': '591',
+            'PNG': '598', 'PER': '604', 'PHL': '608', 'POL': '616', 'PRT': '620',
+            'ROU': '642', 'ZAF': '710', 'KOR': '410', 'ESP': '724', 'SWE': '752',
+            'CHE': '756', 'TWN': '158', 'TUR': '792', 'UGA': '800', 'UKR': '804',
+            'GBR': '826', 'USA': '840', 'AGO': '024'
+        };
+        
+        const numericToCountry = {
+            '032': 'Argentina', '036': 'Australia', '040': 'Austria', '050': 'Bangladesh',
+            '056': 'Belgium', '084': 'Belize', '204': 'Benin', '076': 'Brazil',
+            '120': 'Cameroon', '124': 'Canada', '152': 'Chile', '156': 'China',
+            '170': 'Colombia', '203': 'Czechia', '218': 'Ecuador', '233': 'Estonia',
+            '246': 'Finland', '250': 'France', '276': 'Germany', '288': 'Ghana',
+            '300': 'Greece', '308': 'Grenada', '348': 'Hungary', '356': 'India',
+            '360': 'Indonesia', '372': 'Ireland', '380': 'Italy', '388': 'Jamaica',
+            '392': 'Japan', '404': 'Kenya', '442': 'Luxembourg', '484': 'Mexico',
+            '516': 'Namibia', '524': 'Nepal', '528': 'Netherlands', '554': 'New Zealand',
+            '566': 'Nigeria', '578': 'Norway', '586': 'Pakistan', '591': 'Panama',
+            '598': 'Papua New Guinea', '604': 'Peru', '608': 'Philippines', '616': 'Poland',
+            '620': 'Portugal', '642': 'Romania', '710': 'South Africa', '410': 'South Korea',
+            '724': 'Spain', '752': 'Sweden', '756': 'Switzerland', '158': 'Taiwan',
+            '792': 'Türkiye', '800': 'Uganda', '804': 'Ukraine', '826': 'United Kingdom',
+            '840': 'United States', '024': 'Angola'
+        };
+        
+        const countryToISO = {
+            'Argentina': 'ARG', 'Australia': 'AUS', 'Austria': 'AUT', 'Belgium': 'BEL',
+            'Brazil': 'BRA', 'Canada': 'CAN', 'Chile': 'CHL', 'China': 'CHN',
+            'Colombia': 'COL', 'Czechia': 'CZE', 'France': 'FRA', 'Germany': 'DEU',
+            'India': 'IND', 'Indonesia': 'IDN', 'Ireland': 'IRL', 'Italy': 'ITA',
+            'Japan': 'JPN', 'Kenya': 'KEN', 'Mexico': 'MEX', 'Netherlands': 'NLD',
+            'New Zealand': 'NZL', 'Nigeria': 'NGA', 'Norway': 'NOR', 'Pakistan': 'PAK',
+            'Philippines': 'PHL', 'South Africa': 'ZAF', 'South Korea': 'KOR',
+            'Spain': 'ESP', 'Switzerland': 'CHE', 'Türkiye': 'TUR',
+            'Luxembourg': 'LUX', 'Namibia': 'NAM', 'Nepal': 'NPL',
+            'Panama': 'PAN', 'Papua New Guinea': 'PNG', 'Romania': 'ROU',
+            'United Kingdom': 'GBR', 'United States': 'USA'
+        };
+        
+        // State
+        let selectedCountry = null;
+        let direction = 'incoming';
+        let worldData = null;
+        let svg, g, projection, path, zoom;
+        let currentCases = [];
+        
+        // Initialize
+        async function initMap() {
+            const container = document.getElementById('map');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            svg = d3.select('#map')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            g = svg.append('g');
+            
+            projection = d3.geoNaturalEarth1()
+                .scale(width / 5.5)
+                .translate([width / 2, height / 2]);
+            
+            path = d3.geoPath().projection(projection);
+            
+            zoom = d3.zoom()
+                .scaleExtent([1, 8])
+                .on('zoom', (event) => g.attr('transform', event.transform));
+            
+            svg.call(zoom);
+            
+            try {
+                const response = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+                worldData = await response.json();
+                
+                const countries = topojson.feature(worldData, worldData.objects.countries);
+                
+                g.selectAll('.country')
+                    .data(countries.features)
+                    .enter()
+                    .append('path')
+                    .attr('class', 'country')
+                    .attr('d', path)
+                    .attr('data-id', d => d.id)
+                    .on('mouseover', handleCountryHover)
+                    .on('mouseout', handleCountryOut)
+                    .on('click', handleCountryClick);
+                
+                const graticule = d3.geoGraticule();
+                g.append('path')
+                    .datum(graticule)
+                    .attr('class', 'graticule')
+                    .attr('d', path)
+                    .attr('fill', 'none')
+                    .attr('stroke', 'rgba(255,255,255,0.05)')
+                    .attr('stroke-width', 0.5);
+                
+                g.append('g').attr('class', 'arcs');
+                g.append('g').attr('class', 'markers');
+                
+            } catch (error) {
+                console.error('Error loading map:', error);
+            }
+            
+            populateCountrySelector();
+            setupEventListeners();
+        }
+        
+        function populateCountrySelector() {
+            const select = document.getElementById('country-select');
+            const countriesWithData = new Set();
+            
+            citationData.flows.forEach(flow => {
+                countriesWithData.add(flow.source);
+                countriesWithData.add(flow.target);
+            });
+            
+            Array.from(countriesWithData).sort().forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                select.appendChild(option);
+            });
+        }
+        
+        function setupEventListeners() {
+            document.getElementById('country-select').addEventListener('change', (e) => {
+                selectedCountry = e.target.value || null;
+                updateVisualization();
+            });
+            
+            document.querySelectorAll('.direction-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.direction-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    direction = btn.dataset.direction;
+                    updateVisualization();
+                });
+            });
+            
+            document.getElementById('zoom-in').addEventListener('click', () => svg.transition().call(zoom.scaleBy, 1.5));
+            document.getElementById('zoom-out').addEventListener('click', () => svg.transition().call(zoom.scaleBy, 0.67));
+            document.getElementById('zoom-reset').addEventListener('click', () => svg.transition().call(zoom.transform, d3.zoomIdentity));
+            
+            document.getElementById('case-search').addEventListener('input', (e) => {
+                filterCases(e.target.value);
+            });
+            
+            window.addEventListener('resize', debounce(() => {
+                const container = document.getElementById('map');
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                svg.attr('width', width).attr('height', height);
+                projection.scale(width / 5.5).translate([width / 2, height / 2]);
+                
+                g.selectAll('.country').attr('d', path);
+                g.selectAll('.graticule').attr('d', path);
+                
+                if (selectedCountry) updateVisualization();
+            }, 250));
+        }
+        
+        function updateVisualization() {
+            g.selectAll('.country')
+                .classed('selected', false)
+                .classed('citing', false)
+                .classed('cited', false);
+            
+            g.select('.arcs').selectAll('*').remove();
+            g.select('.markers').selectAll('*').remove();
+            
+            if (!selectedCountry) {
+                updateStats(0, 0, 0, 0);
+                updateCitationList([]);
+                updateCasesList([]);
+                return;
+            }
+            
+            // Get relevant flows
+            let relevantFlows;
+            if (direction === 'incoming') {
+                relevantFlows = citationData.flows.filter(f => f.target === selectedCountry);
+            } else {
+                relevantFlows = citationData.flows.filter(f => f.source === selectedCountry);
+            }
+            
+            // Get relevant cases
+            let relevantCases;
+            if (direction === 'incoming') {
+                relevantCases = citationData.case_details.filter(c => c.target === selectedCountry);
+            } else {
+                relevantCases = citationData.case_details.filter(c => c.source === selectedCountry);
+            }
+            
+            highlightCountry(selectedCountry, 'selected');
+            
+            let totalCitations = 0;
+            let northCitations = 0;
+            let southCitations = 0;
+            const connectedCountries = new Set();
+            
+            relevantFlows.forEach(flow => {
+                totalCitations += flow.count;
+                const otherCountry = direction === 'incoming' ? flow.source : flow.target;
+                const otherRegion = direction === 'incoming' ? flow.source_region : flow.target_region;
+                
+                connectedCountries.add(otherCountry);
+                
+                if (otherRegion === 'Global North') northCitations += flow.count;
+                else southCitations += flow.count;
+                
+                highlightCountry(otherCountry, direction === 'incoming' ? 'citing' : 'cited');
+            });
+            
+            updateStats(totalCitations, connectedCountries.size, northCitations, southCitations);
+            updateCitationList(relevantFlows);
+            updateCasesList(relevantCases);
+            drawArcs(relevantFlows);
+        }
+        
+        function highlightCountry(countryName, className) {
+            const iso = countryToISO[countryName];
+            if (!iso) return;
+            
+            const numericId = isoToNumeric[iso];
+            if (numericId) {
+                g.selectAll('.country')
+                    .filter(d => d.id === numericId)
+                    .classed(className, true);
+            }
+        }
+        
+        function drawArcs(flows) {
+            const arcGroup = g.select('.arcs');
+            const markerGroup = g.select('.markers');
+            
+            flows.forEach(flow => {
+                const sourceCountry = direction === 'incoming' ? flow.source : selectedCountry;
+                const targetCountry = direction === 'incoming' ? selectedCountry : flow.target;
+                
+                const sourceData = citationData.countries.find(c => c.country === sourceCountry);
+                const targetData = citationData.countries.find(c => c.country === targetCountry);
+                
+                if (!sourceData || !targetData || !sourceData.lon || !targetData.lon) return;
+                
+                const source = projection([sourceData.lon, sourceData.lat]);
+                const target = projection([targetData.lon, targetData.lat]);
+                
+                if (!source || !target) return;
+                
+                const dx = target[0] - source[0];
+                const dy = target[1] - source[1];
+                const dr = Math.sqrt(dx * dx + dy * dy) * 1.5;
+                const strokeWidth = Math.min(1 + Math.log(flow.count + 1) * 1.5, 8);
+                
+                arcGroup.append('path')
+                    .attr('class', `flow-arc ${direction}`)
+                    .attr('d', `M${source[0]},${source[1]}A${dr},${dr} 0 0,1 ${target[0]},${target[1]}`)
+                    .attr('stroke-width', strokeWidth);
+                
+                const otherCountry = direction === 'incoming' ? sourceCountry : targetCountry;
+                const otherData = direction === 'incoming' ? sourceData : targetData;
+                const otherRegion = direction === 'incoming' ? flow.source_region : flow.target_region;
+                const markerPos = direction === 'incoming' ? source : target;
+                
+                markerGroup.append('circle')
+                    .attr('cx', markerPos[0])
+                    .attr('cy', markerPos[1])
+                    .attr('r', Math.min(4 + Math.log(flow.count + 1) * 2, 12))
+                    .style('fill', otherRegion === 'Global North' ? '#d4a657' : '#2dd4bf')
+                    .style('stroke', '#fff')
+                    .style('stroke-width', 1.5)
+                    .style('cursor', 'pointer')
+                    .on('mouseover', (event) => showTooltip(event, otherCountry, otherRegion, flow.count))
+                    .on('mouseout', hideTooltip)
+                    .on('click', () => {
+                        document.getElementById('country-select').value = otherCountry;
+                        selectedCountry = otherCountry;
+                        updateVisualization();
+                    });
+            });
+            
+            const selectedData = citationData.countries.find(c => c.country === selectedCountry);
+            if (selectedData && selectedData.lon) {
+                const pos = projection([selectedData.lon, selectedData.lat]);
+                if (pos) {
+                    markerGroup.append('circle')
+                        .attr('cx', pos[0])
+                        .attr('cy', pos[1])
+                        .attr('r', 8)
+                        .style('fill', '#f97316')
+                        .style('stroke', '#fff')
+                        .style('stroke-width', 2);
+                }
+            }
+        }
+        
+        function updateStats(total, countries, north, south) {
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-countries').textContent = countries;
+            document.getElementById('stat-north').textContent = north;
+            document.getElementById('stat-south').textContent = south;
+        }
+        
+        function updateCitationList(flows) {
+            const listContainer = document.getElementById('citation-list');
+            const listTitle = document.getElementById('list-title');
+            
+            if (!flows.length) {
+                listContainer.innerHTML = `<div class="empty-state"><p>No connections</p></div>`;
+                return;
+            }
+            
+            listTitle.textContent = direction === 'incoming' ? 'Citing Countries' : 'Cited Countries';
+            
+            const sortedFlows = [...flows].sort((a, b) => b.count - a.count);
+            
+            listContainer.innerHTML = sortedFlows.map(flow => {
+                const country = direction === 'incoming' ? flow.source : flow.target;
+                const region = direction === 'incoming' ? flow.source_region : flow.target_region;
+                const regionClass = region === 'Global North' ? 'north' : 'south';
+                
+                return `
+                    <div class="citation-item ${regionClass}" data-country="${country}">
+                        <span>${country}</span>
+                        <span class="citation-count">${flow.count}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            listContainer.querySelectorAll('.citation-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.getElementById('country-select').value = item.dataset.country;
+                    selectedCountry = item.dataset.country;
+                    updateVisualization();
+                });
+            });
+        }
+        
+        function updateCasesList(cases) {
+            const casesTitle = document.getElementById('cases-title');
+            const casesCount = document.getElementById('cases-count');
+            const searchInput = document.getElementById('case-search');
+            const casesList = document.getElementById('cases-list');
+            
+            currentCases = cases;
+            
+            if (!cases.length) {
+                casesTitle.textContent = 'Cases';
+                casesCount.textContent = 'Select a country to view cases';
+                searchInput.disabled = true;
+                searchInput.value = '';
+                casesList.innerHTML = `
+                    <div class="cases-empty">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <p>Select a country to view<br>detailed case information</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            searchInput.disabled = false;
+            
+            if (direction === 'incoming') {
+                casesTitle.textContent = `Cases Citing ${selectedCountry}`;
+            } else {
+                casesTitle.textContent = `${selectedCountry}'s Citations`;
+            }
+            
+            casesCount.textContent = `${cases.length} citation${cases.length !== 1 ? 's' : ''} found`;
+            
+            renderCases(cases);
+        }
+        
+        function renderCases(cases) {
+            const casesList = document.getElementById('cases-list');
+            
+            // Group by source case for cleaner display
+            const groupedCases = {};
+            cases.forEach(c => {
+                const key = c.source_case_name + '|' + c.source;
+                if (!groupedCases[key]) {
+                    groupedCases[key] = {
+                        source_case_name: c.source_case_name,
+                        source_case_url: c.source_case_url,
+                        source_case_year: c.source_case_year,
+                        source: c.source,
+                        source_region: c.source_region,
+                        target: c.target,
+                        target_region: c.target_region,
+                        cited_cases: []
+                    };
+                }
+                groupedCases[key].cited_cases.push({
+                    name: c.cited_case_name,
+                    year: c.cited_year,
+                    target: c.target
+                });
+            });
+            
+            const casesArray = Object.values(groupedCases);
+            
+            // Sort by year (most recent first)
+            casesArray.sort((a, b) => (b.source_case_year || 0) - (a.source_case_year || 0));
+            
+            casesList.innerHTML = casesArray.map(caseGroup => {
+                const regionClass = (direction === 'incoming' ? caseGroup.source_region : caseGroup.target_region) === 'Global North' ? 'north' : 'south';
+                const countryTag = direction === 'incoming' ? caseGroup.source : caseGroup.target;
+                const countryRegion = direction === 'incoming' ? caseGroup.source_region : caseGroup.target_region;
+                const countryTagClass = countryRegion === 'Global North' ? '' : 'south';
+                
+                const citationsHtml = caseGroup.cited_cases.slice(0, 3).map(cited => `
+                    <div class="case-citation">
+                        <div class="case-citation-label">${direction === 'incoming' ? 'Cites' : 'Cited'}</div>
+                        ${cited.name}${cited.year ? ` (${cited.year})` : ''}
+                    </div>
+                `).join('');
+                
+                const moreCount = caseGroup.cited_cases.length - 3;
+                const moreHtml = moreCount > 0 ? `<div class="case-citation" style="color: var(--text-muted);">+ ${moreCount} more citation${moreCount > 1 ? 's' : ''}</div>` : '';
+                
+                return `
+                    <div class="case-card ${regionClass}">
+                        <div class="case-source">
+                            ${caseGroup.source_case_url 
+                                ? `<a href="${caseGroup.source_case_url}" target="_blank" rel="noopener">${caseGroup.source_case_name}</a>`
+                                : caseGroup.source_case_name
+                            }
+                        </div>
+                        <div class="case-meta">
+                            <span class="case-tag country ${countryTagClass}">${countryTag}</span>
+                            ${caseGroup.source_case_year ? `<span class="case-tag year">${caseGroup.source_case_year}</span>` : ''}
+                            <span class="case-tag">${caseGroup.cited_cases.length} citation${caseGroup.cited_cases.length > 1 ? 's' : ''}</span>
+                        </div>
+                        ${citationsHtml}
+                        ${moreHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function filterCases(query) {
+            if (!query.trim()) {
+                renderCases(currentCases);
+                return;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            const filtered = currentCases.filter(c => 
+                c.source_case_name.toLowerCase().includes(lowerQuery) ||
+                c.cited_case_name.toLowerCase().includes(lowerQuery) ||
+                c.source.toLowerCase().includes(lowerQuery) ||
+                c.target.toLowerCase().includes(lowerQuery)
+            );
+            
+            renderCases(filtered);
+            document.getElementById('cases-count').textContent = `${filtered.length} of ${currentCases.length} citations`;
+        }
+        
+        function showTooltip(event, country, region, count) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerHTML = `
+                <div class="tooltip-title">${country}</div>
+                <div class="tooltip-region">${region}</div>
+                <div class="tooltip-stat">${count} citation${count !== 1 ? 's' : ''}</div>
+            `;
+            tooltip.style.left = (event.pageX + 15) + 'px';
+            tooltip.style.top = (event.pageY - 10) + 'px';
+            tooltip.classList.add('visible');
+        }
+        
+        function hideTooltip() {
+            document.getElementById('tooltip').classList.remove('visible');
+        }
+        
+        function handleCountryHover(event, d) {
+            const countryName = numericToCountry[d.id];
+            if (countryName) {
+                const countryData = citationData.countries.find(c => c.country === countryName);
+                if (countryData) {
+                    const incoming = citationData.flows.filter(f => f.target === countryName)
+                        .reduce((sum, f) => sum + f.count, 0);
+                    const outgoing = citationData.flows.filter(f => f.source === countryName)
+                        .reduce((sum, f) => sum + f.count, 0);
+                    
+                    if (incoming > 0 || outgoing > 0) {
+                        const tooltip = document.getElementById('tooltip');
+                        tooltip.innerHTML = `
+                            <div class="tooltip-title">${countryName}</div>
+                            <div class="tooltip-region">${countryData.region}</div>
+                            <div class="tooltip-stat">Cited by: ${incoming}</div>
+                            <div class="tooltip-stat">Cites: ${outgoing}</div>
+                        `;
+                        tooltip.style.left = (event.pageX + 15) + 'px';
+                        tooltip.style.top = (event.pageY - 10) + 'px';
+                        tooltip.classList.add('visible');
+                    }
+                }
+            }
+            d3.select(event.target).classed('highlighted', true);
+        }
+        
+        function handleCountryOut(event, d) {
+            hideTooltip();
+            d3.select(event.target).classed('highlighted', false);
+        }
+        
+        function handleCountryClick(event, d) {
+            const countryName = numericToCountry[d.id];
+            if (countryName) {
+                const hasData = citationData.flows.some(f => 
+                    f.source === countryName || f.target === countryName
+                );
+                if (hasData) {
+                    document.getElementById('country-select').value = countryName;
+                    selectedCountry = countryName;
+                    updateVisualization();
+                }
+            }
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func(...args), wait);
+            };
+        }
+        
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+</html>

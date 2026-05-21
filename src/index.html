@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#FBF8F1" />
+  <title>climatecaselab — Climate Litigation Across Borders</title>
+  <meta name="description" content="A public companion to a doctoral study of transnational citation patterns in climate litigation. Explore the citation map, the catalytic cases, and the methodology." />
+  <meta property="og:title" content="climatecaselab — Climate Litigation Across Borders" />
+  <meta property="og:description" content="Transnational citation patterns in climate litigation. Interactive map and catalytic cases dashboard." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://climatecaselab.org/" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%233A5BA0'/%3E%3C/svg%3E" />
+
+  <!-- Theme-preload runs BEFORE the stylesheet so we never paint the wrong theme. -->
+  <script src="scripts/theme-preload.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/shell.css" />
+  <link rel="stylesheet" href="styles/landing.css" />
+  <link rel="stylesheet" href="styles/cases.css" />
+  <link rel="stylesheet" href="styles/map.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <a href="#/" class="wordmark" aria-label="ClimateCaseLab — home">ClimateCaseLab</a>
+
+    <nav class="uppertab-bar" role="tablist" aria-label="Top-level navigation">
+      <button type="button" role="tab" data-panel="landing" aria-controls="panel-landing" aria-selected="true">Landing</button>
+      <button type="button" role="tab" data-panel="map" aria-controls="panel-map" aria-selected="false" tabindex="-1">Interactive Map</button>
+      <button type="button" role="tab" data-panel="cases" aria-controls="panel-cases" aria-selected="false" tabindex="-1">Catalytic Cases</button>
+    </nav>
+
+    <button type="button" class="theme-toggle" aria-label="Toggle theme">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <div class="uppertab-track" id="uppertab-track">
+
+      <!-- ============================ LANDING ============================ -->
+      <section class="uppertab-panel" role="tabpanel" id="panel-landing" data-panel="landing" aria-labelledby="panel-landing">
+        <nav class="subtab-bar" role="tablist" aria-label="Landing sections">
+          <button type="button" role="tab" data-subtab="about" aria-current="true">About this project</button>
+          <button type="button" role="tab" data-subtab="methodology" aria-current="false">Methodology</button>
+          <button type="button" role="tab" data-subtab="collaboration" aria-current="false">Collaboration</button>
+        </nav>
+
+        <div class="container landing-body">
+
+          <!-- ABOUT -->
+          <section id="section-about" class="landing-section">
+            <p class="landing-eyebrow"><span class="mono">climatecaselab — Global Trends, May 2026</span></p>
+            <h1 class="landing-hero">Climate Litigation Across Borders</h1>
+            <p class="landing-lede"></p>
+
+            <div class="landing-tiles">
+              <a class="tile" href="#/map">
+                <h3>Interactive Map</h3>
+                <p></p>
+                <span class="tile-cta">Explore the map →</span>
+              </a>
+              <a class="tile" href="#/cases">
+                <h3>Catalytic Cases</h3>
+                <p></p>
+                <span class="tile-cta">See the five cases →</span>
+              </a>
+              <a class="tile" href="#/landing/methodology">
+                <h3>Methodology</h3>
+                <p></p>
+                <span class="tile-cta">Read the methodology →</span>
+              </a>
+            </div>
+
+            <blockquote class="landing-pullquote">
+              <p></p>
+              <cite></cite>
+            </blockquote>
+          </section>
+
+          <!-- METHODOLOGY -->
+          <section id="section-methodology" class="landing-section">
+            <p class="landing-eyebrow"><span class="mono">§ Methodology</span></p>
+            <h1>Research Methodology</h1>
+            <div class="methodology-prose"></div>
+            <figure class="methodology-diagram" aria-labelledby="md-title" aria-describedby="md-desc">
+              <svg viewBox="0 0 920 220" xmlns="http://www.w3.org/2000/svg" role="img">
+                <title id="md-title">Four-stage condensation of the citation-extraction pipeline</title>
+                <desc id="md-desc">From left to right: filter the corpus to judicial decisions, extract every case reference, classify by functional use and sixfold type, and verify each result against the source text.</desc>
+                <defs>
+                  <marker id="md-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                  </marker>
+                </defs>
+                <g font-family="var(--font-mono)" font-size="11" fill="currentColor">
+                  <g transform="translate(20,40)">
+                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
+                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Filter</text>
+                    <text x="14" y="44">2,924 docs in corpus</text>
+                    <text x="14" y="62">└ 654 judicial decisions</text>
+                    <text x="14" y="92">keep only documents that</text>
+                    <text x="14" y="106">contain a court's reasoning</text>
+                  </g>
+                  <g transform="translate(240,40)">
+                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
+                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Extract</text>
+                    <text x="14" y="44">12 citation patterns</text>
+                    <text x="14" y="62">→ every case reference</text>
+                    <text x="14" y="92">recall-first; verification</text>
+                    <text x="14" y="106">happens later</text>
+                  </g>
+                  <g transform="translate(460,40)">
+                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
+                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Classify</text>
+                    <text x="14" y="44">functional use (Nollkaemper)</text>
+                    <text x="14" y="62">+ origin court tier</text>
+                    <text x="14" y="92">+ sixfold typology of</text>
+                    <text x="14" y="106">national / international ends</text>
+                  </g>
+                  <g transform="translate(680,40)">
+                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
+                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Verify</text>
+                    <text x="14" y="44">match each candidate</text>
+                    <text x="14" y="62">against the source text</text>
+                    <text x="14" y="92">confidence score flags</text>
+                    <text x="14" y="106">below-threshold output</text>
+                  </g>
+                  <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#md-arrow)">
+                    <line x1="200" y1="110" x2="240" y2="110" />
+                    <line x1="420" y1="110" x2="460" y2="110" />
+                    <line x1="640" y1="110" x2="680" y2="110" />
+                  </g>
+                </g>
+              </svg>
+              <figcaption class="methodology-caption"></figcaption>
+            </figure>
+            <p class="methodology-cta">Full methodology paper: forthcoming.</p>
+          </section>
+
+          <!-- COLLABORATION -->
+          <section id="section-collaboration" class="landing-section">
+            <p class="landing-eyebrow"><span class="mono">§ Collaboration</span></p>
+            <h1 class="collab-heading"></h1>
+            <p class="collab-body"></p>
+            <p class="collab-instructions"></p>
+            <p>
+              <button type="button" class="collab-mailto"
+                      data-contact-email="hello@climatecaselab.org">
+                <span class="mailto-label">Email us a correction or suggestion</span>
+                <span class="mailto-address mono"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+              </button>
+            </p>
+            <div class="cited-literature"></div>
+          </section>
+
+          <footer class="site-footer container" role="contentinfo">
+            <div class="footer-grid">
+              <dl>
+                <dt>Authorship</dt>
+                <dd>Lucas Biasetton — Ph.D. researcher, University of São Paulo &amp; Grantham Research Institute on Climate Change and the Environment, London School of Economics.</dd>
+                <dd>Gustavo dos Santos Rodrigues da Silva, LL.B. (University of São Paulo) — independent researcher in data and computer sciences.</dd>
+              </dl>
+              <dl>
+                <dt>Snapshot</dt>
+                <dd class="mono small" data-snapshot-label>Sabin Global Trends — May 2026</dd>
+                <dt style="margin-top: var(--sp-4)">Licensing</dt>
+                <dd class="small">
+                  Content &amp; data: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+                  &nbsp;·&nbsp;
+                  Code: <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT</a>
+                </dd>
+              </dl>
+            </div>
+          </footer>
+
+        </div><!-- /.container -->
+      </section>
+
+      <!-- ============================ MAP ============================ -->
+      <section class="uppertab-panel" role="tabpanel" id="panel-map" data-panel="map" inert aria-hidden="true">
+        <div class="map-shell">
+          <aside class="map-controls" aria-label="Map controls">
+            <header class="map-controls-header">
+              <h2>Explore citation flows</h2>
+              <p class="muted small">Pick one or more jurisdictions to see which other courts cite them — or which courts they cite — and read the underlying cases.</p>
+            </header>
+
+            <section class="control-block">
+              <header class="block-header">
+                <h3>Jurisdictions</h3>
+                <button type="button" class="link-btn js-clear-countries" hidden>Clear all</button>
+              </header>
+              <div class="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                <div class="chip-stack js-chips"></div>
+                <input type="search" class="combobox-input" placeholder="Add a jurisdiction…" aria-label="Search jurisdictions" />
+                <ul class="combobox-menu" role="listbox" hidden></ul>
+              </div>
+              <select multiple class="sr-only js-country-fallback" aria-label="Selected jurisdictions"></select>
+            </section>
+
+            <section class="control-block">
+              <header class="block-header"><h3>Direction</h3></header>
+              <div class="direction-toggle" role="radiogroup" aria-label="Citation direction">
+                <button type="button" role="radio" aria-checked="true" data-dir="in" title="Show citations into the selected jurisdictions">
+                  ← Cited by
+                </button>
+                <button type="button" role="radio" aria-checked="false" data-dir="out" title="Show citations from the selected jurisdictions">
+                  Cites →
+                </button>
+              </div>
+            </section>
+
+            <section class="control-block stats-card">
+              <header class="block-header"><h3>Statistics</h3></header>
+              <dl class="stats-grid">
+                <div><dt>Citations</dt><dd class="mono js-stat-citations">0</dd></div>
+                <div><dt>Countries</dt><dd class="mono js-stat-countries">0</dd></div>
+                <div>
+                  <dt><button type="button" class="ns-explainer" data-region="north" aria-describedby="ns-explainer-popover">North</button></dt>
+                  <dd class="mono js-stat-north">0</dd>
+                  <small class="mono js-stat-north-pct"></small>
+                </div>
+                <div>
+                  <dt><button type="button" class="ns-explainer" data-region="south" aria-describedby="ns-explainer-popover">South</button></dt>
+                  <dd class="mono js-stat-south">0</dd>
+                  <small class="mono js-stat-south-pct"></small>
+                </div>
+              </dl>
+            </section>
+
+            <section class="control-block">
+              <header class="block-header"><h3>Connected jurisdictions</h3></header>
+              <ul class="connected-list js-connected" aria-live="polite"></ul>
+            </section>
+          </aside>
+
+          <div class="map-canvas-wrap">
+            <svg class="map-canvas" id="map-canvas" role="img" aria-label="World citation flow map">
+              <defs>
+                <marker id="arc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+                </marker>
+              </defs>
+              <g class="graticule-layer"></g>
+              <g class="land-layer"></g>
+              <g class="arc-layer"></g>
+              <g class="marker-layer"></g>
+              <g class="label-layer"></g>
+            </svg>
+            <div class="map-tooltip" role="tooltip" hidden></div>
+            <div class="map-aria-live sr-only" aria-live="polite"></div>
+            <div class="map-legend" aria-hidden="false">
+              <button type="button" class="legend-row" data-dir="in" aria-pressed="true">
+                <span class="legend-swatch in"></span>
+                <span class="legend-label">Cited by — incoming citations</span>
+              </button>
+              <button type="button" class="legend-row" data-dir="out" aria-pressed="false">
+                <span class="legend-swatch out"></span>
+                <span class="legend-label">Cites — outgoing citations</span>
+              </button>
+            </div>
+            <div class="map-zoom-controls" aria-label="Map zoom">
+              <button type="button" class="js-zoom-in" aria-label="Zoom in (shortcut +)">+</button>
+              <button type="button" class="js-zoom-out" aria-label="Zoom out (shortcut −)">−</button>
+              <button type="button" class="js-zoom-reset" aria-label="Reset zoom (shortcut 0)">⟲</button>
+            </div>
+            <div class="ns-popover" id="ns-explainer-popover" role="tooltip" hidden></div>
+          </div>
+
+          <aside class="map-cases" aria-label="Cases for the current flow set">
+            <header class="cases-header">
+              <h2>Cases <span class="mono small js-cases-count"></span></h2>
+              <p class="js-cases-empty muted small">Select one or more jurisdictions to explore the cases.</p>
+              <div class="cases-controls">
+                <input type="search" class="js-cases-search" placeholder="Filter by case or country…" aria-label="Filter cases" />
+                <select class="js-cases-sort" aria-label="Sort cases">
+                  <option value="citations">By citation count (desc)</option>
+                  <option value="year">By year (desc)</option>
+                  <option value="name">Alphabetical</option>
+                </select>
+              </div>
+            </header>
+            <ol class="cases-list js-cases-list"></ol>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============================ CASES ============================ -->
+      <section class="uppertab-panel" role="tabpanel" id="panel-cases" data-panel="cases" inert aria-hidden="true">
+        <div class="container cases-shell">
+          <header class="cases-section-header">
+            <p class="landing-eyebrow"><span class="mono">§ Catalytic Cases</span></p>
+            <h1>Five Decisions Shaping a Transnational Climate Jurisprudence</h1>
+            <div class="cases-intro">
+              <p>A <em>catalytic case</em> is a decision whose holdings have been the load-bearing arguments other courts have borrowed.</p>
+              <p>The five cards below are the most-cited source decisions across the corpus — the cases other jurisdictions reach for when they have to articulate what climate-litigation reasoning looks like. The selection is data-driven, recomputed every time the dataset is refreshed; the ranking is not editorial.</p>
+              <p>Each card reveals progressively more detail when opened: the full table of citing jurisdictions, a year-by-year stack of citations, the case's key holdings, and the citing decisions themselves grouped by country.</p>
+            </div>
+          </header>
+          <div class="catalytic-grid js-catalytic-grid" role="list"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="scripts/main.js"></script>
+</body>
+</html>

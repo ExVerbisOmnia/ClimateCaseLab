@@ -1,0 +1,18 @@
+{
+  "_comment": "Maps raw spelling variants from the XLSX to a single canonical name. Add new variants here if QA report flags them.",
+  "United States": "United States",
+  "USA": "United States",
+  "US": "United States",
+  "Puerto Rico (United States)": "United States",
+  "United Kingdom": "United Kingdom",
+  "UK": "United Kingdom",
+  "Scotland": "United Kingdom",
+  "Germany / United States": "Germany",
+  "International / Norway": "Norway",
+  "International (European Court of Human Rights)": "Council of Europe",
+  "European Union": "European Union",
+  "Council of Europe": "Council of Europe",
+  "United Nations": "United Nations",
+  "Organization of American States": "Organization of American States",
+  "International": "International"
+}

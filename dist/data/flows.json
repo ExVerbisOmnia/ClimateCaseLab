@@ -1,0 +1,1186 @@
+[
+  {
+    "id": "f_0001",
+    "source": "Argentina",
+    "target": "Germany",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0002",
+    "source": "Argentina",
+    "target": "International",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0003",
+    "source": "Argentina",
+    "target": "Netherlands",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0004",
+    "source": "Argentina",
+    "target": "Norway",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0005",
+    "source": "Argentina",
+    "target": "South Africa",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0006",
+    "source": "Argentina",
+    "target": "United Kingdom",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0007",
+    "source": "Argentina",
+    "target": "United States",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0008",
+    "source": "Australia",
+    "target": "Belgium",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 3
+  },
+  {
+    "id": "f_0009",
+    "source": "Australia",
+    "target": "Canada",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0010",
+    "source": "Australia",
+    "target": "Colombia",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0011",
+    "source": "Australia",
+    "target": "France",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0012",
+    "source": "Australia",
+    "target": "Germany",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0013",
+    "source": "Australia",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0014",
+    "source": "Australia",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 10
+  },
+  {
+    "id": "f_0015",
+    "source": "Australia",
+    "target": "New Zealand",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 3
+  },
+  {
+    "id": "f_0016",
+    "source": "Australia",
+    "target": "United Kingdom",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0017",
+    "source": "Australia",
+    "target": "United States",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 7
+  },
+  {
+    "id": "f_0018",
+    "source": "Austria",
+    "target": "Germany",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0019",
+    "source": "Austria",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0020",
+    "source": "Belgium",
+    "target": "Australia",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0021",
+    "source": "Belgium",
+    "target": "European Union",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0022",
+    "source": "Belgium",
+    "target": "France",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0023",
+    "source": "Belgium",
+    "target": "Germany",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 5
+  },
+  {
+    "id": "f_0024",
+    "source": "Belgium",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 4
+  },
+  {
+    "id": "f_0025",
+    "source": "Belgium",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 9
+  },
+  {
+    "id": "f_0026",
+    "source": "Belgium",
+    "target": "Pakistan",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 2
+  },
+  {
+    "id": "f_0027",
+    "source": "Belgium",
+    "target": "United States",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 4
+  },
+  {
+    "id": "f_0028",
+    "source": "Brazil",
+    "target": "Chile",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0029",
+    "source": "Brazil",
+    "target": "Council of Europe",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0030",
+    "source": "Brazil",
+    "target": "France",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 4
+  },
+  {
+    "id": "f_0031",
+    "source": "Brazil",
+    "target": "Germany",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 8
+  },
+  {
+    "id": "f_0032",
+    "source": "Brazil",
+    "target": "International",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0033",
+    "source": "Brazil",
+    "target": "Netherlands",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 6
+  },
+  {
+    "id": "f_0034",
+    "source": "Brazil",
+    "target": "Pakistan",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 3
+  },
+  {
+    "id": "f_0035",
+    "source": "Brazil",
+    "target": "South Africa",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0036",
+    "source": "Brazil",
+    "target": "United States",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 11
+  },
+  {
+    "id": "f_0037",
+    "source": "Canada",
+    "target": "Australia",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0038",
+    "source": "Canada",
+    "target": "Ireland",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0039",
+    "source": "Canada",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 4
+  },
+  {
+    "id": "f_0040",
+    "source": "Canada",
+    "target": "Pakistan",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0041",
+    "source": "Canada",
+    "target": "South Africa",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0042",
+    "source": "Canada",
+    "target": "United Kingdom",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0043",
+    "source": "Canada",
+    "target": "United States",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 4
+  },
+  {
+    "id": "f_0044",
+    "source": "Colombia",
+    "target": "United Nations",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0045",
+    "source": "Czechia",
+    "target": "Colombia",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 3
+  },
+  {
+    "id": "f_0046",
+    "source": "Czechia",
+    "target": "Council of Europe",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 3
+  },
+  {
+    "id": "f_0047",
+    "source": "Czechia",
+    "target": "France",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0048",
+    "source": "Czechia",
+    "target": "Germany",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 5
+  },
+  {
+    "id": "f_0049",
+    "source": "Czechia",
+    "target": "International",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 5
+  },
+  {
+    "id": "f_0050",
+    "source": "Czechia",
+    "target": "Ireland",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0051",
+    "source": "Czechia",
+    "target": "Nepal",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0052",
+    "source": "Czechia",
+    "target": "Netherlands",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 5
+  },
+  {
+    "id": "f_0053",
+    "source": "Czechia",
+    "target": "United States",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0054",
+    "source": "Finland",
+    "target": "Council of Europe",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 3
+  },
+  {
+    "id": "f_0055",
+    "source": "Finland",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 11
+  },
+  {
+    "id": "f_0056",
+    "source": "France",
+    "target": "European Union",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0057",
+    "source": "France",
+    "target": "Ireland",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0058",
+    "source": "France",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0059",
+    "source": "France",
+    "target": "Norway",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0060",
+    "source": "France",
+    "target": "United Kingdom",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0061",
+    "source": "Germany",
+    "target": "European Union",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0062",
+    "source": "Germany",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0063",
+    "source": "Germany",
+    "target": "Ireland",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0064",
+    "source": "Germany",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 3
+  },
+  {
+    "id": "f_0065",
+    "source": "India",
+    "target": "International",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0066",
+    "source": "India",
+    "target": "Netherlands",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0067",
+    "source": "International",
+    "target": "Argentina",
+    "source_region": "International",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0068",
+    "source": "International",
+    "target": "Australia",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0069",
+    "source": "International",
+    "target": "Canada",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0070",
+    "source": "International",
+    "target": "Colombia",
+    "source_region": "International",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0071",
+    "source": "International",
+    "target": "Costa Rica",
+    "source_region": "International",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0072",
+    "source": "International",
+    "target": "Council of Europe",
+    "source_region": "International",
+    "target_region": "International",
+    "count": 20
+  },
+  {
+    "id": "f_0073",
+    "source": "International",
+    "target": "European Union",
+    "source_region": "International",
+    "target_region": "International",
+    "count": 198
+  },
+  {
+    "id": "f_0074",
+    "source": "International",
+    "target": "Finland",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0075",
+    "source": "International",
+    "target": "France",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0076",
+    "source": "International",
+    "target": "Germany",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 10
+  },
+  {
+    "id": "f_0077",
+    "source": "International",
+    "target": "India",
+    "source_region": "International",
+    "target_region": "Global South",
+    "count": 2
+  },
+  {
+    "id": "f_0078",
+    "source": "International",
+    "target": "Ireland",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0079",
+    "source": "International",
+    "target": "Nepal",
+    "source_region": "International",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0080",
+    "source": "International",
+    "target": "Netherlands",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 7
+  },
+  {
+    "id": "f_0081",
+    "source": "International",
+    "target": "Pakistan",
+    "source_region": "International",
+    "target_region": "Global South",
+    "count": 3
+  },
+  {
+    "id": "f_0082",
+    "source": "International",
+    "target": "United Kingdom",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 8
+  },
+  {
+    "id": "f_0083",
+    "source": "International",
+    "target": "United Nations",
+    "source_region": "International",
+    "target_region": "International",
+    "count": 19
+  },
+  {
+    "id": "f_0084",
+    "source": "International",
+    "target": "United States",
+    "source_region": "International",
+    "target_region": "Global North",
+    "count": 7
+  },
+  {
+    "id": "f_0085",
+    "source": "Ireland",
+    "target": "Council of Europe",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0086",
+    "source": "Ireland",
+    "target": "European Union",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 4
+  },
+  {
+    "id": "f_0087",
+    "source": "Ireland",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0088",
+    "source": "Ireland",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 3
+  },
+  {
+    "id": "f_0089",
+    "source": "Ireland",
+    "target": "Norway",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0090",
+    "source": "Ireland",
+    "target": "United Kingdom",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 12
+  },
+  {
+    "id": "f_0091",
+    "source": "Italy",
+    "target": "France",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0092",
+    "source": "Italy",
+    "target": "Germany",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0093",
+    "source": "Italy",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0094",
+    "source": "Italy",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0095",
+    "source": "Kenya",
+    "target": "South Africa",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 2
+  },
+  {
+    "id": "f_0096",
+    "source": "Kenya",
+    "target": "United States",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0097",
+    "source": "Luxembourg",
+    "target": "Netherlands",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0098",
+    "source": "Netherlands",
+    "target": "Brazil",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0099",
+    "source": "Netherlands",
+    "target": "Colombia",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0100",
+    "source": "Netherlands",
+    "target": "Council of Europe",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 5
+  },
+  {
+    "id": "f_0101",
+    "source": "Netherlands",
+    "target": "India",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0102",
+    "source": "Netherlands",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0103",
+    "source": "Netherlands",
+    "target": "Pakistan",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 5
+  },
+  {
+    "id": "f_0104",
+    "source": "Netherlands",
+    "target": "United States",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 4
+  },
+  {
+    "id": "f_0105",
+    "source": "New Zealand",
+    "target": "Australia",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 11
+  },
+  {
+    "id": "f_0106",
+    "source": "New Zealand",
+    "target": "Canada",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0107",
+    "source": "New Zealand",
+    "target": "Council of Europe",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0108",
+    "source": "New Zealand",
+    "target": "Germany",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0109",
+    "source": "New Zealand",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0110",
+    "source": "New Zealand",
+    "target": "Ireland",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0111",
+    "source": "New Zealand",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 5
+  },
+  {
+    "id": "f_0112",
+    "source": "New Zealand",
+    "target": "United Kingdom",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 13
+  },
+  {
+    "id": "f_0113",
+    "source": "New Zealand",
+    "target": "United States",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 8
+  },
+  {
+    "id": "f_0114",
+    "source": "Norway",
+    "target": "Council of Europe",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 3
+  },
+  {
+    "id": "f_0115",
+    "source": "Norway",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0116",
+    "source": "Norway",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0117",
+    "source": "Norway",
+    "target": "United Kingdom",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0118",
+    "source": "Panama",
+    "target": "Colombia",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0119",
+    "source": "Papua New Guinea",
+    "target": "Netherlands",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0120",
+    "source": "Papua New Guinea",
+    "target": "Pakistan",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0121",
+    "source": "Philippines",
+    "target": "Australia",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0122",
+    "source": "Philippines",
+    "target": "Colombia",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0123",
+    "source": "Philippines",
+    "target": "Germany",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0124",
+    "source": "Philippines",
+    "target": "Netherlands",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 3
+  },
+  {
+    "id": "f_0125",
+    "source": "Philippines",
+    "target": "Organization of American States",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0126",
+    "source": "Philippines",
+    "target": "Pakistan",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0127",
+    "source": "Philippines",
+    "target": "United States",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 4
+  },
+  {
+    "id": "f_0128",
+    "source": "Portugal",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 5
+  },
+  {
+    "id": "f_0129",
+    "source": "Romania",
+    "target": "European Union",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 4
+  },
+  {
+    "id": "f_0130",
+    "source": "Romania",
+    "target": "Ireland",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0131",
+    "source": "South Africa",
+    "target": "Namibia",
+    "source_region": "Global South",
+    "target_region": "Global South",
+    "count": 1
+  },
+  {
+    "id": "f_0132",
+    "source": "South Africa",
+    "target": "United Nations",
+    "source_region": "Global South",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0133",
+    "source": "South Africa",
+    "target": "United States",
+    "source_region": "Global South",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0134",
+    "source": "South Korea",
+    "target": "Australia",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0135",
+    "source": "South Korea",
+    "target": "Germany",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 6
+  },
+  {
+    "id": "f_0136",
+    "source": "South Korea",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 4
+  },
+  {
+    "id": "f_0137",
+    "source": "United Kingdom",
+    "target": "Australia",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 3
+  },
+  {
+    "id": "f_0138",
+    "source": "United Kingdom",
+    "target": "Council of Europe",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 2
+  },
+  {
+    "id": "f_0139",
+    "source": "United Kingdom",
+    "target": "European Union",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 15
+  },
+  {
+    "id": "f_0140",
+    "source": "United Kingdom",
+    "target": "International",
+    "source_region": "Global North",
+    "target_region": "International",
+    "count": 1
+  },
+  {
+    "id": "f_0141",
+    "source": "United Kingdom",
+    "target": "Ireland",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 8
+  },
+  {
+    "id": "f_0142",
+    "source": "United Kingdom",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 3
+  },
+  {
+    "id": "f_0143",
+    "source": "United Kingdom",
+    "target": "Norway",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0144",
+    "source": "United Kingdom",
+    "target": "United States",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0145",
+    "source": "United States",
+    "target": "Australia",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0146",
+    "source": "United States",
+    "target": "Canada",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 1
+  },
+  {
+    "id": "f_0147",
+    "source": "United States",
+    "target": "Netherlands",
+    "source_region": "Global North",
+    "target_region": "Global North",
+    "count": 2
+  },
+  {
+    "id": "f_0148",
+    "source": "United States",
+    "target": "Pakistan",
+    "source_region": "Global North",
+    "target_region": "Global South",
+    "count": 1
+  }
+]

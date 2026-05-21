@@ -1,0 +1,138 @@
+/* tokens.css — single source of truth for design tokens.
+   Light values default on :root; dark values override under [data-theme="dark"].
+   See specs/specs-v1.md §7. */
+
+:root {
+  /* Surfaces & ink — light */
+  --surface:           #FBF8F1;
+  --surface-1:         #FFFFFF;
+  --surface-2:         #F2EEE3;
+  --border:            #E5DFD0;
+  --border-strong:     #B7AE99;
+  --text:              #1B1F26;
+  --text-muted:        #5C6068;
+  --text-strong:       #0C0F14;
+
+  /* Accents */
+  --accent-cool:       #3A5BA0;
+  --accent-cool-2:     #8B7BC4;
+  --accent-warm:       #E89F6B;
+  --accent-warm-2:     #D97A66;
+
+  /* Flow arc colors */
+  --flow-in:           #3A5BA0;
+  --flow-out:          #E89F6B;
+
+  /* Regions */
+  --region-north:      #7A8FBF;
+  --region-south:      #9F8CC9;
+  --region-international: #9AA1B0;
+
+  /* Map fills */
+  --map-land:          #ECE7D9;
+  --map-land-hover:    #DCD5C2;
+  --map-land-implied:  #D7CBA8;
+  --map-graticule:     #D8D1BE;
+
+  /* Catalytic case signature colors */
+  --case-1:            #3A5BA0;
+  --case-2:            #D97A66;
+  --case-3:            #5C8A6B;
+  --case-4:            #E89F6B;
+  --case-5:            #8B7BC4;
+
+  /* Type stack */
+  --font-display:      'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+  --font-body:         'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:         'JetBrains Mono', 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* Type scale */
+  --ts-display: 3.0rem;
+  --ts-h1:      2.0rem;
+  --ts-h2:      1.5rem;
+  --ts-h3:      1.15rem;
+  --ts-body:    1.0rem;
+  --ts-small:   0.875rem;
+  --ts-micro:   0.75rem;
+
+  /* Spacing scale (8-pt grid) */
+  --sp-0:  0;
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-24: 96px;
+
+  /* Radii */
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-full: 999px;
+
+  /* Elevation */
+  --el-1: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --el-2: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --el-2-inset: 0 0 0 1px var(--border);
+
+  /* Header heights — kept in sync with shell.css and used for scroll offsets */
+  --header-height: 56px;
+  --subtab-height: 48px;
+
+  /* Easing & motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur:  320ms;
+  --dur-fast: 200ms;
+
+  /* Misc */
+  --contact-email: 'hello@climatecaselab.org';
+}
+
+[data-theme="dark"] {
+  --surface:           #161A22;
+  --surface-1:         #1E232D;
+  --surface-2:         #252B37;
+  --border:            #2F3543;
+  --border-strong:     #4A5266;
+  --text:              #E8EAEE;
+  --text-muted:        #9AA1B0;
+  --text-strong:       #F4F5F8;
+
+  --accent-cool:       #7A9CE0;
+  --accent-cool-2:     #B2A4E0;
+  --accent-warm:       #F2B187;
+  --accent-warm-2:     #E68F7C;
+
+  --flow-in:           #7A9CE0;
+  --flow-out:          #F2B187;
+
+  --region-north:      #9DAFCF;
+  --region-south:      #B6A7DC;
+  --region-international: #C0C7D3;
+
+  --map-land:          #252B37;
+  --map-land-hover:    #2E3543;
+  --map-land-implied:  #384057;
+  --map-graticule:     #2F3543;
+
+  --case-1:            #7A9CE0;
+  --case-2:            #E68F7C;
+  --case-3:            #7BAA88;
+  --case-4:            #F2B187;
+  --case-5:            #B2A4E0;
+
+  --el-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --el-2: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --el-2-inset: inset 0 0 0 1px var(--border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 180ms;
+    --dur-fast: 120ms;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+  }
+}
