@@ -24,8 +24,10 @@ dist/
 # --- Heavy doc/reference artifacts (not needed to render the site) ---
 build/screenshots/
 
-# --- Raw research data (per CLAUDE.md: don't ship the XLSX) ---
-refs/data/*.xlsx
+# --- Internal docs, specs, seeds & mockups (kept local, off the public repo) ---
+# Supersedes the old refs/data/*.xlsx rule — the whole refs/ tree is now local-only.
+/specs/
+/refs/
 
 # --- Claude tooling local state ---
 .claude/sip-state/
