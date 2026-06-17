@@ -1,108 +1,105 @@
 // landing.js — renders content into the static Landing skeleton.
-// Pulls copy from src/data/landing-content.json (a pre-baked JSON view of
-// refs/specs/landing-content.md — see build/build_landing_content.py).
+// Copy mirrors refs/specs/landing-content.md (the locked Landing seed).
 // To keep the v1 build pipeline tight, the copy is inlined here.
 
-import { $, $$, el, toast, fetchJSON } from './utils.js';
+import { $, el, toast } from './utils.js';
 
 const COPY = {
-  lede: "This site is a public-facing companion to a doctoral study on transnational citation patterns in climate litigation. It condenses, for a wider audience, the patterns of cross-border judicial dialogue that emerge from a recent snapshot of the world's climate cases — who cites whom, how often, and along which fault lines.",
-  tiles: [
-    {
-      title: 'Interactive Map',
-      body: "A country-level view of citation flows between national and international courts. Select one or several jurisdictions, switch between cited-by and cites directions, and read the cases that produce each connection. Useful for spotting where doctrinal transplantation is dense — and where it is conspicuously absent.",
-      cta: 'Explore the map →',
-      href: '#/map',
-    },
-    {
-      title: 'Catalytic Cases',
-      body: "Five decisions whose reasoning has travelled furthest: Urgenda, Neubauer, Massachusetts v. EPA, Shell PLC v. Netherlands, and KlimaSeniorinnen. Each card unfolds into the full ecology of citing jurisdictions, a year-by-year timeline of uptake, and a short summary of the case's central holdings.",
-      cta: 'See the five cases →',
-      href: '#/cases',
-    },
-    {
-      title: 'Methodology',
-      body: "A seven-phase data-processing pipeline turns the Climate Case Chart corpus (Sabin) into structured citation data: documents are filtered to judicial decisions, every reference to case law is extracted, each cited court's origin is identified, and the resulting pair is sorted under a sixfold typology of court-to-court relations.",
-      cta: 'Read the methodology →',
-      href: '#/landing/methodology',
-    },
-  ],
-  pullquote: {
-    text: '“The map of climate jurisprudence remains, for now, an asymmetric one: roughly ninety-six per cent of cross-border citations travel between courts of the Global North. The South appears mostly as a place that reads — less than as a place that is read.”',
-    cite: '— climatecaselab, from the May 2026 corpus snapshot',
+  about: {
+    paragraphs: [
+      "We have created this website to share our ongoing doctoral research on transnational citation patterns in climate litigation. This research we have been developing, and the tools that inform it, is an ongoing effort to map citations across borders. We wanted to understand whether courts were actually using foreign case law and under which conditions. The use of natural language processing tools was a pre-requisite for a large-scale investigation. Our methodology has been improving for the past eight months, since we began this endeavor. As new cases arise every other day, this is an ongoing and probably never-ending effort. As the technology we use improves, and as new data comes to light, we want to update the findings produced through the tooling this research applies. For that reason, we know we will never have a final version subject to a crystalized publication under a paper or any other form.",
+      "As firm believers of the collaboration between researchers, we understand this data could be useful for researchers in climate litigation, but such peers could also be helpful in our task, contributing with improvements and manual review of thousands of documents and information that we could never do by ourselves — regardless of how many natural language processing tools we apply. We have decided to share what we have found so far to push this research further.",
+      "We hope you find this data useful, and please let us know if you would like to chat about it or have any contributions of any kind.",
+    ],
+    authorship: [
+      "Lucas Biasetton, doctoral researcher at the University of São Paulo (USP).",
+      "Gustavo Rodrigues, LL.B. (USP), independent researcher in computer sciences.",
+    ],
   },
   methodology: {
-    standfirst: "A citation, in this corpus, is any reference by one court's reasoning to the reasoning of another — formal, narrative, or shorthand. A transnational citation is one whose two endpoints sit in different legal systems. Counting them allows us to read the silent geography of climate jurisprudence: where doctrines travel, where they are received, and where the borders prove inconvenient.",
-    paragraphs: [
-      "The corpus is the Sabin Center's Climate Case Chart, May 2026 snapshot — some 2,924 judicial decisions across roughly 102 jurisdictions. Not every entry in the chart is itself a judicial decision (the chart also catalogues pleadings, administrative notices, and settlements), so the first task is always to filter the corpus down to documents that actually contain a court's reasoning.",
-      "What follows is a seven-phase pipeline carried out document by document. Phase 0 separates judicial decisions from the rest. Phase 1 identifies the citing court's jurisdiction by metadata lookup. Phase 2 reads the full text and extracts every reference to case law — across twelve textual patterns, from traditional citations and parallel reporters down to one-word shorthand (“the Urgenda case”, “as in Abraham”). Phase 3 classifies how each citation is being used in the citing court's reasoning, following Nollkaemper's functional typology. Phase 4 identifies the cited case's origin court through a three-tier procedure: a dictionary of more than eighty courts, a model-assisted lookup, and (in future iterations) a web-search fallback. Phase 5 applies the sixfold typology that captures whether each endpoint is a national or international court — and, for international tribunals, whether the citing party is a member state. Phase 6 verifies each candidate citation against the source text, with a confidence score that flags any below-threshold output for manual review.",
-      "The pipeline was not its first draft. An earlier single-pass version asked one model to extract and classify in a single call, which encouraged confident-sounding inventions; the current design deliberately separates recall (extract every plausible reference, even at the price of noise) from precision (verify each candidate against the source text it allegedly came from). An initial commitment to a frontier model proved incompatible with a doctoral budget, so the pipeline now tiers cheaper models for cost-gating and reserves heavier reasoning for the phases that demand it. Subsequent passes added explicit anti-hallucination filters — pipe-format and anachronism detectors — after early audits surfaced a small number of plausibly fabricated citations that no single prompt could be persuaded to stop producing.",
-      "What the analysis surfaces, in headline form, is a striking asymmetry. Of the cross-jurisdictional citations in the corpus, roughly ninety-six per cent travel between courts of the Global North; the Global South appears overwhelmingly as a place that reads, less than as a place that is read. The interactive map and the catalytic-cases dashboard on this site are two ways of looking at that pattern at different scales — country-to-country at one, case-to-case at the other.",
+    intro: [
+      "This research examines how courts acting in climate litigation cases engage with foreign case law and the conditions under which they do so. Its empirical basis is the Climate Case Chart, the litigation database maintained by the Sabin Center for Climate Change Law at Columbia Law School, from which our most recent survey identified around 2,924 judicial decisions across roughly 102 jurisdictions.",
+      "The Climate Case Chart is a public repository designed for consultation rather than for computational analysis, and work at this scale requires a different foundation. Our first step was therefore to ingest the full set of relevant documents into a structured local database that we design, organize, and maintain ourselves. Holding the corpus locally allows us to query, cross-reference, and process thousands of decisions under uniform and reproducible conditions that manual consultation of the original site would never allow. Within this database we restrict the analysis to judicial decisions and exclude procedural filings and other materials that fall outside the scope of this study for now.",
     ],
-    caption: 'A condensed reading of the seven-phase pipeline — filter the corpus to judicial decisions, extract every case reference, classify its functional use, origin court, and sixfold type, and verify each result against the source text.',
+    subsections: [
+      {
+        heading: "Definitions and classification",
+        paragraphs: [
+          "Within this corpus, a citation is any reference made by the reasoning of one court to the reasoning of another, whether expressed as a formal citation, a narrative reference, or a shorthand allusion. A citation is transnational if its two endpoints belong to different jurisdictions.",
+          "Each transnational citation is assigned to one of six categories through a classification that rests on two criteria. The first criterion records whether each endpoint is a national court or an international tribunal; and the second, which applies only where an international tribunal is involved, records whether the relevant national party is itself a member of that tribunal, or subject to its jurisdiction. The combination of these two criteria yields the six categories set out below.",
+        ],
+        list: [
+          "Foreign Citation. A national court cites the case law of another national court, i.e. another national jurisdiction.",
+          "International Citation. A national court cites an international tribunal and the state of that court is a member of such international tribunal.",
+          "Foreign International Citation. A national court cites an international tribunal of which the state of the citing court is not a member.",
+          "Inter-System Citation. An international tribunal cites case law of another international tribunal.",
+          "Member-State Citation. An international tribunal cites a national court of one of its member states.",
+          "Non-Member Citation. An international tribunal cites a national court of a state outside its membership.",
+        ],
+      },
+      {
+        heading: "The processing pipeline",
+        paragraphs: [
+          "What we are naming as pipeline is a structured sequence of scripts, coded in python and whose outputs and inputs are sequentially piped among each other. Such scripts feature a connection to the local database that contains the raw texts of all the relevant decisions, which define the corpus, and such decisions are processed through the pipeline under a succession of analytical operations.",
+          "The pipeline first distinguishes judicial decisions from the remaining document types and sets the latter aside. For each decision it then resolves the citing court's jurisdiction by reference to the case metadata featured in the Sabin's original database, after which it reads the full text from all filtered decisions to then extract every reference to case law, drawing on twelve distinct textual patterns that range from conventional citations and parallel reporters to single-word allusions such as “the Urgenda case” or “as in Abraham.”",
+          "All extracted citations are then filtered under the goal of scrapping any citation that does not fit in this research parameters — citations not deemed as cross-border, mainly. The origin court of each cited case is then identified through a three-tier procedure that combines a dictionary of more than eighty courts, a model-assisted resolution where the dictionary proves insufficient, and, in later iterations, a web-search fallback. Each candidate is subsequently assigned to one of the six categories defined above and verified against the source text from which it was drawn, receiving a confidence score that routes any result below the established threshold to manual review.",
+          "The final achieved state produced by the pipeline is a recording of all the captured citations in a dedicated database, segregated from the local database containing the raw texts of all relevant decisions. Such dedicated database features not only the text of which each citation is composed, but also its classification labels and a set of metadata relating to each one, to the decision that contains it, and to the court that renders such decision.",
+          "The tools published in this website are a translation of a portion of the data featured in the dedicated final database, aimed at visualization and condensation of some of the findings that arose from the current state of the research. The interactive map presently displays only Foreign Citations, that is, instances in which a national court cites the case law of a national court in another jurisdiction, while the remaining five categories, although already recorded in the underlying data on the dedicated database, are reserved for future updates.",
+        ],
+      },
+      {
+        heading: "Refinement of the methodology",
+        paragraphs: [
+          "The methodology continues to evolve as the underlying technology matures and as we iterate through the research process, learning and evolving on the way and discovering and applying new toolsets. An earlier single-pass design asked one model to extract and classify citations within a single call on each decision document, an arrangement that tended to produce confident but fabricated output. The current architecture deliberately separates recall from precision, so that the initial stages extract every plausible reference even at the cost of admitting noise, and later stages perform verification steps, with more reasoning effort and precision, to each candidate against the source text from which it derives.",
+          "Because an early commitment to a commercial frontier model proved incompatible with a doctoral budget, the pipeline now tiers less expensive models for cost-gating and reserves heavier reasoning for the stages that genuinely require it. Successive revisions introduced explicit anti-hallucination filters and formatting refinements, after early audits surfaced a small number of plausibly fabricated citations and misidentifications that no single prompt design proved able to eliminate.",
+        ],
+      },
+    ],
+  },
+  acknowledgements: {
+    paragraphs: [
+      "This research would not be possible without the work of the Sabin Center for Climate Change Law at Columbia Law School in building and maintaining the Climate Case Chart. Every piece of information used here, and every link to case law, traces back to that database.",
+      "We also thank our colleagues at the Grantham Research Institute on Climate Change and the Environment, especially Prof. Joana Setzer and Catherine Higham, for their valuable contributions to our methodology and our conclusions so far; and Professor Alberto do Amaral Junior, from the University of São Paulo as the supervisor of the research.",
+    ],
   },
   collaboration: {
     heading: 'Spotted an error? Got an improvement?',
-    body: "A corpus of nearly three thousand decisions will contain errors. A case name may be misspelled; a citation may be missed, mislabelled, or mis-attributed to the wrong origin court; a recent decision may not yet be ingested; a methodological choice may, on reflection, deserve a second look. If you notice one — or have a broader remark on the analysis, the typology, or the visualisations on this site — please write to us. We read every message, and we reply when a question warrants one.",
-    instructions: 'The most useful messages identify the case (full name, and ideally a link to its Climate Case Chart page), the nature of the issue, and what you would expect to see in its place.',
+    body: "The processing of a corpus of nearly three thousand decisions will contain errors. A case name may be misspelled; a citation may be missed, mislabelled, or mis-attributed to the wrong origin court; a recent decision may not yet be ingested; a methodological choice may, on reflection, deserve a second look. If you notice one — or have a broader remark on the analysis, the typology, or the visualisations on this site — please write to us. We read every message, and we reply when a question warrants one.",
+    instructions: 'The most useful messages identify the case (full name, and ideally a link to its Climate Case Chart page), the nature of the issue, and what you would expect to see in its place or what refinement or correction it deserves.',
     contact_email: 'hello@climatecaselab.org',
-  },
-  citedLiterature: {
-    title: 'Cited literature',
-    intro: 'A short reading list of the works this project leans on most directly. Grouped by role.',
-    groups: [
-      {
-        heading: 'Corpus and snapshot',
-        items: [
-          'Sabin Center for Climate Change Law & Grantham Research Institute on Climate Change and the Environment (LSE). <em>Climate Change Litigation Databases</em>. Columbia Law School. <a href="https://climatecasechart.com/" target="_blank" rel="noopener">climatecasechart.com</a>',
-          'Setzer, J., & Higham, C. (2024). <em>Global Trends in Climate Change Litigation: 2024 Snapshot</em>. Grantham Research Institute, LSE.',
-          'Tigre, M. A. (2023). <em>Global Climate Litigation Report: 2023 Status Review</em>. United Nations Environment Programme.',
-        ],
-      },
-      {
-        heading: 'Transnational judicial dialogue and citation analysis',
-        items: [
-          'Slaughter, A.-M. (2003). “A Global Community of Courts”. <em>Harvard International Law Journal</em>, 44(1), 191–219.',
-          'Nollkaemper, A. (2011). <em>National Courts and the International Rule of Law</em>. Oxford University Press. — source of the functional typology applied in Phase 3.',
-          'Peel, J., & Lin, J. (2019). “Transnational Climate Litigation: The Contribution of the Global South”. <em>American Journal of International Law</em>, 113(4), 679–726.',
-        ],
-      },
-      {
-        heading: 'Climate doctrine and judicial reasoning',
-        items: [
-          'Burgers, L. (2020). “Should Judges Make Climate Change Law?”. <em>Transnational Environmental Law</em>, 9(1), 55–75.',
-          'Bodansky, D. (2017). <em>The Art and Craft of International Environmental Law</em>. Harvard University Press.',
-          'IPCC (2023). <em>Climate Change 2023: Synthesis Report</em> (Sixth Assessment Report). H. Lee &amp; J. Romero (eds.). IPCC, Geneva.',
-        ],
-      },
-    ],
   },
 };
 
 function renderAbout(root) {
-  $('.landing-lede', root).textContent = COPY.lede;
-  const tiles = $$('.tile', root);
-  COPY.tiles.forEach((t, i) => {
-    const tile = tiles[i];
-    if (!tile) return;
-    tile.querySelector('h3').textContent = t.title;
-    tile.querySelector('p').textContent = t.body;
-    tile.querySelector('.tile-cta').textContent = t.cta;
-    tile.setAttribute('href', t.href);
-  });
-  const pq = $('.landing-pullquote', root);
-  pq.querySelector('p').textContent = COPY.pullquote.text;
-  pq.querySelector('cite').textContent = COPY.pullquote.cite;
+  const prose = $('.landing-about-prose', root);
+  prose.innerHTML = '';
+  for (const p of COPY.about.paragraphs) prose.appendChild(el('p', {}, p));
+
+  const auth = $('.landing-authorship', root);
+  auth.innerHTML = '';
+  for (const line of COPY.about.authorship) auth.appendChild(el('p', {}, line));
 }
 
 function renderMethodology(root) {
   const prose = $('.methodology-prose', root);
   prose.innerHTML = '';
-  prose.appendChild(el('p', { class: 'methodology-standfirst' }, COPY.methodology.standfirst));
-  for (const p of COPY.methodology.paragraphs) {
-    prose.appendChild(el('p', {}, p));
+  for (const p of COPY.methodology.intro) prose.appendChild(el('p', {}, p));
+  for (const sub of COPY.methodology.subsections) {
+    prose.appendChild(el('h2', { class: 'methodology-subhead' }, sub.heading));
+    for (const p of sub.paragraphs) prose.appendChild(el('p', {}, p));
+    if (sub.list) {
+      const ol = el('ol', { class: 'methodology-sixfold' });
+      for (const item of sub.list) ol.appendChild(el('li', {}, item));
+      prose.appendChild(ol);
+    }
   }
-  $('.methodology-caption', root).textContent = COPY.methodology.caption;
+}
+
+function renderAcknowledgements(root) {
+  const prose = $('.acknowledgements-prose', root);
+  if (!prose) return;
+  prose.innerHTML = '';
+  for (const p of COPY.acknowledgements.paragraphs) prose.appendChild(el('p', {}, p));
 }
 
 function renderCollaboration(root) {
@@ -112,19 +109,6 @@ function renderCollaboration(root) {
   const btn = $('.collab-mailto', root);
   btn.dataset.contactEmail = COPY.collaboration.contact_email;
   $('.mailto-address', btn).textContent = COPY.collaboration.contact_email;
-
-  const lit = $('.cited-literature', root);
-  lit.innerHTML = '';
-  lit.appendChild(el('h2', {}, COPY.citedLiterature.title));
-  lit.appendChild(el('p', { class: 'small', style: { color: 'var(--text-muted)' } }, COPY.citedLiterature.intro));
-  for (const group of COPY.citedLiterature.groups) {
-    lit.appendChild(el('h3', {}, group.heading));
-    const ul = el('ul');
-    for (const item of group.items) {
-      ul.appendChild(el('li', { html: item }));
-    }
-    lit.appendChild(ul);
-  }
 }
 
 function wireMailto() {
@@ -160,20 +144,13 @@ function wireMailto() {
   });
 }
 
-async function maybeRenderManifest() {
-  try {
-    const m = await fetchJSON('data/manifest.json');
-    $$('.site-footer [data-snapshot-label]').forEach(n => { n.textContent = m.snapshot_label; });
-  } catch (_) { /* non-fatal */ }
-}
-
 export async function initLanding() {
   const root = document.querySelector('.uppertab-panel[data-panel="landing"]');
   if (!root) return;
   renderAbout(root);
   renderMethodology(root);
+  renderAcknowledgements(root);
   renderCollaboration(root);
   wireMailto();
-  maybeRenderManifest();
   document.dispatchEvent(new CustomEvent('landing:ready'));
 }

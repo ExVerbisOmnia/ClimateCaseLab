@@ -52,6 +52,7 @@
         <nav class="subtab-bar" role="tablist" aria-label="Landing sections">
           <button type="button" role="tab" data-subtab="about" aria-current="true">About this project</button>
           <button type="button" role="tab" data-subtab="methodology" aria-current="false">Methodology</button>
+          <button type="button" role="tab" data-subtab="acknowledgements" aria-current="false">Acknowledgements</button>
           <button type="button" role="tab" data-subtab="collaboration" aria-current="false">Collaboration</button>
         </nav>
 
@@ -61,30 +62,8 @@
           <section id="section-about" class="landing-section">
             <p class="landing-eyebrow"><span class="mono">climatecaselab — Global Trends, May 2026</span></p>
             <h1 class="landing-hero">Climate Litigation Across Borders</h1>
-            <p class="landing-lede"></p>
-
-            <div class="landing-tiles">
-              <a class="tile" href="#/map">
-                <h3>Interactive Map</h3>
-                <p></p>
-                <span class="tile-cta">Explore the map →</span>
-              </a>
-              <a class="tile" href="#/cases">
-                <h3>Catalytic Cases</h3>
-                <p></p>
-                <span class="tile-cta">See the five cases →</span>
-              </a>
-              <a class="tile" href="#/landing/methodology">
-                <h3>Methodology</h3>
-                <p></p>
-                <span class="tile-cta">Read the methodology →</span>
-              </a>
-            </div>
-
-            <blockquote class="landing-pullquote">
-              <p></p>
-              <cite></cite>
-            </blockquote>
+            <div class="landing-about-prose"></div>
+            <div class="landing-authorship"></div>
           </section>
 
           <!-- METHODOLOGY -->
@@ -92,58 +71,14 @@
             <p class="landing-eyebrow"><span class="mono">§ Methodology</span></p>
             <h1>Research Methodology</h1>
             <div class="methodology-prose"></div>
-            <figure class="methodology-diagram" aria-labelledby="md-title" aria-describedby="md-desc">
-              <svg viewBox="0 0 920 220" xmlns="http://www.w3.org/2000/svg" role="img">
-                <title id="md-title">Four-stage condensation of the citation-extraction pipeline</title>
-                <desc id="md-desc">From left to right: filter the corpus to judicial decisions, extract every case reference, classify by functional use and sixfold type, and verify each result against the source text.</desc>
-                <defs>
-                  <marker id="md-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                  </marker>
-                </defs>
-                <g font-family="var(--font-mono)" font-size="11" fill="currentColor">
-                  <g transform="translate(20,40)">
-                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
-                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Filter</text>
-                    <text x="14" y="44">2,924 docs in corpus</text>
-                    <text x="14" y="62">└ 654 judicial decisions</text>
-                    <text x="14" y="92">keep only documents that</text>
-                    <text x="14" y="106">contain a court's reasoning</text>
-                  </g>
-                  <g transform="translate(240,40)">
-                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
-                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Extract</text>
-                    <text x="14" y="44">12 citation patterns</text>
-                    <text x="14" y="62">→ every case reference</text>
-                    <text x="14" y="92">recall-first; verification</text>
-                    <text x="14" y="106">happens later</text>
-                  </g>
-                  <g transform="translate(460,40)">
-                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
-                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Classify</text>
-                    <text x="14" y="44">functional use (Nollkaemper)</text>
-                    <text x="14" y="62">+ origin court tier</text>
-                    <text x="14" y="92">+ sixfold typology of</text>
-                    <text x="14" y="106">national / international ends</text>
-                  </g>
-                  <g transform="translate(680,40)">
-                    <rect width="180" height="140" rx="8" fill="none" stroke="currentColor" />
-                    <text x="14" y="22" font-family="var(--font-display)" font-size="16" font-weight="600">Verify</text>
-                    <text x="14" y="44">match each candidate</text>
-                    <text x="14" y="62">against the source text</text>
-                    <text x="14" y="92">confidence score flags</text>
-                    <text x="14" y="106">below-threshold output</text>
-                  </g>
-                  <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#md-arrow)">
-                    <line x1="200" y1="110" x2="240" y2="110" />
-                    <line x1="420" y1="110" x2="460" y2="110" />
-                    <line x1="640" y1="110" x2="680" y2="110" />
-                  </g>
-                </g>
-              </svg>
-              <figcaption class="methodology-caption"></figcaption>
-            </figure>
             <p class="methodology-cta">Full methodology paper: forthcoming.</p>
+          </section>
+
+          <!-- ACKNOWLEDGEMENTS -->
+          <section id="section-acknowledgements" class="landing-section">
+            <p class="landing-eyebrow"><span class="mono">§ Acknowledgements</span></p>
+            <h1>Acknowledgements</h1>
+            <div class="acknowledgements-prose"></div>
           </section>
 
           <!-- COLLABORATION -->
@@ -160,20 +95,17 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
               </button>
             </p>
-            <div class="cited-literature"></div>
           </section>
 
           <footer class="site-footer container" role="contentinfo">
             <div class="footer-grid">
               <dl>
                 <dt>Authorship</dt>
-                <dd>Lucas Biasetton — Ph.D. researcher, University of São Paulo &amp; Grantham Research Institute on Climate Change and the Environment, London School of Economics.</dd>
-                <dd>Gustavo dos Santos Rodrigues da Silva, LL.B. (University of São Paulo) — independent researcher in data and computer sciences.</dd>
+                <dd>Lucas Biasetton, doctoral researcher at the University of São Paulo (USP).</dd>
+                <dd>Gustavo Rodrigues, LL.B. (USP), independent researcher in computer sciences.</dd>
               </dl>
               <dl>
-                <dt>Snapshot</dt>
-                <dd class="mono small" data-snapshot-label>Sabin Global Trends — May 2026</dd>
-                <dt style="margin-top: var(--sp-4)">Licensing</dt>
+                <dt>Licensing</dt>
                 <dd class="small">
                   Content &amp; data: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
                   &nbsp;·&nbsp;

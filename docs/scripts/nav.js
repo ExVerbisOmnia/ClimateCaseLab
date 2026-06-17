@@ -11,7 +11,7 @@
 import { $, $$ } from './utils.js';
 
 export const PANELS = ['landing', 'map', 'cases'];
-const SUBTABS = ['about', 'methodology', 'collaboration'];
+const SUBTABS = ['about', 'methodology', 'acknowledgements', 'collaboration'];
 
 const listeners = new Set();
 let current = { panel: 'landing', subtab: 'about', params: {} };

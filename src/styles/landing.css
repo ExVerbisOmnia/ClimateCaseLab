@@ -34,39 +34,27 @@
   line-height: 1.05;
   letter-spacing: -0.02em;
 }
-.landing-lede {
-  font-size: 1.15rem;
-  color: var(--text);
-  max-width: 56ch;
-  margin-bottom: var(--sp-12);
+.landing-about-prose p {
+  font-size: 1.05rem;
+  max-width: 60ch;
+  margin-bottom: var(--sp-6);
 }
-
-.landing-tiles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--sp-4);
-  margin-bottom: var(--sp-16);
-}
-@media (max-width: 880px) {
-  .landing-tiles { grid-template-columns: 1fr; }
-}
-
-.landing-pullquote {
-  margin: var(--sp-16) 0 0;
-  padding: var(--sp-8) 0 var(--sp-8) var(--sp-6);
-  border-left: 2px solid var(--accent-warm);
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  line-height: 1.4;
+.landing-about-prose p:first-child {
+  font-size: 1.2rem;
   color: var(--text-strong);
+  margin-bottom: var(--sp-8);
 }
-.landing-pullquote p { margin: 0 0 var(--sp-4) 0; }
-.landing-pullquote cite {
-  display: block;
-  font-family: var(--font-mono);
-  font-style: normal;
+
+.landing-authorship {
+  margin-top: var(--sp-12);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--border);
+}
+.landing-authorship p {
   font-size: var(--ts-small);
   color: var(--text-muted);
+  margin: 0 0 var(--sp-2);
+  max-width: 60ch;
 }
 
 /* Methodology --------------------------------------------------- */
@@ -85,16 +73,19 @@
   color: var(--accent-cool);
 }
 
-.methodology-diagram {
-  margin: var(--sp-12) 0 var(--sp-6);
-  color: var(--text-muted);
-}
-.methodology-diagram svg { width: 100%; height: auto; }
-.methodology-caption {
-  font-size: var(--ts-small);
-  color: var(--text-muted);
-  margin-top: var(--sp-3);
+.methodology-prose .methodology-subhead {
+  font-size: var(--ts-h2);
+  margin: var(--sp-12) 0 var(--sp-4);
   max-width: 64ch;
+}
+.methodology-sixfold {
+  max-width: 64ch;
+  margin: 0 0 var(--sp-6);
+  padding-left: var(--sp-6);
+}
+.methodology-sixfold li {
+  font-size: 1.05rem;
+  margin-bottom: var(--sp-3);
 }
 .methodology-cta {
   font-family: var(--font-mono);
@@ -145,33 +136,8 @@
   padding-left: var(--sp-3);
 }
 
-.cited-literature {
-  margin-top: var(--sp-12);
-  border-top: 1px solid var(--border);
-  padding-top: var(--sp-6);
-}
-.cited-literature h2 {
-  font-size: var(--ts-h2);
+.acknowledgements-prose p {
+  font-size: 1.05rem;
+  max-width: 64ch;
   margin-bottom: var(--sp-6);
 }
-.cited-literature h3 {
-  font-family: var(--font-mono);
-  font-size: var(--ts-micro);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-top: var(--sp-6);
-  margin-bottom: var(--sp-3);
-}
-.cited-literature ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.cited-literature li {
-  font-size: var(--ts-small);
-  color: var(--text);
-  padding: var(--sp-2) 0;
-  border-bottom: 1px dashed var(--border);
-}
-.cited-literature li:last-child { border-bottom: 0; }
